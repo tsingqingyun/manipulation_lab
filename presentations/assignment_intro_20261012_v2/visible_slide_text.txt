@@ -1,0 +1,178 @@
+SLIDE 1
+Manipulation Learning Lab
+1
+Introduction to Robotics
+Manipulation
+Learning Lab
+From Demonstrations to Robot Policies
+Learning Robot Manipulation
+from Demonstrations
+
+SLIDE 2
+What Will the Robot Do?
+Manipulation Learning Lab
+2
+Panda arm · red can · can-marked target bin
+Click to play · 15 s · half speed
+Reach
+Grasp
+Transport
+Place
+Stable released placement
+Inside the target region, with a radius margin
+Gripper open and no longer touching the can
+Stable for 1 s after release
+Displacement ≤1 cm · speed ≤5 cm/s
+
+SLIDE 3
+From demonstrations to a policy
+Manipulation Learning Lab
+3
+Demonstrations
+Recorded observations
+and human actions.
+Training
+Fit a model to those
+observation–action pairs.
+Inference
+Use the current observation
+to choose the next action.
+→
+→
+Observe → act → observe again, at 20 Hz
+200 complete demonstrations
+160 train     20 validation     20 test
+Select saved model weights using validation loss; reserve test cases for evaluation.
+
+SLIDE 4
+Observations and actions
+Manipulation Learning Lab
+4
+Observation: 16 values
+Action: 7 values
+7
+Gripper-tip position and orientation
+2
+Finger joint positions
+7
+Can position and orientation
+3
+Translation in X, Y, Z
+3
+Rotation of the gripper
+1
+Close (+) or open (−)
+World frame · Z up · positions in meters
+Normalized commands in [−1, 1]
+ât = πθ(ot)
+o: normalized observation    θ: learned weights
+â: predicted action    t: current control step
+Model: 16 → 256 → 256 → 256 → 7
+Training-only normalization · fixed weights during inference
+
+SLIDE 5
+Learning by behavior cloning
+Manipulation Learning Lab
+5
+Match the demonstrated action, then update the model weights.
+Mean squared action error
+LB(θ) =
+1
+7B
+B
+∑
+i = 1
+‖âi − aiE‖22
+B: batch size (up to 256) · i: a training example
+aᴱ: human action · average over all 7 action values
+Weight update
+θ ← θ − η dAdam
+η: learning rate · dAdam: adaptive gradient direction
+Actual training runs
+Pale lines: training; dark lines: validation
+Dotted lines: selected epochs
+One action value: (0.15 − 0.10)² = 0.0025
+
+SLIDE 6
+The four experiments
+Manipulation Learning Lab
+6
+Open the notebooks in order on the prepared course server.
+01
+Demonstrations
+Play a demo; inspect observations and actions.
+20 min
+Q1
+02
+Policy training
+Train both rates; save models, curves and evaluations.
+50–60 min
+Q2–Q3
+03
+Evaluation
+Inspect the same saved cases and position shifts.
+40–50 min
+Q4
+04
+Failure analysis
+Select ≥3 steps; mark the first error; export evidence.
+20–30 min
+Q5
+Compare η = 0.001 and η = 0.0003
+Keep data, initial weights, architecture, seed 17, 50 epochs, batch size 256 and device fixed.
+
+SLIDE 7
+Evaluating a learned policy
+Manipulation Learning Lab
+7
+Two models × (5 standard + 5 shifted starts) = 20 rollouts
+Stable placements: one completed example
+Learning rate
+Standard
+Shifted
+0.001
+2 / 5
+3 / 5
+0.0003
+5 / 5
+5 / 5
+Paired source episode and seed
+Can position shifted +0.04 m along world X
+Five cases give a coarse estimate; a position shift is not a certified out-of-distribution test.
+
+SLIDE 8
+Analyzing a failure
+Manipulation Learning Lab
+8
+Locate the first visible error using frames and logged state.
+Step 1
+Step 41
+Step 81
+Observed: the can remains in the source bin.
+In Notebook 04, select ≥3 control steps
+and mark the first observable error.
+Observation → hypothesis → proposed test
+Check the offset between the requested state
+and the nearest recorded video frame.
+
+SLIDE 9
+Submission and assessment
+Manipulation Learning Lab
+9
+Submit a 1–2 page PDF
+and the evidence ZIP
+Answer Q1–Q5 in your own words.
+Export the ZIP from Notebook 04.
+Include both models and all outcomes.
+The generated report is an evidence appendix.
+Blank answers or no error marker remain DRAFT.
+Assessment
+Demonstration understanding
+20
+Training and experiment
+25
+Policy evaluation
+30
+Failure analysis and discussion
+25
+Success rate does not determine your grade.
