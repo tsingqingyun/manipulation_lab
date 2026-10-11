@@ -65,6 +65,13 @@ export PATH="$HOME/.local/bin:$PATH"
 bash scripts/setup_environment.sh
 ```
 
+安装脚本会在 PATH 和 `uv` 的标准安装目录查找可执行文件，即使 Bash 重置 PATH 也可继续。非标准安装位置可用 `LAB_UV` 指定：
+
+```bash
+LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh --check-uv
+LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh
+```
+
 安装脚本会创建 `.venv`，获取 Python 3.12.13，按 [完整依赖锁定文件](requirements.lock.txt) 安装并检查依赖，注册 **Manipulation Lab (Python 3.12)** Notebook 内核。两个官方源码子模块均使用固定提交，作业期间请勿自行升级。
 
 | 组件 | 固定版本 |
@@ -75,8 +82,11 @@ bash scripts/setup_environment.sh
 | robosuite | 1.5.1，固定 Git 提交 |
 | robomimic | 0.4.0，固定 Git 提交 |
 | NumPy | 1.26.4 |
+| Numba / llvmlite | 0.61.2 / 0.44.0 |
 
 源码提交和观测定义见 [configs/environment.yaml](configs/environment.yaml)。MuJoCo 通过 pip 安装，无需额外许可密钥或单独下载。
+
+为避免部分服务器的 Numba JIT（即时编译）段错误，命令行入口和 Notebook 导入默认设置 `NUMBA_DISABLE_JIT=1`，执行原有 Python 函数。保留固定依赖版本，不更换训练算法；仿真耗时可能变化。教师需重新测量本机课堂用时。仅在本机验证通过后，才可在启动 Python/Jupyter **之前**显式设置 `NUMBA_DISABLE_JIT=0`；修改后必须重启内核。预检记录版本、实际 JIT 状态和失败阶段，详见 [部署排查](docs/server_setup.md#native-runtime-and-preflight)。
 
 请在**启动 Jupyter 前**选择计算设备。固定版本的 PyTorch 同样支持 CPU 执行，但安装时仍会下载其 CUDA 依赖；CPU 执行不需要 GPU 或 CUDA toolkit。
 
@@ -102,6 +112,15 @@ scripts/lab_python.sh scripts/smoke_test.py --output outputs/smoke_v1
 
 下载流程会校验固定 SHA256 和包含 200 条轨迹的 HDF5 结构。Smoke Test 检查依赖版本、CUDA 状态、Headless Simulation（无显示器仿真）的重置与渲染、数据解析、两个 Epoch（完整训练轮次）的真实训练、Checkpoint 加载，以及标准和位置偏移条件各一次闭环 Rollout（策略执行轨迹）及视频。预期终端显示 `PASS`，且 `outputs/smoke_v1/smoke.json` 中的 `passed` 为 `true`。即使放置成功率为零，安装验证也可能通过；此处训练量不等于正式作业的训练量。排查问题需要重跑时，请使用**新的输出目录名**，保留失败记录。
 
+服务器无法直连 Hugging Face 时，可以使用管理员提供的镜像或代理，也可以在能联网的电脑下载同一文件并传入服务器。下载脚本支持 `HF_ENDPOINT`、`LAB_DATASET_URL`、`--url` 和 `--from-file`，所有方式都必须通过同一 SHA256 校验。下面的离线导入命令在传入文件后执行：
+
+```bash
+# 将原始 low_dim_v15.hdf5 放入项目 incoming/，不要重新打包 HDF5。
+scripts/lab_python.sh scripts/download_dataset.py --from-file incoming/low_dim_v15.hdf5
+```
+
+镜像、代理和文件传输的完整步骤见 [受限网络下的数据准备](docs/server_setup.md#restricted-network-dataset-transfer)。失败下载的 `.partial` 文件会保留，重试请指定新的 `--output` 路径，并让 `LAB_DATASET` 指向验证完成的文件。
+
 教师 Reference Checkpoint（参考模型检查点）**不随 Git 仓库分发**。教师需使用相同公开数据集和固定参考配置生成：
 
 ```bash
@@ -119,6 +138,8 @@ export LAB_REFERENCE_ROOT="$PWD/checkpoints/reference_v1"
 export LAB_GROUP=group_01
 scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
 ```
+
+启动器默认将 Jupyter 临时连接文件放在 `/tmp/manipulation-lab-jupyter-<UID>`，目录初始权限为 `0700`（Jupyter 创建内核后可增加 sticky bit 成为 `1700`，仍仅当前用户可访问）、文件权限为 `0600`，避免共享盘不支持安全权限的问题。可用 `JUPYTER_RUNTIME_DIR` 指定满足这些要求的本地目录。以 root 运行时自动添加 `--allow-root`；学生仍应使用独立的普通账号。
 
 Jupyter 监听 **127.0.0.1**，使用正常的 Jupyter token 认证。在个人电脑上建立 SSH 端口转发，并将目标账号和服务器替换为教师分配的信息：
 
@@ -211,6 +232,10 @@ Notebook 01 会创建带时间戳的小组实验会话；Notebook 02–04 自动
 
 | 环境变量 | 默认值 / 用途 |
 |---|---|
+| `LAB_UV` | 可选的 `uv` 可执行文件路径；安装器也会检查 PATH 和标准安装目录 |
+| `NUMBA_DISABLE_JIT` | 默认为 `1`；教师验证后才可在启动前显式设为 `0` |
+| `JUPYTER_RUNTIME_DIR` | 默认 `/tmp/manipulation-lab-jupyter-<UID>`；须为当前用户拥有的本地 `0700` 目录，支持 `0600` 文件 |
+| `HF_ENDPOINT` / `LAB_DATASET_URL` | 可选的镜像端点 / 完整数据 URL；完整 URL 优先，SHA256 校验保持不变 |
 | `LAB_VENV` | 项目内的 `.venv`；指定其他环境时使用绝对路径 |
 | `LAB_DATASET` | 项目内的 `data/low_dim_v15.hdf5`；可指向共享只读 HDF5 文件 |
 | `LAB_DEVICE` | 完整训练的配置默认值为 `cuda`；请显式设置为 `cpu` 或 `cuda` |

@@ -8,6 +8,9 @@ robosuite:
 mujoco: 3.2.7
 torch: 2.8.0
 torchvision: 0.23.0
+numba: 0.61.2
+llvmlite: 0.44.0
+numba_disable_jit_default: true  # set NUMBA_DISABLE_JIT=0 before launch only after host validation
 cuda_wheel: '12.8'
 dataset: 'amandlek/robomimic v1.5/can/ph/low_dim_v15.hdf5'
 task: PickPlaceCan

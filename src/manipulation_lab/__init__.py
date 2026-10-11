@@ -6,3 +6,5 @@ os.environ.setdefault("MUJOCO_GL", "egl")
 os.environ.setdefault("OMP_NUM_THREADS", "2")
 os.environ.setdefault("MKL_NUM_THREADS", "2")
 os.environ.setdefault("MPLBACKEND", "Agg")
+# Also covers direct imports from an installed Notebook kernel.
+os.environ.setdefault("NUMBA_DISABLE_JIT", "1")

@@ -15,7 +15,26 @@ export LAB_VENV="$PWD/outputs/install_check_v1/venv"
 bash scripts/setup_environment.sh
 ```
 
+The installer resolves uv once to an absolute executable path. It accepts `LAB_UV`, then searches PATH, `UV_INSTALL_DIR`, `XDG_BIN_HOME`, the XDG user bin directory, `~/.local/bin` and the legacy `~/.cargo/bin`. This works even when Bash startup replaces PATH. An invalid explicit `LAB_UV` is an error, not a silent fallback. Check discovery without installing anything:
+
+```bash
+LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh --check-uv
+```
+
 Use the same exported `LAB_VENV` for every subsequent command and Jupyter launch. Kernels are installed under that environment's prefix. Install paths should be absolute and readable by the intended accounts.
+
+## Native runtime and preflight
+
+Numba 0.61.2 and llvmlite 0.44.0 are explicitly pinned, consistent with the [Numba compatibility table](https://numba.readthedocs.io/en/0.61.2/user/installing.html). The lab defaults to `NUMBA_DISABLE_JIT=1` in the shell wrapper and package initialization **before** simulator imports. As documented by [Numba](https://numba.readthedocs.io/en/0.61.2/reference/envvars.html#envvar-NUMBA_DISABLE_JIT), this executes the original Python functions. It avoids the reported JIT compilation crash path; it does not diagnose an LLVM/driver/native-library root cause. CPU/GPU training settings, data and model architecture are unchanged. Measure simulation throughput on the deployment host again.
+
+For an existing JupyterHub, also set `NUMBA_DISABLE_JIT=1` in the spawner environment so it applies before any preloaded library. Restart kernels after changing it. An administrator can explicitly set `NUMBA_DISABLE_JIT=0` before launch for host validation; never switch modes between the two controlled learning-rate runs.
+
+```bash
+export NUMBA_DISABLE_JIT=1
+scripts/lab_python.sh scripts/preflight.py --output outputs/preflight_portable_v1
+```
+
+Preflight starts a fresh native worker with Python fault tracing. The parent writes `preflight.json` before launch and records pass/fail, exit signal, elapsed time and the last phase even if the worker crashes. `preflight_worker.log` holds its output/trace; `runtime.json` records effective JIT mode. CUDA probing follows the simulator reset/step/render check. This is a deliberate initialization sequence, not proof that import order alone fixes native crashes. A failed worker returns a nonzero exit status, with no automatic retry. Default timeout is 300 seconds; use `--timeout` for an intentionally slower host. Preserve failed runs and use a new output path after fixing the cause.
 
 ## Graphics backends
 
@@ -61,6 +80,29 @@ Reference generation uses the existing fixed `configs/bc_reference.json`: three 
 
 After preparation, make the shared dataset, reference and source environment readable but not writable by students. Each group needs its own writable notebooks (a separate checkout or copy), outputs and Jupyter runtime directory. Teachers must retain the authoritative source/configuration pins.
 
+## Restricted-network dataset transfer
+
+Choose one transport for the same official `low_dim_v15.hdf5`. All paths enforce SHA256 `3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962` and the 200-episode HDF5 structure. Existing files are checked without a network connection. No alternate dataset, automatic third-party mirror, or checksum bypass is used.
+
+For a mirror, set `HF_ENDPOINT` to your administrator's actual endpoint before running the normal download command. It receives the same `/datasets/amandlek/robomimic/resolve/main/v1.5/can/ph/low_dim_v15.hdf5` path. `LAB_DATASET_URL` supplies a full URL instead; CLI `--url` has highest precedence. The downloader also respects standard `HTTPS_PROXY`/`HTTP_PROXY` and `NO_PROXY` variables through Python urllib. Do not put proxy credentials or signed links in committed configuration. Provenance omits URL credentials/query strings. Network operations time out after 120 seconds by default (`--timeout` overrides this).
+
+For an offline transfer, on a connected computer run:
+
+```bash
+curl -fL --retry 2 -o low_dim_v15.hdf5 \
+  'https://huggingface.co/datasets/amandlek/robomimic/resolve/main/v1.5/can/ph/low_dim_v15.hdf5?download=true'
+sha256sum low_dim_v15.hdf5
+scp low_dim_v15.hdf5 user@server:~/low_dim_v15.hdf5
+```
+
+Replace `user@server` with the assigned SSH destination. On the server, from the repository root:
+
+```bash
+scripts/lab_python.sh scripts/download_dataset.py --from-file "$HOME/low_dim_v15.hdf5"
+```
+
+The importer copies and validates the unchanged file, records provenance and makes the accepted copy read-only. Keep the original HDF5 bytes; rebuilding it from equivalent arrays changes its hash. A failed/corrupt partial is retained and never silently reused. After diagnosing a failure, choose a new `--output` path and set `LAB_DATASET` to it for later training. Missing sources and network failures include actionable recovery instructions. A mirror's reachability is a deployment check, not guaranteed by this repository.
+
 ## 3. Assign accounts and output directories
 
 Use existing JupyterHub authentication or separate Linux/SSH accounts. A `LAB_GROUP` string prevents accidental output collisions; it is not a security boundary. Six notebooks under one Unix account do not establish permission isolation.
@@ -77,6 +119,21 @@ scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
 Set `LAB_DATASET`, `LAB_REFERENCE_ROOT` and, if sharing a read-only environment, `LAB_VENV` to the administrator's actual deployment locations. These are deployment choices, not hardcoded developer paths. For an existing JupyterHub, configure the same variables in its spawner and select the installed lab kernel; follow the institution's authentication and TLS policy.
 
 The standalone launcher uses loopback only, Jupyter's default token authentication, disables terminals, and fails on port conflict. Use SSH forwarding as shown in README. Do not set an empty token/password, bind an unauthenticated server to `0.0.0.0`, or publish a shared Jupyter login. Disabling terminals does not sandbox notebook Python.
+
+### Private Jupyter runtime files and root containers
+
+The launcher automatically uses `/tmp/manipulation-lab-jupyter-<effective UID>` instead of placing runtime files on a shared home/data mount. It verifies directory ownership and `0700` access permissions (also accepting Jupyter's sticky-bit `1700` on restart), rejects symlinks, and probes file creation with exact `0600` mode before starting Jupyter. These follow [Jupyter runtime and secure-write requirements](https://jupyter-core.readthedocs.io/en/latest/api/jupyter_core.html). Notebook files and experiment outputs stay in their configured project directories. The launcher removes `JUPYTER_ALLOW_INSECURE_WRITES`; it never bypasses secure writes.
+
+If setting `JUPYTER_RUNTIME_DIR` explicitly, choose a local filesystem that supports those permissions. For a fresh private directory:
+
+```bash
+export JUPYTER_RUNTIME_DIR="$(mktemp -d /tmp/manipulation-lab-jupyter.XXXXXXXX)"
+scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
+```
+
+An unsafe existing directory is rejected rather than chmodded behind your back. In JupyterHub, configure each user's private runtime directory in the spawner; do not share it between users. Runtime files are temporary: after a reboot, restart Jupyter and retrieve its new token. Do not delete connection files while kernels are running.
+
+Inside a root container, the launcher adds `--allow-root` only when effective UID is 0. Loopback binding, token authentication and fixed-port behavior remain in place. A root kernel executes as root, so this option is container compatibility, not multi-user isolation; use ordinary separate accounts or the institution's managed isolation for students.
 
 ## 4. Prepare shared resource locks
 

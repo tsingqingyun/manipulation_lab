@@ -38,7 +38,7 @@ def new_output(path):
 
 
 def versions():
-    names = ["robomimic", "robosuite", "mujoco", "torch", "torchvision", "numpy", "h5py", "jupyterlab"]
+    names = ["robomimic", "robosuite", "mujoco", "torch", "torchvision", "numpy", "numba", "llvmlite", "h5py", "jupyterlab"]
     return {"python": platform.python_version(), **{n: importlib.metadata.version(n) for n in names}}
 
 

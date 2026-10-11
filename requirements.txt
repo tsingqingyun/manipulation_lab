@@ -4,6 +4,7 @@ torchvision==0.23.0
 numpy==1.26.4
 mujoco==3.2.7
 numba==0.61.2
+llvmlite==0.44.0
 opencv-python==4.11.0.86
 h5py==3.14.0
 matplotlib==3.10.6

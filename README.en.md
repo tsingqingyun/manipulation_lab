@@ -65,6 +65,13 @@ export PATH="$HOME/.local/bin:$PATH"
 bash scripts/setup_environment.sh
 ```
 
+The installer searches PATH and standard uv installation directories, including when Bash resets PATH. For a custom location, set `LAB_UV`:
+
+```bash
+LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh --check-uv
+LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh
+```
+
 The installer creates `.venv`, obtains Python 3.12.13, installs [the full dependency lock](requirements.lock.txt), checks dependencies, and registers the **Manipulation Lab (Python 3.12)** notebook kernel. It installs both official source submodules at their pinned commits. Do not upgrade them during the assignment.
 
 | Component | Fixed version |
@@ -75,8 +82,11 @@ The installer creates `.venv`, obtains Python 3.12.13, installs [the full depend
 | robosuite | 1.5.1, pinned Git commit |
 | robomimic | 0.4.0, pinned Git commit |
 | NumPy | 1.26.4 |
+| Numba / llvmlite | 0.61.2 / 0.44.0 |
 
 Exact source commits and the observation contract are in [configs/environment.yaml](configs/environment.yaml). MuJoCo is installed by pip; no separate license key or MuJoCo download is required.
+
+To avoid reported native Numba JIT crashes on some servers, CLI entry points and Notebook imports default to `NUMBA_DISABLE_JIT=1`, executing the original Python functions. Dependency pins and training algorithms are retained; simulation timing may change, so instructors must measure their host. Only opt into `NUMBA_DISABLE_JIT=0` **before** starting Python/Jupyter after host validation; restart existing kernels. Preflight records versions, effective JIT mode and failure phase. See [native runtime diagnostics](docs/server_setup.md#native-runtime-and-preflight).
 
 Choose the compute device **before starting Jupyter**. The same locked PyTorch distribution runs on CPU; the CPU path still downloads its CUDA dependencies. It does not require a GPU or CUDA toolkit for CPU execution.
 
@@ -102,6 +112,15 @@ scripts/lab_python.sh scripts/smoke_test.py --output outputs/smoke_v1
 
 The download verifies the fixed SHA256 and 200-episode HDF5 structure. The smoke test checks dependency versions, CUDA availability, a headless reset/render, dataset parsing, two real training epochs, checkpoint reload, and one standard + one shifted closed-loop rollout with videos. Expect `PASS` and `outputs/smoke_v1/smoke.json` with `passed: true`. Zero successful placements can still pass this installation test; it is not the assignment budget. Use a **new output name** for a diagnostic rerun and preserve the failed run.
 
+If the server cannot reach Hugging Face, use an administrator-provided mirror/proxy or transfer the same file from a connected machine. The downloader accepts `HF_ENDPOINT`, `LAB_DATASET_URL`, `--url` and `--from-file`; every transport must pass the same SHA256 check. After transferring the file:
+
+```bash
+# Place the original low_dim_v15.hdf5 in incoming/; do not repack the HDF5.
+scripts/lab_python.sh scripts/download_dataset.py --from-file incoming/low_dim_v15.hdf5
+```
+
+See [restricted-network dataset preparation](docs/server_setup.md#restricted-network-dataset-transfer) for mirror, proxy and transfer steps. Failed `.partial` downloads are preserved; retry with a new `--output` and point `LAB_DATASET` to the validated file.
+
 The reference checkpoint is **not distributed with Git**. The instructor generates it from the same public dataset using the fixed reference configuration:
 
 ```bash
@@ -119,6 +138,8 @@ On a prepared course server, skip installation and use your instructor's account
 export LAB_GROUP=group_01
 scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
 ```
+
+The launcher stores temporary Jupyter connection files in `/tmp/manipulation-lab-jupyter-<UID>` with directory mode `0700` (Jupyter may add the sticky bit, yielding owner-only `1700`) and file mode `0600`, avoiding shared filesystems that cannot enforce secure permissions. Override with a suitable local `JUPYTER_RUNTIME_DIR`. Root launches automatically include `--allow-root`; students should still use separate ordinary accounts.
 
 Jupyter listens on **127.0.0.1**, with normal Jupyter token authentication. From your laptop, forward the port (replace the SSH destination with your assigned login):
 
@@ -211,6 +232,10 @@ This lab builds on [robomimic](https://robomimic.github.io/), [robosuite](https:
 
 | Environment variable | Default / purpose |
 |---|---|
+| `LAB_UV` | Optional uv executable path; installer also searches PATH and standard installation directories |
+| `NUMBA_DISABLE_JIT` | Default `1`; set `0` before launch only after instructor host validation |
+| `JUPYTER_RUNTIME_DIR` | Default `/tmp/manipulation-lab-jupyter-<UID>`; locally owned `0700` directory supporting `0600` files |
+| `HF_ENDPOINT` / `LAB_DATASET_URL` | Optional mirror endpoint / full dataset URL; full URL takes precedence, with unchanged SHA256 validation |
 | `LAB_VENV` | Project `.venv`; use an absolute path for an alternate environment |
 | `LAB_DATASET` | Project `data/low_dim_v15.hdf5`; optional shared read-only HDF5 |
 | `LAB_DEVICE` | Config default `cuda` for full training; explicitly set `cpu` or `cuda` |

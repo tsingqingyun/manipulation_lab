@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-12",
+  "base_commit": "f8ad3ef",
+  "scope": "Linux deployment portability fixes; genuine CPU smoke and authenticated Jupyter kernels",
+  "environment": {
+    "fresh_python_environment": true,
+    "installer_path": "/usr/bin:/bin",
+    "compatible_packages": 163,
+    "versions": {
+      "python": "3.12.13",
+      "robomimic": "0.4.0",
+      "robosuite": "1.5.1",
+      "mujoco": "3.2.7",
+      "torch": "2.8.0",
+      "torchvision": "0.23.0",
+      "numpy": "1.26.4",
+      "numba": "0.61.2",
+      "llvmlite": "0.44.0",
+      "h5py": "3.14.0",
+      "jupyterlab": "4.4.9"
+    },
+    "render_backend": "osmesa",
+    "gpu_hidden_for_smoke": true,
+    "system_libraries": "Previously verified public Ubuntu libosmesa6 extraction; no private project library"
+  },
+  "tests": {
+    "full_suite": {
+      "passed": 22,
+      "seconds": 6.56,
+      "warnings": 14
+    },
+    "targeted_after_sticky_bit_fix": {
+      "passed": 9
+    },
+    "native_crash_fixture": "Intentional SIGSEGV in isolated infrastructure fixture recorded as failure with signal/phase/log; not a simulator crash"
+  },
+  "dataset": {
+    "offline_copy_passed": true,
+    "passed": true,
+    "transport": "HF_ENDPOINT loopback HTTP server serving unchanged official bytes",
+    "sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+    "bytes": 46889752,
+    "requested_paths": [
+      "/datasets/amandlek/robomimic/resolve/main/v1.5/can/ph/low_dim_v15.hdf5?download=true"
+    ],
+    "limitation": "Does not establish reachability of a public mirror on the affected server"
+  },
+  "smoke_and_jit_check": {
+    "passed": true,
+    "elapsed_seconds": 52.74949028622359,
+    "device": "cpu",
+    "conditions": {
+      "standard": {
+        "episodes": 1,
+        "environment_success_rate": 0.0,
+        "stable_success_rate": 0.0
+      },
+      "shifted": {
+        "episodes": 1,
+        "environment_success_rate": 0.0,
+        "stable_success_rate": 0.0
+      }
+    },
+    "jit_preflight_passed": true,
+    "jit_preflight_seconds": 6.326826446224004,
+    "same_input_jit_comparison": [
+      {
+        "episode": "demo_0",
+        "step": 0,
+        "observation_max_abs_error_jit_delta": 0.0,
+        "expert_one_step_max_abs_error_jit_delta": 2.0599841277224584e-18
+      },
+      {
+        "episode": "demo_0",
+        "step": 50,
+        "observation_max_abs_error_jit_delta": 0.0,
+        "expert_one_step_max_abs_error_jit_delta": 3.2526065174565133e-19
+      },
+      {
+        "episode": "demo_1",
+        "step": 100,
+        "observation_max_abs_error_jit_delta": 0.0,
+        "expert_one_step_max_abs_error_jit_delta": 1.368682944757893e-12
+      }
+    ]
+  },
+  "jupyter": {
+    "passed": true,
+    "cases": [
+      {
+        "mode": "user",
+        "effective_uid": 1013,
+        "unauthenticated_http": 403,
+        "authenticated_http": 200,
+        "notebooks": 4,
+        "directory_mode": "0o1700",
+        "connection_file_mode": "0600",
+        "kernel_executed": true,
+        "jit_disabled": true,
+        "insecure_writes": false,
+        "elapsed_seconds": 1.8165172198787332,
+        "kernel_creation_http": 201
+      },
+      {
+        "mode": "root_namespace",
+        "effective_uid": 0,
+        "unauthenticated_http": 403,
+        "authenticated_http": 200,
+        "notebooks": 4,
+        "directory_mode": "0o1700",
+        "connection_file_mode": "0600",
+        "kernel_executed": true,
+        "jit_disabled": true,
+        "insecure_writes": false,
+        "elapsed_seconds": 1.798069744836539,
+        "kernel_creation_http": 201
+      }
+    ]
+  },
+  "preserved_failure": {
+    "path": "outputs/deployment_portability_20261012_v1/jupyter.json",
+    "reason": "Initial assertion rejected 1700 after jupyter_client added its sticky bit. Updated launcher accepts owner-only 0700/1700; only the affected Jupyter test was repeated, in jupyter_v2."
+  },
+  "limitations": [
+    "Original affected server native JIT segfault was not reproduced on this host; native root cause remains undiagnosed.",
+    "Root startup tested with real effective UID 0 in an unprivileged user namespace, not unrestricted host root.",
+    "Shared-mount permission refusal tested with mode fixtures and a shared-data-directory override; the affected remote mount itself was not available.",
+    "HTTP mirror tested on loopback with official dataset bytes; no claim of public mirror/proxy reachability on the affected server.",
+    "This task did not rerun all four notebooks across six users or remeasure the full class schedule. Prior acceptance is preserved separately.",
+    "Two-epoch smoke success rate was zero; installation acceptance does not imply policy quality."
+  ],
+  "artifact_root": "outputs/deployment_portability_20261012_v1",
+  "source_sha256": {
+    "README.md": "5447fb5ddfd2b3e1562f85140c2c9f9aa7c89938aaead26473bc1bf442725f0e",
+    "README.en.md": "f7520af19f1751929153b68d6c435bb6129357e963a1e04be72efb597b48ef77",
+    "requirements.txt": "9045878576a028ad8ef2026edd0def7a122bb33e19e433a21e4243f05e943174",
+    "requirements.lock.txt": "d5daea21a975c02f657b54ebe876e4b857598263b134b1019c0df943cf2baf6b",
+    "configs/environment.yaml": "636268c8445cc317ee75e82cff7e75ca954a9d4626c482949b31f127b03b7d4b",
+    "scripts/lab_python.sh": "454703c2a42973378e05e547ce3a7f568db4d8a718513ef95910ce784eb0ecd1",
+    "scripts/setup_environment.sh": "679b74f4dffe84f5adb6c57e388c0fbdb2eeb779c6d43df933331f6cc2c4b0f5",
+    "scripts/start_lab.py": "710814319f3404b11dd6514ab6a0abbaae5aeaf08b58f49d1298a565b3bd20c7",
+    "scripts/preflight.py": "05a13f17fc68cbac7f1f4cd48d686e62797b925bf69fa965c6c459e9d00793ee",
+    "scripts/download_dataset.py": "209ec442f58a18e0b678ca39dee7618591744a7a3fab74197aa1007509b0f384",
+    "src/manipulation_lab/__init__.py": "db661c188ebca9ae024666b93957a2575e9f64a417a9a83241f42d7ed80528d9",
+    "src/manipulation_lab/common.py": "b6d59ee0521c3659f6d11023ccb7db1572a924441e74f094dc2a0dd3e76f836d",
+    "tests/test_deployment.py": "16ec11ffebbdb463fb57645207bae577afaae9503a8d016d77fd7ebe23cfdfc9"
+  }
+}
