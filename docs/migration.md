@@ -2,6 +2,8 @@
 
 教学实验已从 ICLR 主仓库的 `pipelines/manipulation_learning_lab` 提取到 `/home/jingchen/projects/manipulation_lab`，远程为 `https://github.com/tsingqingyun/manipulation_lab`。来源提交为 `dcb8e4afb4a6cb686d6e2dc143b1a28c3c724ad9`；保留目标仓库原有 LICENSE 与 main 历史。
 
+迁移代码提交 `68226388a04e17186282e2399bafc9610c50a5c0` 已推送到 `origin/main`，并通过 `git ls-remote` 核对远端提交一致。目标保持原有公开可见性。原仓库 HEAD、工作区状态和暂存差异均与迁移前一致。
+
 ## 迁移范围
 
 导入教学代码、四个 Notebook、配置、固定依赖、测试及教学文档。两个第三方源码库位于本仓库 `third_party/`，固定提交与 `configs/environment.yaml` 一致。安装脚本使用当前仓库根目录，不再访问原主仓库。
