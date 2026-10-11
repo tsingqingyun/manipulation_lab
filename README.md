@@ -1,58 +1,61 @@
 # Manipulation Learning Lab
-## Learning Robot Manipulation from Demonstrations
 
-### 1. Overview
+**语言 / Language：** 简体中文 | [English](README.en.md)
 
-Teach a simulated Panda arm to pick up a can and place it in its target bin using human demonstrations. You will inspect the data, train two behavior cloning policies, compare matched evaluation cases, and explain a real failure using video and logged state.
+## 从示教数据学习机器人操作
 
-**Audience:** graduate students with basic Python and machine-learning knowledge. **Time:** 2–3 hours after the instructor has prepared the server, dataset and reference evidence. Installation and downloads are separate from class time. No robotics hardware is required.
+### 1. 实验概览
 
-The lab uses the existing **robosuite + robomimic + MuJoCo** pipeline. It does not require another project, an existing Conda environment, or a downloaded private model. All reported experiment metrics come from training and simulation.
+本实验使用人类示教数据，训练仿真中的 Panda 机械臂抓起罐子并放入目标料箱。你将检查数据、训练两组 Behavior Cloning（BC，行为克隆）策略、在相同条件下比较评测结果，并结合视频和状态记录解释一次真实失败。
 
-### 2. Learning Objectives
+**适用对象：** 具备 Python 和机器学习基础的研究生。**预计时间：** 教师准备好服务器、数据集和参考案例后，核心作业需要 2–3 小时。环境安装和数据下载不计入课堂时间。无需机器人硬件。
 
-By the end, you should be able to:
+本实验沿用已经验证的 **robosuite + robomimic + MuJoCo** 流程，不依赖其他项目、已有 Conda 环境或私有模型。所有实验指标均来自实际训练和仿真执行。
 
-- Inspect a demonstration dataset and distinguish observations from actions.
-- Explain behavior cloning (BC): predicting expert actions from observations.
-- Train a policy and select a checkpoint using validation episodes.
-- Explain closed-loop inference: observing again after every action.
-- Design a controlled comparison and interpret evaluation and generalization limits.
-- Locate a failure in a video and state trace, separating observations from hypotheses.
+### 2. 学习目标
 
-### 3. Task Description
+完成实验后，你应能够：
 
-The task is **robosuite PickPlaceCan**, with a **Panda** arm and a parallel gripper. The official robomimic **v1.5 Can / proficient-human / low-dimensional** dataset contains 200 human demonstrations and 23,207 control steps. The fixed whole-episode split is 160 training / 20 validation / 20 test. Test data never selects model weights.
+- 检查 Demonstration Dataset（示教数据集），区分 Observation（观测）与 Action（动作）。
+- 解释 Behavior Cloning：根据观测预测专家动作。
+- 训练 Policy（策略），使用验证集选择 Checkpoint（模型检查点）。
+- 解释 Closed-loop Inference（闭环推理）：每执行一次动作，都根据新的观测决定下一步动作。
+- 设计 Controlled Experiment（受控对照实验），理解评测结果及其泛化结论的边界。
+- 结合视频和状态曲线定位失败，区分观察到的事实与原因假设。
 
-| Quantity | Meaning |
+### 3. 任务说明
+
+任务为 **robosuite PickPlaceCan**，使用 **Panda** 机械臂和平行夹爪。官方 robomimic **v1.5 Can / proficient-human / low-dimensional** 数据集包含 200 条人类示教、23,207 个控制步。按完整轨迹固定划分为 160 条训练数据、20 条验证数据和 20 条测试数据。测试集不参与模型权重选择。
+
+| 项目 | 含义 |
 |---|---|
-| Policy observation: 16 values | End-effector world position (3), xyzw quaternion (4), two gripper joint positions (2), can world position and xyzw quaternion (7) |
-| Action: 7 values | World translation increment (3), axis-angle rotation increment (3), gripper command (1) |
-| Coordinate and action units | World frame, Z upward; positions in meters; actions normalized to [-1, 1], translation limit ±0.05 m and rotation limit ±0.5 rad |
-| Gripper command | Positive closes; negative opens. Command is unitless; measured opening is in meters |
-| Timing | 20 Hz control steps. No acquisition timestamps are invented |
-| Student model | Existing deterministic BC multilayer perceptron, three 256-unit hidden layers; observation normalization uses training data only |
+| Policy 的 Observation：16 维 | 末端执行器在世界坐标系中的位置（3）、xyzw 四元数（4）、两个夹爪关节位置（2），以及罐子的世界位置和 xyzw 四元数（7） |
+| Action：7 维 | 世界坐标系中的平移增量（3）、轴角旋转增量（3）、夹爪命令（1） |
+| 坐标系与动作单位 | 世界坐标系，Z 轴向上；位置单位为米；动作归一化到 [-1, 1]，平移上限为 ±0.05 m，旋转上限为 ±0.5 rad |
+| 夹爪命令 | 正值闭合，负值张开；命令无量纲，测得的开口单位为米 |
+| 时间 | 控制频率为 20 Hz；使用控制步编号，不虚构采集时间戳 |
+| 学生模型 | 现有的确定性 BC 多层感知机，含三个各 256 单元的隐藏层；Observation 归一化仅使用训练数据 |
 
-The unchanged observation adapter uses `object[7:14]` from the dataset's 14-value object vector. This avoids a known cached relative-sensor inconsistency when restoring states and keeps training and inference inputs consistent.
+现有观测适配器从数据集中 14 维的物体向量读取 `object[7:14]`。这一处理避免恢复仿真状态时已知的相对传感器缓存不一致问题，保持训练和推理输入一致。
 
-We report both the environment's success flag and **stable released placement**: the can is within the target region with a radius margin, the gripper is open and no longer touching it, and continued policy execution maintains displacement ≤0.01 m and speed ≤0.05 m/s for 20 control intervals (1 second). See [the exact thresholds](configs/evaluation.yaml). This is a classroom placement criterion, not a proof that every point of an arbitrarily oriented object mesh is inside the bin.
+评测同时报告环境自身的成功标记和 **stable released placement（松开夹爪后的稳定放置）**：罐子位于目标区域内并留有半径余量，夹爪已张开且不再接触罐子；继续执行 Policy，在 20 个控制间隔（1 秒）内保持位移 ≤0.01 m、速度 ≤0.05 m/s。具体阈值见 [评测配置](configs/evaluation.yaml)。这是课堂使用的放置判据，不能证明任意朝向下物体网格的每一点都位于料箱内。
 
-The **Position Shift Test** adds 0.04 m along world X to matched test starts that remain inside the source bin. It is **not a certified out-of-distribution (OOD) benchmark**. Position shifts can overlap training support, and a 2D position plot does not establish the full input distribution.
+**Position Shift Test（初始位置偏移测试）** 在符合条件的测试初始状态上，沿世界 X 轴增加 0.04 m，且偏移后仍位于源料箱内。它**不等同于经过严格验证的 OOD（分布外）测试**：偏移位置可能与训练数据覆盖范围重叠，二维位置图也不能代表完整的输入分布。
 
-### 4. Installation
+### 4. 安装环境
 
-Run commands from the repository root unless stated otherwise. Linux x86-64 is the tested platform. Allow at least 15 GB free disk for Python/CUDA dependencies and outputs. A class server needs additional storage per group; see [server setup](docs/server_setup.md).
+除非另有说明，以下命令均在仓库根目录执行。已测试的平台为 Linux x86-64。Python/CUDA 依赖和实验输出至少需要 15 GB 可用磁盘空间；课堂服务器还需为各组预留额外空间，见 [服务器部署说明](docs/server_setup.md)。
 
-An administrator installs system prerequisites on Ubuntu 22.04/24.04:
+管理员在 Ubuntu 22.04/24.04 上安装系统依赖：
 
 ```bash
 sudo apt-get update
 sudo apt-get install -y git curl build-essential libosmesa6 libgl1 libegl1 libglib2.0-0
 ```
 
-OSMesa renders without a display or GPU. NVIDIA EGL rendering is also supported when the host has the matching graphics driver libraries; CUDA availability alone does not prove rendering works. See [graphics setup and the no-root alternative](docs/server_setup.md#graphics-backends).
+OSMesa 可在没有显示器或 GPU 的情况下完成渲染。主机安装匹配的图形驱动库后，也可使用 NVIDIA EGL。CUDA 可用并不意味着渲染一定可用，详见 [图形后端配置及无管理员权限的替代方案](docs/server_setup.md#graphics-backends)。
 
-Clone the source and install `uv`, the Python environment manager:
+克隆仓库并安装 Python 环境管理工具 `uv`：
 
 ```bash
 git clone --recurse-submodules https://github.com/tsingqingyun/manipulation_lab.git
@@ -62,159 +65,159 @@ export PATH="$HOME/.local/bin:$PATH"
 bash scripts/setup_environment.sh
 ```
 
-The installer creates `.venv`, obtains Python 3.12.13, installs [the full dependency lock](requirements.lock.txt), checks dependencies, and registers the **Manipulation Lab (Python 3.12)** notebook kernel. It installs both official source submodules at their pinned commits. Do not upgrade them during the assignment.
+安装脚本会创建 `.venv`，获取 Python 3.12.13，按 [完整依赖锁定文件](requirements.lock.txt) 安装并检查依赖，注册 **Manipulation Lab (Python 3.12)** Notebook 内核。两个官方源码子模块均使用固定提交，作业期间请勿自行升级。
 
-| Component | Fixed version |
+| 组件 | 固定版本 |
 |---|---|
 | Python | 3.12.13 |
 | PyTorch / torchvision | 2.8.0 / 0.23.0 |
 | MuJoCo | 3.2.7 |
-| robosuite | 1.5.1, pinned Git commit |
-| robomimic | 0.4.0, pinned Git commit |
+| robosuite | 1.5.1，固定 Git 提交 |
+| robomimic | 0.4.0，固定 Git 提交 |
 | NumPy | 1.26.4 |
 
-Exact source commits and the observation contract are in [configs/environment.yaml](configs/environment.yaml). MuJoCo is installed by pip; no separate license key or MuJoCo download is required.
+源码提交和观测定义见 [configs/environment.yaml](configs/environment.yaml)。MuJoCo 通过 pip 安装，无需额外许可密钥或单独下载。
 
-Choose the compute device **before starting Jupyter**. The same locked PyTorch distribution runs on CPU; the CPU path still downloads its CUDA dependencies. It does not require a GPU or CUDA toolkit for CPU execution.
+请在**启动 Jupyter 前**选择计算设备。固定版本的 PyTorch 同样支持 CPU 执行，但安装时仍会下载其 CUDA 依赖；CPU 执行不需要 GPU 或 CUDA toolkit。
 
 ```bash
-# Portable CPU computation and software rendering:
+# 使用 CPU 计算和软件渲染：
 export LAB_DEVICE=cpu
 export MUJOCO_GL=osmesa
 
-# On a configured NVIDIA server, use these instead for training:
+# 在已配置好的 NVIDIA 服务器上，可改用以下设置训练：
 # export LAB_DEVICE=cuda
 # export CUDA_VISIBLE_DEVICES=0
-# Keep MUJOCO_GL=osmesa, or select egl after the instructor verifies NVIDIA EGL.
+# 保留 MUJOCO_GL=osmesa，或在教师验证 NVIDIA EGL 后选择 egl。
 ```
 
-CPU runs use two threads per job. They are functional, but the 2–3 hour teaching schedule depends on the server and queue; instructors should time their deployment in advance. GPU training needs a driver compatible with PyTorch's CUDA 12.8 wheels. Evaluation policy inference and MuJoCo physics run on CPU; `MUJOCO_GL` selects the rendering backend independently.
+CPU 任务默认使用两个线程。CPU 模式能够运行，但是否满足 2–3 小时的课堂安排取决于服务器性能和排队时间，教师应提前计时。GPU 训练需要兼容 PyTorch CUDA 12.8 安装包的驱动。评测时的 Policy 推理和 MuJoCo 物理仿真在 CPU 上执行；`MUJOCO_GL` 独立选择渲染后端。
 
-Download and verify the public dataset, then run a **real installation smoke test**:
+下载并校验公开数据集，然后执行包含真实训练和仿真的 **Smoke Test（最小安装验证）**：
 
 ```bash
 scripts/lab_python.sh scripts/download_dataset.py
 scripts/lab_python.sh scripts/smoke_test.py --output outputs/smoke_v1
 ```
 
-The download verifies the fixed SHA256 and 200-episode HDF5 structure. The smoke test checks dependency versions, CUDA availability, a headless reset/render, dataset parsing, two real training epochs, checkpoint reload, and one standard + one shifted closed-loop rollout with videos. Expect `PASS` and `outputs/smoke_v1/smoke.json` with `passed: true`. Zero successful placements can still pass this installation test; it is not the assignment budget. Use a **new output name** for a diagnostic rerun and preserve the failed run.
+下载流程会校验固定 SHA256 和包含 200 条轨迹的 HDF5 结构。Smoke Test 检查依赖版本、CUDA 状态、Headless Simulation（无显示器仿真）的重置与渲染、数据解析、两个 Epoch（完整训练轮次）的真实训练、Checkpoint 加载，以及标准和位置偏移条件各一次闭环 Rollout（策略执行轨迹）及视频。预期终端显示 `PASS`，且 `outputs/smoke_v1/smoke.json` 中的 `passed` 为 `true`。即使放置成功率为零，安装验证也可能通过；此处训练量不等于正式作业的训练量。排查问题需要重跑时，请使用**新的输出目录名**，保留失败记录。
 
-The reference checkpoint is **not distributed with Git**. The instructor generates it from the same public dataset using the fixed reference configuration:
+教师 Reference Checkpoint（参考模型检查点）**不随 Git 仓库分发**。教师需使用相同公开数据集和固定参考配置生成：
 
 ```bash
 scripts/lab_python.sh scripts/prepare_reference.py --train --output checkpoints/reference_v1
 export LAB_REFERENCE_ROOT="$PWD/checkpoints/reference_v1"
 ```
 
-This trains the existing reference model, evaluates it and checks for a real failure video. Do this before class. If no real failure is available, preparation fails explicitly; never manufacture one or search seeds for a desired result. [Instructor instructions](docs/instructor_guide.md) explain the reference's separate role.
+该命令训练现有参考模型、执行评测并检查真实失败视频，应在课前完成。若没有真实失败案例，准备流程会明确报错；不得伪造案例或反复选择随机种子以获取期望结果。参考模型的用途见 [教师指南](docs/instructor_guide.md)。
 
-### 5. Getting Started
+### 5. 开始实验
 
-On a prepared course server, skip installation and use your instructor's account, group and access instructions. For your own installation:
+如果课程服务器已经准备好，请跳过安装，使用教师分配的账号、小组编号和访问方式。自行部署时执行：
 
 ```bash
 export LAB_GROUP=group_01
 scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
 ```
 
-Jupyter listens on **127.0.0.1**, with normal Jupyter token authentication. From your laptop, forward the port (replace the SSH destination with your assigned login):
+Jupyter 监听 **127.0.0.1**，使用正常的 Jupyter token 认证。在个人电脑上建立 SSH 端口转发，并将目标账号和服务器替换为教师分配的信息：
 
 ```bash
 ssh -N -L 8892:127.0.0.1:8892 user@server
 ```
 
-Open `http://127.0.0.1:8892/lab` locally and use the token from your server startup log. Never publish that token. If port 8892 is already occupied, use an assigned free port in both commands; the launcher will not silently switch ports. Multi-user courses should use the institution's authenticated JupyterHub or separate SSH/system accounts.
+在个人电脑打开 `http://127.0.0.1:8892/lab`，输入服务器启动日志中的 token，请勿公开该 token。如果端口 8892 已被占用，两条命令都应改为分配给你的空闲端口；启动脚本不会悄悄切换端口。多用户课堂应使用学校已有认证的 JupyterHub，或独立的 SSH/系统账号。
 
-Open these notebooks in order and select the lab kernel:
+按顺序打开以下 Notebook，并选择本实验内核：
 
-1. [01_demonstrations.ipynb](notebooks/01_demonstrations.ipynb) — start a session and play a demonstration.
-2. [02_train_policy.ipynb](notebooks/02_train_policy.ipynb) — run both learning rates and save actual models/evaluations.
-3. [03_policy_evaluation.ipynb](notebooks/03_policy_evaluation.ipynb) — inspect those same matched results.
-4. [04_failure_analysis.ipynb](notebooks/04_failure_analysis.ipynb) — select steps, mark an error, answer questions and export evidence.
+1. [01_demonstrations.ipynb](notebooks/01_demonstrations.ipynb)：创建实验会话，播放一条示教。
+2. [02_train_policy.ipynb](notebooks/02_train_policy.ipynb)：完成两种 Learning Rate（学习率）的训练，保存真实模型与评测结果。
+3. [03_policy_evaluation.ipynb](notebooks/03_policy_evaluation.ipynb)：查看上述相同测试案例的对照结果。
+4. [04_failure_analysis.ipynb](notebooks/04_failure_analysis.ipynb)：选择时间步、标记错误、回答问题并导出实验材料。
 
-Notebook 01 creates a new timestamped group session. Notebooks 02–04 find that session and its previous-stage outputs automatically. Rerunning a training or analysis stage creates a new version and keeps the old one. To revise written answers, rerun only the answer cells and the final report/export cells. Do not restart Notebook 01 halfway through the assignment.
+Notebook 01 会创建带时间戳的小组实验会话；Notebook 02–04 自动找到该会话及上一阶段的输出。重新运行训练或分析阶段会创建新版本，保留已有结果。修改文字答案时，只需重跑答案单元格和最后的报告、导出单元格。请勿在作业中途重新启动 Notebook 01。
 
-### 6. Experiments
+### 6. 实验内容
 
-| Part | Work | Planned class time |
+| 部分 | 实验要求 | 计划课堂时间 |
 |---|---|---:|
-| 1: Understanding Demonstrations | Inspect observations/actions, play recorded states, inspect initial positions, answer Q1 | 20 min |
-| 2: Training a BC Policy | Compare learning rates 0.001 and 0.0003 with the same data, network, initialization seed 17, 50 epochs and batch size; save both curves/checkpoints; answer Q2–Q3 | 50–60 min |
-| 3: Policy Evaluation and Generalization | Compare 5 standard + 5 shifted cases per model; inspect paired cases, positions and videos; answer Q4 | 40–50 min |
-| 4: Failure Analysis | Inspect a real failure, choose at least 3 control steps, mark the first observable error, answer Q5, export evidence | 20–30 min |
+| Part 1：理解示教数据 | 检查 Observation/Action，回放记录状态，查看初始位置分布，回答 Q1 | 20 分钟 |
+| Part 2：训练 BC Policy | 固定数据、网络、初始化种子 17、50 个 Epoch 和 Batch Size（批大小），比较学习率 0.001 与 0.0003；保存两组曲线和 Checkpoint，回答 Q2–Q3 | 50–60 分钟 |
+| Part 3：策略评测与泛化 | 每个模型评测 5 个标准案例和 5 个位置偏移案例；查看逐案例配对结果、位置分布和视频，回答 Q4 | 40–50 分钟 |
+| Part 4：失败分析 | 检查一次真实失败，选择至少 3 个控制步，标记第一次可观察错误，回答 Q5 并导出材料 | 20–30 分钟 |
 
-Only learning rate changes in the mandatory comparison. The code checks identical initial weights, data splits, dependency versions and evaluation manifests. Each checkpoint is selected using validation loss. The primary variant `lr_a` is fixed before testing. Retain both outcomes, including low success rates. Repeated runs with the same seed are not independent samples.
+必做对照实验只改变学习率。代码会检查初始权重、数据划分、依赖版本和评测案例清单是否一致。每组 Checkpoint 均按验证损失选择，主要分析对象 `lr_a` 在测试前固定。两组结果都必须保留，包括较低的成功率；相同种子的重复运行不能视为独立样本。
 
-### 7. Visualization
+### 7. 可视化
 
-Every plot, log and video is saved automatically in the group's run directory:
+所有图表、日志和视频都会自动保存在小组实验目录中：
 
-| Evidence | Where to look |
+| 实验材料 | 查看位置 |
 |---|---|
-| Human interaction video, observation/action information, initial-position scatter | Notebook 01, `demonstration_*` directory |
-| Training/validation losses, selected epoch, configuration, two-rate comparison | Notebook 02, `experiment_*/lr_a` and `lr_b`, plus `learning_rate_curves.png` |
-| Rollout videos, success fractions, per-episode and paired results, actual test starts | Notebook 03, each variant's `evaluation` directory |
-| Failed rollout, robot/object trajectories, gripper opening and command on separate axes | Notebook 04, `analysis_*` directory |
-| Selected frames and exact requested-step state, first-error annotation | `observed_facts.json`, `keyframe_*.png`, `failure_analysis.json` |
+| 人类示教交互视频、Observation/Action 信息、初始位置散点图 | Notebook 01 的 `demonstration_*` 目录 |
+| 训练/验证 Loss（损失）曲线、选中的 Epoch、训练配置、两种学习率对照图 | Notebook 02 的 `experiment_*/lr_a` 和 `lr_b`，以及 `learning_rate_curves.png` |
+| Rollout 视频、成功率、逐案例及配对结果、实际测试初始位置 | Notebook 03 中各训练配置的 `evaluation` 目录 |
+| 失败视频、机械臂/物体轨迹、使用独立坐标轴的夹爪开口与动作命令 | Notebook 04 的 `analysis_*` 目录 |
+| 所选关键帧、指定控制步的准确状态、首次错误标注 | `observed_facts.json`、`keyframe_*.png`、`failure_analysis.json` |
 
-Videos are sampled after every fourth action; state zero has no exact video frame. Selected frames identify the requested step, actual recorded step and offset. State values are from the exact requested step. All positions use world-frame meters, commands use normalized units, and time uses 20 Hz control indices. A first-error marker is a student's observation, not an automatic causal diagnosis.
+视频每执行四次动作后采样一帧，初始状态（第 0 步）没有完全对应的视频帧。选出的关键帧会标明请求步、实际记录步及二者偏差；状态数值则来自指定控制步。位置使用世界坐标系、单位为米，动作命令使用归一化单位，时间使用 20 Hz 控制步编号。首次错误标记是学生的观察，不是自动给出的因果诊断。
 
-### 8. Assignment Questions
+### 8. 作业问题
 
-1. **Q1:** What observations and actions are used in this task?
-2. **Q2:** How does behavior cloning learn from demonstrations?
-3. **Q3:** Does a lower training loss always result in better manipulation performance?
-4. **Q4:** How does changing the initial object position affect the learned policy?
-5. **Q5:** Identify one failure and propose a possible improvement.
+1. **Q1：** 本任务使用哪些 Observation 和 Action？
+2. **Q2：** Behavior Cloning 如何从示教数据中学习？
+3. **Q3：** 更低的 Training Loss（训练损失）是否总能带来更好的机器人操作表现？
+4. **Q4：** 改变物体初始位置，会如何影响学到的 Policy？
+5. **Q5：** 找出一次失败，并提出一种可能的改进方法。
 
-Use your own results and distinguish evidence, hypotheses and limitations. Detailed prompts are in [the student assignment](docs/assignment_student.md).
+请结合自己的实验结果作答，区分证据、假设和限制。详细要求见 [学生作业说明](docs/assignment_student.md)。
 
-### 9. Submission Requirements
+### 9. 提交要求
 
-Each group submits a **1–2 page PDF report** answering Q1–Q5, plus the evidence ZIP generated by Notebook 04. Include both training configurations and loss curves, both checkpoints, evaluation metrics/configurations/case manifests, a representative rollout, and annotated failure keyframes. The generated Markdown report is an evidence appendix; it does not replace your written discussion.
+每组提交一份回答 Q1–Q5 的 **1–2 页 PDF 报告**，以及 Notebook 04 生成的实验材料 ZIP。材料应包含两组训练配置和损失曲线、两个 Checkpoint、评测指标/配置/案例清单、代表性 Rollout，以及带标注的失败关键帧。自动生成的 Markdown 报告是实验材料附录，不能替代你自己的分析讨论。
 
-Blank answers keep the generated report marked **DRAFT**. A completed execution is not proof that student answers are complete or correct. Download the ZIP from Jupyter's file browser. It contains the shared `class_results.csv` schema used by the teacher. Keep the original run directory until grading is complete.
+存在空白答案时，生成的报告会保留 **DRAFT（草稿）** 标记。代码运行完成不代表答案完整或正确。可从 Jupyter 文件浏览器下载 ZIP，其中的 `class_results.csv` 使用教师汇总所需的统一格式。评分完成前，请保留原始实验目录。
 
-### 10. Grading Rubric
+### 10. 评分标准
 
-| Area | Points | Evidence assessed |
+| 项目 | 分值 | 评分依据 |
 |---|---:|---|
-| Demonstration Understanding | 20 | Correct observations/actions, units, playback and split interpretation |
-| Policy Training & Experiment | 25 | Both real runs, controlled variables, curves/configurations/checkpoints and Q2–Q3 |
-| Policy Evaluation | 30 | Matched standard/shifted cases, complete metrics/videos, position coverage and justified limits |
-| Failure Analysis & Discussion | 25 | Real failure, first observable error, supporting state/frames, hypothesis and improvement |
-| **Total** | **100** | Completion, reproducibility and reasonable analysis |
+| 示教数据理解 | 20 | 正确解释 Observation/Action、单位、回放和数据划分 |
+| Policy 训练与对照实验 | 25 | 两组真实训练、变量控制、曲线/配置/Checkpoint，以及 Q2–Q3 |
+| Policy 评测 | 30 | 匹配的标准/偏移案例、完整指标和视频、位置覆盖及合理的结论边界 |
+| 失败分析与讨论 | 25 | 真实失败、首次可观察错误、状态/关键帧证据、原因假设和改进建议 |
+| **总计** | **100** | 实验完成度、可复现性和分析合理性 |
 
-**Success rate itself does not determine your grade.** A well-documented failure can receive full credit. See the [detailed rubric](docs/assignment_student.md).
+**不单纯根据成功率评分。** 记录充分、分析合理的失败结果同样可以获得满分。详见 [详细评分标准](docs/assignment_student.md)。
 
-### 11. Troubleshooting
+### 11. 常见问题
 
-- **Kernel/import missing:** run the installer and choose the lab kernel; do not use another project's Python.
-- **Dataset missing or hash mismatch:** run the downloader; preserve the reported file and investigate rather than bypassing the check.
-- **CUDA unavailable:** explicitly start with `LAB_DEVICE=cpu`; the same choice applies to both variants.
-- **Headless rendering error:** verify OSMesa or the NVIDIA EGL graphics libraries, not just `nvidia-smi`.
-- **Reference missing:** the instructor must generate it before class; if a student's primary policy has no failure, Notebook 04 needs real reference evidence.
-- **Output already exists:** choose a new versioned directory. **Queue wait:** leave the cell running; jobs share one training and one evaluation slot.
+- **找不到内核或无法导入依赖：** 运行安装脚本并选择本实验内核，不要使用其他项目的 Python 环境。
+- **数据集缺失或哈希不匹配：** 运行下载脚本；保留报错涉及的文件并排查原因，不要跳过校验。
+- **CUDA 不可用：** 启动前显式设置 `LAB_DEVICE=cpu`，两组对照实验使用相同设备设置。
+- **Headless 渲染报错：** 检查 OSMesa 或 NVIDIA EGL 图形库；仅检查 `nvidia-smi` 不够。
+- **Reference Checkpoint 缺失：** 教师需要在课前生成；如果学生的主要 Policy 没有失败案例，Notebook 04 需要使用真实的参考失败材料。
+- **输出目录已存在：** 使用新的版本化目录。**任务排队：** 保持单元格运行；各组共享一个训练任务槽和一个评测任务槽。
 
-See [troubleshooting](docs/troubleshooting.md) and [measured acceptance and limits](docs/course_acceptance.md).
+更多说明见 [故障排查](docs/troubleshooting.md) 和 [实际验收记录及限制](docs/course_acceptance.md)。
 
-### 12. References and Acknowledgements
+### 12. 参考资料与致谢
 
-This lab builds on [robomimic](https://robomimic.github.io/), [robosuite](https://robosuite.ai/) and [MuJoCo](https://mujoco.org/). The demonstration download follows the [official robomimic dataset documentation](https://robomimic.github.io/docs/datasets/robomimic_v0.1.html) and its public Hugging Face distribution. The training algorithm is the [official robomimic BC implementation](https://github.com/ARISE-Initiative/robomimic/blob/v0.4.0/robomimic/algo/bc.py). We train compatible lab models instead of mixing older model-zoo weights with this environment. Dependency installation references: [uv](https://docs.astral.sh/uv/getting-started/installation/), [PyTorch 2.8 wheels](https://pytorch.org/get-started/previous-versions/), [MuJoCo Python](https://mujoco.readthedocs.io/en/stable/python.html). See [LICENSE](LICENSE); upstream code and data retain their respective licenses and attribution.
+本实验基于 [robomimic](https://robomimic.github.io/)、[robosuite](https://robosuite.ai/) 和 [MuJoCo](https://mujoco.org/)。示教数据下载遵循 [官方 robomimic 数据集文档](https://robomimic.github.io/docs/datasets/robomimic_v0.1.html)，使用其公开的 Hugging Face 分发资源。训练算法采用 [官方 robomimic BC 实现](https://github.com/ARISE-Initiative/robomimic/blob/v0.4.0/robomimic/algo/bc.py)。本实验从数据训练与当前环境兼容的模型，避免混用旧版模型库权重。依赖安装参考：[uv](https://docs.astral.sh/uv/getting-started/installation/)、[PyTorch 2.8 安装包](https://pytorch.org/get-started/previous-versions/)、[MuJoCo Python](https://mujoco.readthedocs.io/en/stable/python.html)。许可证见 [LICENSE](LICENSE)；上游代码和数据保留各自的许可证与署名要求。
 
-### Project Layout and Configuration
+### 项目结构与配置
 
-`notebooks/`, `src/`, `scripts/`, `configs/`, `tests/` and `docs/` are maintained source. `third_party/` contains the two pinned upstream submodules. `.venv/` is generated by installation; `data/` by download; `checkpoints/reference_v1/` by instructor preparation; and `outputs/` by experiments. Large generated files are excluded from Git. The instructor must prepare the environment, shared dataset, real reference evidence and account/resource setup before class.
+`notebooks/`、`src/`、`scripts/`、`configs/`、`tests/` 和 `docs/` 为维护中的源码与文档；`third_party/` 包含两个固定版本的上游子模块。安装时生成 `.venv/`，下载数据时生成 `data/` 下的数据文件，教师准备阶段生成 `checkpoints/reference_v1/`，实验运行时生成 `outputs/`。大型生成文件不纳入 Git。教师需要在课前准备环境、共享数据集、真实参考案例，以及账号和资源配置。
 
-| Environment variable | Default / purpose |
+| 环境变量 | 默认值 / 用途 |
 |---|---|
-| `LAB_VENV` | Project `.venv`; use an absolute path for an alternate environment |
-| `LAB_DATASET` | Project `data/low_dim_v15.hdf5`; optional shared read-only HDF5 |
-| `LAB_DEVICE` | Config default `cuda` for full training; explicitly set `cpu` or `cuda` |
-| `MUJOCO_GL` | Wrapper default `egl`; set `osmesa` for software rendering |
-| `LAB_GROUP` | `group_01`; assigned identities `group_01` through `group_06` |
-| `LAB_OUTPUT_ROOT` | Project `outputs`; group/session directories are created below it |
-| `LAB_REFERENCE_ROOT` | Project `checkpoints`; directory containing `reference_evaluation/` |
-| `LAB_LOCK_DIR` | `/tmp/manipulation-learning-lab-locks`; all groups must share the same administrator-prepared directory |
+| `LAB_VENV` | 项目内的 `.venv`；指定其他环境时使用绝对路径 |
+| `LAB_DATASET` | 项目内的 `data/low_dim_v15.hdf5`；可指向共享只读 HDF5 文件 |
+| `LAB_DEVICE` | 完整训练的配置默认值为 `cuda`；请显式设置为 `cpu` 或 `cuda` |
+| `MUJOCO_GL` | 启动脚本默认使用 `egl`；软件渲染时设置为 `osmesa` |
+| `LAB_GROUP` | `group_01`；分配的小组编号范围为 `group_01` 至 `group_06` |
+| `LAB_OUTPUT_ROOT` | 项目内的 `outputs`；其下自动创建小组与实验会话目录 |
+| `LAB_REFERENCE_ROOT` | 项目内的 `checkpoints`；应指向包含 `reference_evaluation/` 的目录 |
+| `LAB_LOCK_DIR` | `/tmp/manipulation-learning-lab-locks`；所有小组必须共享管理员准备好的同一目录 |
 
-The [instructor guide](docs/instructor_guide.md) covers aggregation and next-day discussion. [Server setup](docs/server_setup.md) covers deployment, accounts, concurrency and recovery.
+[教师指南](docs/instructor_guide.md) 说明如何汇总结果并组织次日讨论；[服务器部署说明](docs/server_setup.md) 涵盖环境部署、账号、并发资源控制和故障恢复。
