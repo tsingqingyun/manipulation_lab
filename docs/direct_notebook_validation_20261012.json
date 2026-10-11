@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-12",
+  "base_commit": "a5fe44f",
+  "fresh_environment_prepared_by_one_command": true,
+  "compatible_packages": 163,
+  "preflight_passed": true,
+  "parent_environment_sanitized": true,
+  "standalone_kernel_environment_verified": true,
+  "web_server_started": false,
+  "manual_port_forwarding": false,
+  "device": "cpu",
+  "render_backend": "osmesa",
+  "jit_disabled": true,
+  "completed": true,
+  "elapsed_seconds": 192.05250175110996,
+  "notebooks": [
+    {
+      "notebook": "01_demonstrations.ipynb",
+      "passed": true,
+      "seconds": 7.334289629012346
+    },
+    {
+      "notebook": "02_train_policy.ipynb",
+      "passed": true,
+      "seconds": 180.96550683910027
+    },
+    {
+      "notebook": "03_policy_evaluation.ipynb",
+      "passed": true,
+      "seconds": 0.8731278791092336
+    },
+    {
+      "notebook": "04_failure_analysis.ipynb",
+      "passed": true,
+      "seconds": 2.0073190070688725
+    }
+  ],
+  "variants": [
+    {
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "best_epoch": 12,
+      "checkpoint_sha256": "e9771831a6563677cd6db4585b630b54c6f1e14668e4443e1a71e705290c7033",
+      "conditions": {
+        "standard": {
+          "episodes": 5,
+          "environment_success_rate": 0.6,
+          "stable_success_rate": 0.6
+        },
+        "shifted": {
+          "episodes": 5,
+          "environment_success_rate": 0.6,
+          "stable_success_rate": 0.6
+        }
+      },
+      "episodes": 10,
+      "errors": 0
+    },
+    {
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "best_epoch": 12,
+      "checkpoint_sha256": "a93ea8d540130c42f680eacaf7926eef463c0d1ed3f2fd4012ac4fd341cd0f98",
+      "conditions": {
+        "standard": {
+          "episodes": 5,
+          "environment_success_rate": 1.0,
+          "stable_success_rate": 1.0
+        },
+        "shifted": {
+          "episodes": 5,
+          "environment_success_rate": 1.0,
+          "stable_success_rate": 1.0
+        }
+      },
+      "episodes": 10,
+      "errors": 0
+    }
+  ],
+  "submission_zip_valid": true,
+  "class_csv_rows": 2,
+  "report_status": "DRAFT; student answers intentionally blank",
+  "test_scope": {
+    "full_suite_before_additional_reference_test": 25,
+    "final_kernel_setup_subset": 4
+  },
+  "artifact_root": "outputs/direct_notebooks_20261012_v1",
+  "limits": [
+    "IDE GUI, kernel-picker discovery and interactive video playback were not exercised on the headless host.",
+    "Native Windows/macOS and WSL2 not validated.",
+    "This is one group; no new six-account concurrency claim.",
+    "Public Ubuntu OSMesa extraction was reused as an explicit renderer dependency; no fresh operating-system installation."
+  ],
+  "source_sha256": {
+    "scripts/prepare_notebooks.sh": "b6b41fda305e0304b23e4ed04eda6ede1ce130eb04b32e7976a8866a014781f2",
+    "scripts/prepare_notebooks.py": "32ce5ce8df88cafc7b33a848bb2db067be9524f91f02e6c7509c0cfd5c22bef7",
+    "tests/test_notebook_setup.py": "0083d638a556c3cd4e71bff54bd673c0065a3f177149e6a3f87286dfbe68bce3",
+    ".vscode/extensions.json": "ae6d56fcebe02d2d807e77eaa1f5728077b2de72f57c4ef0ca06379fb6254aa0",
+    "README.md": "f796351468e7c7da080f0c83a2f4c64d387c21bb49b1bd28b0e4f6da826f48ec",
+    "README.en.md": "a49e02973251251901950c0b469cc7c1ea5426792aa69eaaede2e697620cecf6",
+    "notebooks/04_failure_analysis.ipynb": "c70776ef6d2e1fda93a0ea3dc686af8bda37788d1ec329eed84a09ee27e10fa6"
+  },
+  "post_execution_text_only_change": "Notebook 04 final download instruction now refers to the IDE file explorer; no experiment logic changed."
+}

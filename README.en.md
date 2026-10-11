@@ -62,7 +62,7 @@ git clone --recurse-submodules https://github.com/tsingqingyun/manipulation_lab.
 cd manipulation_lab
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
-bash scripts/setup_environment.sh
+bash scripts/prepare_notebooks.sh --group group_01
 ```
 
 The installer searches PATH and standard uv installation directories, including when Bash resets PATH. For a custom location, set `LAB_UV`:
@@ -71,6 +71,8 @@ The installer searches PATH and standard uv installation directories, including 
 LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh --check-uv
 LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh
 ```
+
+The one-command preparation installs the environment, downloads or checks the fixed dataset, runs headless preflight, and registers a configured per-group Notebook kernel. It starts no web server. The default is CPU computation and OSMesa rendering; add `--device cuda` for a verified NVIDIA training device, and use `--from-file` for an offline dataset copy. Subsequent standalone commands below are available for diagnostics or instructor preparation.
 
 The installer creates `.venv`, obtains Python 3.12.13, installs [the full dependency lock](requirements.lock.txt), checks dependencies, and registers the **Manipulation Lab (Python 3.12)** notebook kernel. It installs both official source submodules at their pinned commits. Do not upgrade them during the assignment.
 
@@ -88,7 +90,7 @@ Exact source commits and the observation contract are in [configs/environment.ya
 
 To avoid reported native Numba JIT crashes on some servers, CLI entry points and Notebook imports default to `NUMBA_DISABLE_JIT=1`, executing the original Python functions. Dependency pins and training algorithms are retained; simulation timing may change, so instructors must measure their host. Only opt into `NUMBA_DISABLE_JIT=0` **before** starting Python/Jupyter after host validation; restart existing kernels. Preflight records versions, effective JIT mode and failure phase. See [native runtime diagnostics](docs/server_setup.md#native-runtime-and-preflight).
 
-Choose the compute device **before starting Jupyter**. The same locked PyTorch distribution runs on CPU; the CPU path still downloads its CUDA dependencies. It does not require a GPU or CUDA toolkit for CPU execution.
+Choose the compute device during preparation, before starting the Notebook kernel. The selected settings are saved in the registered kernel; changing a terminal export later does not update an existing IDE kernel. The same locked PyTorch distribution runs on CPU; the CPU path still downloads its CUDA dependencies. It does not require a GPU or CUDA toolkit for CPU execution.
 
 ```bash
 # Portable CPU computation and software rendering:
@@ -130,24 +132,34 @@ export LAB_REFERENCE_ROOT="$PWD/checkpoints/reference_v1"
 
 This trains the existing reference model, evaluates it and checks for a real failure video. Do this before class. If no real failure is available, preparation fails explicitly; never manufacture one or search seeds for a desired result. [Instructor instructions](docs/instructor_guide.md) explain the reference's separate role.
 
-### 5. Getting Started
+### 5. Getting Started — open .ipynb directly
 
-On a prepared course server, skip installation and use your instructor's account, group and access instructions. For your own installation:
+Use **VS Code with the Python and Jupyter extensions**. No browser, Jupyter web-server launch, token entry, or manual port forwarding is required. See the [official Notebook instructions](https://code.visualstudio.com/docs/datascience/jupyter-notebooks).
 
-```bash
-export LAB_GROUP=group_01
-scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
-```
+- **Linux on your own computer:** open this repository as a folder in VS Code; computation runs on that computer.
+- **A prepared Linux server:** open the server folder through VS Code **Remote - SSH** and install Python/Jupyter extensions in that remote window. Computation runs on the server; the IDE handles the existing SSH connection. See [Remote SSH](https://code.visualstudio.com/docs/remote/ssh).
 
-The launcher stores temporary Jupyter connection files in `/tmp/manipulation-lab-jupyter-<UID>` with directory mode `0700` (Jupyter may add the sticky bit, yielding owner-only `1700`) and file mode `0600`, avoiding shared filesystems that cannot enforce secure permissions. Override with a suitable local `JUPYTER_RUNTIME_DIR`. Root launches automatically include `--allow-root`; students should still use separate ordinary accounts.
-
-Jupyter listens on **127.0.0.1**, with normal Jupyter token authentication. From your laptop, forward the port (replace the SSH destination with your assigned login):
+If your instructor has already prepared and named your kernel, select it directly. Otherwise prepare once in that folder's terminal (use your assigned group):
 
 ```bash
-ssh -N -L 8892:127.0.0.1:8892 user@server
+bash scripts/prepare_notebooks.sh --group group_01
 ```
 
-Open `http://127.0.0.1:8892/lab` locally and use the token from your server startup log. Never publish that token. If port 8892 is already occupied, use an assigned free port in both commands; the launcher will not silently switch ports. Multi-user courses should use the institution's authenticated JupyterHub or separate SSH/system accounts.
+If installation above already printed `READY`, skip this command. It prints a kernel label such as **Manipulation Lab (group_01, cpu, …)**. Open `notebooks/01_demonstrations.ipynb`, click **Select Kernel → Select Another Kernel → Jupyter Kernels**, and choose that exact label. If the editor has not discovered it yet, reload the window. Select the same kernel for all four notebooks. The generated name includes a suffix to keep different installations/settings separate.
+
+The kernel remembers the dataset, output directory, group, device, rendering backend and instructor reference path. It does not depend on exports from an IDE terminal. Choose the registered lab kernel so these settings apply. The first Notebook cell prints the group and data location.
+
+For GPU training or an offline dataset, the same command accepts:
+
+```bash
+# Only after verifying the server's CUDA driver:
+bash scripts/prepare_notebooks.sh --group group_01 --device cuda
+
+# If the official file was transferred to incoming/:
+bash scripts/prepare_notebooks.sh --group group_01 --from-file incoming/low_dim_v15.hdf5
+```
+
+Preparation is repeatable and preserves experiment outputs. Changed settings create a new kernel entry; select the newly printed label and restart the kernel. Reference-model generation remains a teacher step. Native Windows/macOS deployment has not been validated; Windows/macOS users can use the server through Remote SSH. WSL2 is a possible Linux environment but is not part of the current acceptance.
 
 Open these notebooks in order and select the lab kernel:
 
@@ -197,7 +209,7 @@ Use your own results and distinguish evidence, hypotheses and limitations. Detai
 
 Each group submits a **1–2 page PDF report** answering Q1–Q5, plus the evidence ZIP generated by Notebook 04. Include both training configurations and loss curves, both checkpoints, evaluation metrics/configurations/case manifests, a representative rollout, and annotated failure keyframes. The generated Markdown report is an evidence appendix; it does not replace your written discussion.
 
-Blank answers keep the generated report marked **DRAFT**. A completed execution is not proof that student answers are complete or correct. Download the ZIP from Jupyter's file browser. It contains the shared `class_results.csv` schema used by the teacher. Keep the original run directory until grading is complete.
+Blank answers keep the generated report marked **DRAFT**. A completed execution is not proof that student answers are complete or correct. Find the ZIP at the path printed by Notebook 04; use the IDE file explorer to download it when working remotely. It contains the shared `class_results.csv` schema used by the teacher. Keep the original run directory until grading is complete.
 
 ### 10. Grading Rubric
 
@@ -213,9 +225,9 @@ Blank answers keep the generated report marked **DRAFT**. A completed execution 
 
 ### 11. Troubleshooting
 
-- **Kernel/import missing:** run the installer and choose the lab kernel; do not use another project's Python.
+- **Kernel/import missing:** run `prepare_notebooks.sh`, reload the IDE window and choose the exact printed lab kernel; install Python/Jupyter extensions on the machine running the code.
 - **Dataset missing or hash mismatch:** run the downloader; preserve the reported file and investigate rather than bypassing the check.
-- **CUDA unavailable:** explicitly start with `LAB_DEVICE=cpu`; the same choice applies to both variants.
+- **CUDA unavailable:** prepare with `--device cpu`, select the resulting kernel and restart. Both variants use that saved setting.
 - **Headless rendering error:** verify OSMesa or the NVIDIA EGL graphics libraries, not just `nvidia-smi`.
 - **Reference missing:** the instructor must generate it before class; if a student's primary policy has no failure, Notebook 04 needs real reference evidence.
 - **Output already exists:** choose a new versioned directory. **Queue wait:** leave the cell running; jobs share one training and one evaluation slot.

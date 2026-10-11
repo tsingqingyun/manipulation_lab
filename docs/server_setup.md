@@ -8,7 +8,7 @@ Use an existing institution-managed Linux server. Install `git`, `curl`, a C/C++
 
 For six groups, provision at least 32 GB RAM and 30 GB free disk as a starting allocation, then measure on the actual host. Keep at least two CPU threads per active training/evaluation process. One CUDA-capable NVIDIA GPU is recommended for faster training; 8 GB of free VRAM is a practical starting allocation, not a measured minimum. Reserve a device using `CUDA_VISIBLE_DEVICES`. Do not evict unrelated workloads.
 
-Follow README Installation through `setup_environment.sh`. The installer verifies the exact Python patch version and refuses to silently reuse a different one. To test a new environment without overwriting an old one:
+The default student interface is direct `.ipynb` execution in an IDE. After system prerequisites and uv are installed, `bash scripts/prepare_notebooks.sh --group group_01` performs the existing environment installation, dataset check/download, headless preflight and persistent per-group kernel registration. It starts no Jupyter HTTP server and requires no manual port tunnel. Use `--device cuda` only on a verified GPU host; default computation is CPU and rendering is OSMesa. Follow README Installation for prerequisites. The installer verifies the exact Python patch version and refuses to silently reuse a different one. To test a new environment without overwriting an old one:
 
 ```bash
 export LAB_VENV="$PWD/outputs/install_check_v1/venv"
@@ -113,14 +113,18 @@ For each group's account, set its assigned group and its own writable output roo
 export LAB_GROUP=group_01
 export LAB_OUTPUT_ROOT="$PWD/outputs"
 export LAB_LOCK_DIR=/var/lock/manipulation-lab
-scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
+bash scripts/prepare_notebooks.sh --group "$LAB_GROUP" --device cpu
 ```
 
 Set `LAB_DATASET`, `LAB_REFERENCE_ROOT` and, if sharing a read-only environment, `LAB_VENV` to the administrator's actual deployment locations. These are deployment choices, not hardcoded developer paths. For an existing JupyterHub, configure the same variables in its spawner and select the installed lab kernel; follow the institution's authentication and TLS policy.
 
-The standalone launcher uses loopback only, Jupyter's default token authentication, disables terminals, and fails on port conflict. Use SSH forwarding as shown in README. Do not set an empty token/password, bind an unauthenticated server to `0.0.0.0`, or publish a shared Jupyter login. Disabling terminals does not sandbox notebook Python.
+For the default IDE workflow, each group opens its own checkout locally on Linux or through VS Code Remote - SSH, installs Python/Jupyter extensions on the execution host, and selects the exact configured kernel label printed by preparation. The kernelspec persists the approved lab paths, group, device and rendering settings; terminal exports alone do not reconfigure an existing editor kernel. Register under each actual student account. Rerunning with different settings creates a separate kernel instead of overwriting another group's entry. No SSH `-L` command or Jupyter web-server address is needed.
 
-### Private Jupyter runtime files and root containers
+Use `scripts/lab_python.sh scripts/prepare_notebooks.py --group "$LAB_GROUP" --device cpu --render-backend osmesa` to register/check a group against a previously installed read-only environment without reinstalling it. Each account still needs writable output and user kernel-registration directories. `LAB_OUTPUT_ROOT` selects where its setup records and experiment outputs are written. The teacher prepares the reference once; preparation reports missing reference evidence without inventing a failure.
+
+Existing institution-managed JupyterHub deployments may continue to use their authenticated interface. The optional `start_lab.py` launcher retains loopback-only binding, token authentication, disabled terminals and fixed-port behavior. Do not bind an unauthenticated server to a public interface. The direct IDE workflow does not use this launcher.
+
+### Optional Jupyter server runtime files and root containers
 
 The launcher automatically uses `/tmp/manipulation-lab-jupyter-<effective UID>` instead of placing runtime files on a shared home/data mount. It verifies directory ownership and `0700` access permissions (also accepting Jupyter's sticky-bit `1700` on restart), rejects symlinks, and probes file creation with exact `0600` mode before starting Jupyter. These follow [Jupyter runtime and secure-write requirements](https://jupyter-core.readthedocs.io/en/latest/api/jupyter_core.html). Notebook files and experiment outputs stay in their configured project directories. The launcher removes `JUPYTER_ALLOW_INSECURE_WRITES`; it never bypasses secure writes.
 

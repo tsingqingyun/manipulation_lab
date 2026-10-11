@@ -62,7 +62,7 @@ git clone --recurse-submodules https://github.com/tsingqingyun/manipulation_lab.
 cd manipulation_lab
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
-bash scripts/setup_environment.sh
+bash scripts/prepare_notebooks.sh --group group_01
 ```
 
 安装脚本会在 PATH 和 `uv` 的标准安装目录查找可执行文件，即使 Bash 重置 PATH 也可继续。非标准安装位置可用 `LAB_UV` 指定：
@@ -71,6 +71,8 @@ bash scripts/setup_environment.sh
 LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh --check-uv
 LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh
 ```
+
+这一条准备命令会完成环境安装、固定数据集下载或校验、无显示器仿真预检，并注册带小组设置的 Notebook 内核，不启动网页服务。默认使用 CPU 和 OSMesa；已验证 NVIDIA 环境可加 `--device cuda`，离线数据可用 `--from-file` 导入。下方单独的安装、下载和验证命令供排查或教师准备时使用。
 
 安装脚本会创建 `.venv`，获取 Python 3.12.13，按 [完整依赖锁定文件](requirements.lock.txt) 安装并检查依赖，注册 **Manipulation Lab (Python 3.12)** Notebook 内核。两个官方源码子模块均使用固定提交，作业期间请勿自行升级。
 
@@ -88,7 +90,7 @@ LAB_UV="$HOME/.local/bin/uv" bash scripts/setup_environment.sh
 
 为避免部分服务器的 Numba JIT（即时编译）段错误，命令行入口和 Notebook 导入默认设置 `NUMBA_DISABLE_JIT=1`，执行原有 Python 函数。保留固定依赖版本，不更换训练算法；仿真耗时可能变化。教师需重新测量本机课堂用时。仅在本机验证通过后，才可在启动 Python/Jupyter **之前**显式设置 `NUMBA_DISABLE_JIT=0`；修改后必须重启内核。预检记录版本、实际 JIT 状态和失败阶段，详见 [部署排查](docs/server_setup.md#native-runtime-and-preflight)。
 
-请在**启动 Jupyter 前**选择计算设备。固定版本的 PyTorch 同样支持 CPU 执行，但安装时仍会下载其 CUDA 依赖；CPU 执行不需要 GPU 或 CUDA toolkit。
+请在准备阶段选择计算设备，再启动 Notebook 内核。选定设置会保存到注册的内核中；之后只修改终端环境变量，不会更新已有的 IDE 内核。固定版本的 PyTorch 同样支持 CPU 执行，但安装时仍会下载其 CUDA 依赖；CPU 执行不需要 GPU 或 CUDA toolkit。
 
 ```bash
 # 使用 CPU 计算和软件渲染：
@@ -130,24 +132,34 @@ export LAB_REFERENCE_ROOT="$PWD/checkpoints/reference_v1"
 
 该命令训练现有参考模型、执行评测并检查真实失败视频，应在课前完成。若没有真实失败案例，准备流程会明确报错；不得伪造案例或反复选择随机种子以获取期望结果。参考模型的用途见 [教师指南](docs/instructor_guide.md)。
 
-### 5. 开始实验
+### 5. 开始实验：直接打开 .ipynb
 
-如果课程服务器已经准备好，请跳过安装，使用教师分配的账号、小组编号和访问方式。自行部署时执行：
+使用安装了 **Python 和 Jupyter 扩展的 VS Code**，直接打开 Notebook 即可。无需打开浏览器、启动 Jupyter 网页服务、输入 token 或手动转发端口。操作方式见 [VS Code 官方 Notebook 文档](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)。
 
-```bash
-export LAB_GROUP=group_01
-scripts/lab_python.sh scripts/start_lab.py --group "$LAB_GROUP" --port 8892
-```
+- **自己的 Linux 电脑：** 在 VS Code 中打开本仓库文件夹，计算在本机执行。
+- **已准备好的 Linux 服务器：** 用 VS Code 的 **Remote - SSH** 打开服务器上的仓库文件夹，并在该远程窗口安装 Python/Jupyter 扩展。计算在服务器执行，IDE 管理已有的 SSH 连接。参见 [Remote SSH 文档](https://code.visualstudio.com/docs/remote/ssh)。
 
-启动器默认将 Jupyter 临时连接文件放在 `/tmp/manipulation-lab-jupyter-<UID>`，目录初始权限为 `0700`（Jupyter 创建内核后可增加 sticky bit 成为 `1700`，仍仅当前用户可访问）、文件权限为 `0600`，避免共享盘不支持安全权限的问题。可用 `JUPYTER_RUNTIME_DIR` 指定满足这些要求的本地目录。以 root 运行时自动添加 `--allow-root`；学生仍应使用独立的普通账号。
-
-Jupyter 监听 **127.0.0.1**，使用正常的 Jupyter token 认证。在个人电脑上建立 SSH 端口转发，并将目标账号和服务器替换为教师分配的信息：
+如果教师已经准备并提供了内核名称，直接选择该内核即可。否则在该文件夹的终端准备一次，小组编号使用教师分配的编号：
 
 ```bash
-ssh -N -L 8892:127.0.0.1:8892 user@server
+bash scripts/prepare_notebooks.sh --group group_01
 ```
 
-在个人电脑打开 `http://127.0.0.1:8892/lab`，输入服务器启动日志中的 token，请勿公开该 token。如果端口 8892 已被占用，两条命令都应改为分配给你的空闲端口；启动脚本不会悄悄切换端口。多用户课堂应使用学校已有认证的 JupyterHub，或独立的 SSH/系统账号。
+如果前面的安装步骤已打印 `READY`，这里无需重复运行。命令会打印类似 **Manipulation Lab (group_01, cpu, …)** 的内核名称。打开 `notebooks/01_demonstrations.ipynb`，点击右上角 **Select Kernel → Select Another Kernel → Jupyter Kernels**，选择打印出的名称。如果列表尚未刷新，可重新加载 IDE 窗口。四个 Notebook 均选择同一个内核；名称末尾的后缀用于区分不同安装目录和配置。
+
+该内核会记住数据集、输出目录、小组、计算设备、渲染后端和教师参考模型路径，不依赖 IDE 终端里的临时环境变量。请选择注册好的实验内核，使这些设置生效。Notebook 第一个单元格会打印小组和数据位置。
+
+GPU 训练和离线数据仍使用同一个入口：
+
+```bash
+# 仅在服务器 CUDA 驱动验证通过后使用：
+bash scripts/prepare_notebooks.sh --group group_01 --device cuda
+
+# 已将官方文件传入 incoming/ 时：
+bash scripts/prepare_notebooks.sh --group group_01 --from-file incoming/low_dim_v15.hdf5
+```
+
+准备命令可以重复执行，已有实验结果会保留。更改设置后会生成新的内核条目，请选择新打印的名称并重启内核。参考模型仍由教师提前准备。原生 Windows/macOS 部署尚未验证，这两类电脑可通过 Remote SSH 使用服务器；WSL2 可提供 Linux 环境，但尚未纳入当前验收。
 
 按顺序打开以下 Notebook，并选择本实验内核：
 
@@ -197,7 +209,7 @@ Notebook 01 会创建带时间戳的小组实验会话；Notebook 02–04 自动
 
 每组提交一份回答 Q1–Q5 的 **1–2 页 PDF 报告**，以及 Notebook 04 生成的实验材料 ZIP。材料应包含两组训练配置和损失曲线、两个 Checkpoint、评测指标/配置/案例清单、代表性 Rollout，以及带标注的失败关键帧。自动生成的 Markdown 报告是实验材料附录，不能替代你自己的分析讨论。
 
-存在空白答案时，生成的报告会保留 **DRAFT（草稿）** 标记。代码运行完成不代表答案完整或正确。可从 Jupyter 文件浏览器下载 ZIP，其中的 `class_results.csv` 使用教师汇总所需的统一格式。评分完成前，请保留原始实验目录。
+存在空白答案时，生成的报告会保留 **DRAFT（草稿）** 标记。代码运行完成不代表答案完整或正确。Notebook 04 会打印 ZIP 路径；远程运行时可从 IDE 文件浏览器下载。其中的 `class_results.csv` 使用教师汇总所需的统一格式。评分完成前，请保留原始实验目录。
 
 ### 10. 评分标准
 
@@ -213,9 +225,9 @@ Notebook 01 会创建带时间戳的小组实验会话；Notebook 02–04 自动
 
 ### 11. 常见问题
 
-- **找不到内核或无法导入依赖：** 运行安装脚本并选择本实验内核，不要使用其他项目的 Python 环境。
+- **找不到内核或无法导入依赖：** 运行 `prepare_notebooks.sh`，重新加载 IDE 窗口，选择打印出的实验内核；Python/Jupyter 扩展应安装在执行代码的机器上。
 - **数据集缺失或哈希不匹配：** 运行下载脚本；保留报错涉及的文件并排查原因，不要跳过校验。
-- **CUDA 不可用：** 启动前显式设置 `LAB_DEVICE=cpu`，两组对照实验使用相同设备设置。
+- **CUDA 不可用：** 使用 `--device cpu` 重新准备，选择相应内核并重启；两组对照实验使用相同的已保存设置。
 - **Headless 渲染报错：** 检查 OSMesa 或 NVIDIA EGL 图形库；仅检查 `nvidia-smi` 不够。
 - **Reference Checkpoint 缺失：** 教师需要在课前生成；如果学生的主要 Policy 没有失败案例，Notebook 04 需要使用真实的参考失败材料。
 - **输出目录已存在：** 使用新的版本化目录。**任务排队：** 保持单元格运行；各组共享一个训练任务槽和一个评测任务槽。
