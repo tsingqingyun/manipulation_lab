@@ -1,0 +1,203 @@
+{
+  "measured_on": "2026-10-12",
+  "source": "outputs/teaching_acceptance_20261012_v1",
+  "notebook_and_queue_acceptance_passed": true,
+  "formal_multiuser_deployment_passed": false,
+  "account_isolation_verified": false,
+  "account_limitation": "Six independent kernels under one OS UID; separate users/JupyterHub authorization not verified",
+  "groups": 6,
+  "full_notebook_executions": 24,
+  "real_student_training_runs": 12,
+  "student_evaluation_episodes": 120,
+  "teacher_evaluation_episodes": 10,
+  "execution_errors": 0,
+  "csv_rows": 12,
+  "tests_before_full_run": "11 passed; 14 third-party deprecation warnings",
+  "elapsed_seconds": 617.9804733688943,
+  "peak_live_groups": 6,
+  "max_active_resource_slots": {
+    "evaluation": 1,
+    "training": 1
+  },
+  "max_queue_wait_seconds": 368.5443999050185,
+  "peak_process_tree_rss_sum_gib": 10.655330657958984,
+  "actual_initial_positions_identical_between_learning_rates": true,
+  "statistical_limit": "Groups repeat the same seeds and initial cases; they are not independent performance samples",
+  "student_answers": "Unfilled; all reports remain drafts",
+  "results": [
+    {
+      "group": "group_01",
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 7,
+      "validation_mse": 0.03473110596361063,
+      "standard_stable_success_rate": 0.4,
+      "shifted_stable_success_rate": 0.6,
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "group": "group_01",
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 11,
+      "validation_mse": 0.03469040771542544,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0,
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9"
+    },
+    {
+      "group": "group_02",
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 7,
+      "validation_mse": 0.03473110596361063,
+      "standard_stable_success_rate": 0.4,
+      "shifted_stable_success_rate": 0.6,
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "group": "group_02",
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 11,
+      "validation_mse": 0.03469040771542544,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0,
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9"
+    },
+    {
+      "group": "group_03",
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 7,
+      "validation_mse": 0.03473110596361063,
+      "standard_stable_success_rate": 0.4,
+      "shifted_stable_success_rate": 0.6,
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "group": "group_03",
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 11,
+      "validation_mse": 0.03469040771542544,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0,
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9"
+    },
+    {
+      "group": "group_04",
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 7,
+      "validation_mse": 0.03473110596361063,
+      "standard_stable_success_rate": 0.4,
+      "shifted_stable_success_rate": 0.6,
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "group": "group_04",
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 11,
+      "validation_mse": 0.03469040771542544,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0,
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9"
+    },
+    {
+      "group": "group_05",
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 7,
+      "validation_mse": 0.03473110596361063,
+      "standard_stable_success_rate": 0.4,
+      "shifted_stable_success_rate": 0.6,
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "group": "group_05",
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 11,
+      "validation_mse": 0.03469040771542544,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0,
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9"
+    },
+    {
+      "group": "group_06",
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 7,
+      "validation_mse": 0.03473110596361063,
+      "standard_stable_success_rate": 0.4,
+      "shifted_stable_success_rate": 0.6,
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "group": "group_06",
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 11,
+      "validation_mse": 0.03469040771542544,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0,
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9"
+    }
+  ],
+  "teacher_reference": {
+    "ready": true,
+    "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+    "role": "instructor_reference",
+    "conditions": {
+      "standard": {
+        "episodes": 5,
+        "environment_success_rate": 0.8,
+        "stable_success_rate": 0.8
+      },
+      "shifted": {
+        "episodes": 5,
+        "environment_success_rate": 0.6,
+        "stable_success_rate": 0.4
+      }
+    },
+    "errors": 0,
+    "failure_episode": "standard_03",
+    "failure_video": "reference_evaluation/standard_03.mp4",
+    "source": "existing real instructor model; fresh fixed-seed evaluation, no retraining"
+  },
+  "report_display_fix": {
+    "passed": true,
+    "targeted_notebook_04_executions": 6,
+    "embedded_images_per_group": 7,
+    "extra_training_or_evaluation_runs": 0,
+    "all_12_checkpoint_hashes_unchanged": true,
+    "source": "outputs/teaching_acceptance_20261012_v1/report_display_fix_v2/acceptance.json",
+    "regression_test": "1 passed; initial 11 relevant tests already passed"
+  }
+}

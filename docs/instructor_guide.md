@@ -8,6 +8,8 @@
 
 数据 200 条按 160/20/20 分割。默认学生确定性 MLP 为 256×3 隐藏层、50 轮、学习率 1e-3；教师 512×3、400 轮、3e-4。两者只使用训练集拟合，验证 MSE 选择模型，固定测试集合从未进入训练。教师更多训练不保证更低验证损失；展示过拟合本身有教学价值。
 
+必做教学对照增加第二个**学生**模型：学习率3e-4，其余与第一个学生模型完全一致（种子17、50轮、256×3）。这不是教师512×3模型。Notebook 02 实际训练、评测两份模型；Notebook 03 复用同一记录展示位置与逐案例配对，不额外重复评测。对照以 experiment.json 中的初始化/划分/模型哈希/评测清单检查为有效性依据，不看谁的成功率更高。
+
 教师参考需要提前运行以下命令，并检查实际结果后发布。请用新目录；不要覆盖已有参考。
 
 ```bash
@@ -19,6 +21,16 @@ scripts/lab_python.sh scripts/evaluate.py \
 ```
 
 本机已生成只读 checkpoints/instructor_reference.pth 及明确标记的参考评测。参考不是学生训练的替代品。参考的完整成功判据与学生相同，不调整阈值去追求更高数字。
+
+课前用已有可信参考模型生成新的准备目录，实际执行固定评测并验证失败视频及状态日志可读；如果没有真实失败，命令明确失败。原参考不覆盖。
+
+```bash
+CUDA_VISIBLE_DEVICES=0 scripts/lab_python.sh scripts/prepare_reference.py \
+  --checkpoint checkpoints/instructor_reference.pth --output outputs/teacher_ready_v1
+export LAB_REFERENCE_ROOT="$PWD/outputs/teacher_ready_v1"
+```
+
+上述环境变量需传给各组 Jupyter 内核。原始教师模型若缺失，先按上一节实际训练，不能从学生模型改标签伪造。新机器还应核对模型和数据只读权限。
 
 ## 与课程知识的联系
 
@@ -53,14 +65,15 @@ MLP 可能停在抓取前、关闭夹爪但未抓住、成功搬运后靠近边�
 
 ## 班级汇总
 
-docs/class_results.csv 可用 Excel/LibreOffice 编辑。记录每组明确选择的 run，而不是事后只保留最高成功率。脚本可合并指定的真实 summary：
+docs/class_results.csv 与脚本共享固定字段，每组每次 run 的每种学习率各一行，六组共12行。成功率列明确以0–1表示；包含训练轮数/种子/学习率/验证误差、模型哈希、两条件回合数及环境/稳定成功率。学生失败标注只附到哈希匹配的模型，教师证据不能混入学生行。使用明确 run 清单，不自动挑选最好或最新结果。
 
 ```bash
 scripts/lab_python.sh scripts/aggregate_results.py \
-  --summaries outputs/group_01/<run>/<evaluation>/summary.json \
-              outputs/group_02/<run>/<evaluation>/summary.json \
+  --runs outputs/group_01/<run> outputs/group_02/<run> \
   --output outputs/class_summary_v1.csv
 ```
+
+一次汇总六组：创建 JSON，将 group_01…group_06 分别映射到选择的 run 目录（相对于 JSON 文件所在目录），再运行 `scripts/lab_python.sh scripts/aggregate_results.py --selection <清单.json> --output <新CSV路径>`。六组验收命令会自动产生 class_selection.json，可直接复用。旧的 `--summaries` 已替换为 `--runs` / `--selection`，因为单个评测摘要不能证明两学习率实验或连接训练配置。实验未完成或模型不匹配时仍输出明确的 incomplete_or_invalid 行，指标留空并返回失败；不能把缺失记成零成功率。
 
 讨论样本量：5 回合成功率的粒度就是20个百分点，不能推断细微优劣。更多回合可用 --episodes 和 --seeds，最大数量受满足固定位移范围的20条保留初态限制。不要重复完全相同初态并当作更多独立样本。
 
@@ -69,6 +82,8 @@ scripts/lab_python.sh scripts/aggregate_results.py \
 优先使用现有 JupyterHub，为 group_01…group_06 分配独立系统用户。共享代码/环境、data/ 和 checkpoints/ 由教师持有，仅允许学生读取；各组输出目录归该组所有，权限 0700。管理员配置每组 LAB_GROUP 和 LAB_OUTPUT_ROOT，使根目录仅该组可写。独立系统权限才提供隔离；Notebook 的组名不是访问控制。
 
 为所有进程配置同一个 LAB_LOCK_DIR。管理员预建目录和 training.lock、evaluation.lock，允许课堂用户打开锁文件（共享用户组权限0660），不允许学生替换/删除锁文件。通过系统服务/cgroups 给每组内核与脚本限制 CPU/RAM；脚本的线程数、超时和锁只是作业级约束。不要开放匿名 JupyterLab 到公网。当前交付实测了单用户 SSH 隧道服务，未用6个真实账号做并发验收。
+
+新版验证入口见 [部署验收](deployment_acceptance.md)。同一系统账号下的六组独立内核可以验证任务并发提交和排队，但正式多用户权限隔离必须另外通过，不能以组名或目录模式替代。
 
 ## 备用流程
 

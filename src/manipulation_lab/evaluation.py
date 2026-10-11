@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from pathlib import Path
 import resource
 import shutil
@@ -69,7 +70,7 @@ def evaluate(checkpoint, config, output, dataset=DATA):
             for case in manifest:
                 episode_start = time.monotonic()
                 video = output / f"{case['episode_id']}.mp4"
-                history, actions, frames, error = [], [], [], None
+                history, actions, frames, video_steps, error = [], [], [], [], None
                 try:
                     with deadline(config["episode_timeout_seconds"]):
                         torch.manual_seed(case["seed"])
@@ -86,6 +87,7 @@ def evaluate(checkpoint, config, output, dataset=DATA):
                             history.append(snapshot(env, obs))
                             if step % config["video_stride"] == 0:
                                 frames.append(env.render(mode="rgb_array", width=config["video_size"], height=config["video_size"]))
+                                video_steps.append(step + 1)  # Frame follows this action; state[0] is pre-action.
                             if stable_placement(history, config, hz):
                                 break
                 except Exception as exc:
@@ -98,7 +100,7 @@ def evaluate(checkpoint, config, output, dataset=DATA):
                 final = history[-1] if history else None
                 row = {**{k: case[k] for k in ("episode_id", "condition", "source_episode", "seed")},
                     "policy_name": ckpt["lab_contract"]["policy_name"], "policy_role": ckpt["lab_contract"]["role"],
-                    "checkpoint": str(Path(checkpoint).resolve()), "checkpoint_sha256": checkpoint_hash,
+                    "checkpoint": os.path.relpath(Path(checkpoint).resolve(), output.resolve()), "checkpoint_sha256": checkpoint_hash,
                     "initial_object_position": json.dumps(history[0]["object_position"].tolist()) if history else None,
                     "final_object_position": json.dumps(final["object_position"].tolist()) if final else None,
                     "steps": len(actions), "environment_success": env_success, "stable_success": stable,
@@ -107,6 +109,7 @@ def evaluate(checkpoint, config, output, dataset=DATA):
                 rows.append(row)
                 if history:
                     np.savez_compressed(output / f"{case['episode_id']}.npz", actions=np.array(actions),
+                        video_control_steps=np.asarray(video_steps, dtype=np.int64),
                         **{k: np.array([s[k] for s in history]) for k in history[0]})
                 with open(output / "results.csv", "w", newline="") as f:
                     writer = csv.DictWriter(f, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)

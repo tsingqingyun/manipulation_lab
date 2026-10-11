@@ -1,5 +1,7 @@
 import csv
+import hashlib
 import json
+import random
 import resource
 import time
 from pathlib import Path
@@ -19,6 +21,7 @@ def train(settings, output, dataset=DATA):
         torch.set_num_threads(settings["cpu_threads"])
         torch.manual_seed(settings["seed"])
         np.random.seed(settings["seed"])
+        random.seed(settings["seed"])
         torch.backends.cudnn.benchmark = False
         device = torch.device(settings["device"])
         if device.type == "cuda" and not torch.cuda.is_available():
@@ -44,6 +47,10 @@ def train(settings, output, dataset=DATA):
         shapes = inspection["policy_observation_shapes"]
         shape_meta = {"all_shapes": shapes, "ac_dim": 7, "all_obs_keys": KEYS, "use_images": False, "use_depths": False}
         model = make_model(config, shapes, device)
+        initial_hash = hashlib.sha256()
+        for name, value in sorted(model.nets.state_dict().items()):
+            initial_hash.update(name.encode())
+            initial_hash.update(value.detach().cpu().numpy().tobytes())
         best, best_epoch, history = float("inf"), 0, []
         target = output / "student_policy.pth"
         contract = {"versions": versions(), "dataset_sha256": inspection["dataset_sha256"],
@@ -94,6 +101,7 @@ def train(settings, output, dataset=DATA):
         from .visualization import training_curve
         training_curve(history, output / "training_curve.png")
         summary = {"elapsed_seconds": time.monotonic() - start, "epochs": settings["epochs"], "best_epoch": best_epoch,
+            "initial_weights_sha256": initial_hash.hexdigest(),
             "best_validation_mse": best, "last_training_mse": history[-1]["training_loss"],
             "checkpoint_reload_passed": True, "peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
             "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 2**20 if device.type == "cuda" else 0,

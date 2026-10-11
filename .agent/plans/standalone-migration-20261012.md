@@ -4,7 +4,7 @@
 
 ## 目标与最终效果
 
-用户从 `https://github.com/tsingqingyun/manipulation_lab` 克隆后，可以在仓库根目录安装、启动和运行原有四步教学实验，不再依赖 ICLR 主仓库。服务器独立目录为 `/home/jingchen/projects/manipulation_lab`。Git 子模块是固定到具体提交的外部源码依赖；本项目只需要 robomimic 和 robosuite 两个子模块。
+用户从 `https://github.com/tsingqingyun/manipulation_lab` 克隆后，可以在仓库根目录安装、启动和运行原有四步教学实验，不再依赖 ICLR 主仓库。服务器独立目录为 `manipulation_lab`。Git 子模块是固定到具体提交的外部源码依赖；本项目只需要 robomimic 和 robosuite 两个子模块。
 
 ## 当前进度
 
@@ -36,7 +36,7 @@
 
 ## 项目背景
 
-源代码为 `/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab`，来源提交 `dcb8e4afb4a6cb686d6e2dc143b1a28c3c724ad9`。核心 Python 包在 `src/manipulation_lab`，其 ROOT 根据本文件路径定位实验根目录，已能适配新位置。`scripts/setup_environment.sh` 是已知需要修改的安装入口。
+源代码为 `原主仓库中的 pipelines/manipulation_learning_lab`，来源提交 `dcb8e4afb4a6cb686d6e2dc143b1a28c3c724ad9`。核心 Python 包在 `src/manipulation_lab`，其 ROOT 根据本文件路径定位实验根目录，已能适配新位置。`scripts/setup_environment.sh` 是已知需要修改的安装入口。
 
 ## 实施方案
 
@@ -44,7 +44,7 @@
 
 ## 具体执行
 
-工作目录 `/home/jingchen/projects/manipulation_lab`：
+工作目录 `manipulation_lab`：
 
     bash scripts/setup_environment.sh
     scripts/lab_python.sh -m pytest -q tests

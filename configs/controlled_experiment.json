@@ -1,0 +1,5 @@
+{
+  "learning_rates": [0.001, 0.0003],
+  "primary_variant": "lr_a",
+  "selection_rule": "Primary variant fixed before evaluation; do not select using test success"
+}

@@ -68,10 +68,21 @@ def resource_slot(kind, timeout=900):
     path = directory / f"{kind}.lock"
     fd = os.open(path, os.O_CREAT | os.O_RDWR, 0o666)
     start = time.monotonic()
+    def audit(event):
+        target = os.environ.get("LAB_RESOURCE_AUDIT")
+        if target:
+            with open(target, "a") as log:
+                fcntl.flock(log, fcntl.LOCK_EX)
+                log.write(json.dumps({"kind": kind, "event": event, "pid": os.getpid(),
+                    "group": os.environ.get("LAB_GROUP"), "monotonic": time.monotonic()}) + "\n")
+    acquired = False
     try:
+        audit("requested")
         while True:
             try:
                 fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                acquired = True
+                audit("acquired")
                 break
             except BlockingIOError:
                 if time.monotonic() - start > timeout:
@@ -79,4 +90,6 @@ def resource_slot(kind, timeout=900):
                 time.sleep(0.5)
         yield
     finally:
+        if acquired:
+            audit("released")
         os.close(fd)

@@ -14,11 +14,11 @@ def workspace(group=None, fresh=False):
     if not re.fullmatch(r"group_0[1-6]", group):
         raise ValueError("Choose group_01 .. group_06")
     base = Path(os.environ.get("LAB_OUTPUT_ROOT", ROOT / "outputs")).resolve() / group
-    base.mkdir(parents=True, exist_ok=True)
+    base.mkdir(parents=True, exist_ok=True, mode=0o700)
     pointer = base / "current_session.json"
     if fresh:
         run = base / (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex[:8])
-        run.mkdir()
+        run.mkdir(mode=0o700)
         write_json(pointer, {"run": str(run), "group": group})
         write_json(run / "session.json", {"group": group, "run": str(run)})
     elif pointer.exists():

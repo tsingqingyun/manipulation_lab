@@ -5,8 +5,8 @@
 | Task | 学生操作 | 提交 |
 |---|---|---|
 | 1 | 查看机器人观测、动作和完整示教 | 示教分析 |
-| 2 | 实际训练 BC 网络 | 训练曲线与 checkpoint |
-| 3 | 自己的模型运行标准 5 次、位移 5 次 | 成功率与 rollout |
+| 2 | 必做学习率对照：仅改变 1e-3 / 3e-4，两次真实训练与同条件评测 | 两组曲线、checkpoint 和对照结果 |
+| 3 | 查看训练/测试初始位置、两条件逐案例配对 | 二维位置图、每个模型的配对 CSV 与视频 |
 | 4 | 分析一次真实失败并提出改进 | 1–2 页报告与关键帧 |
 
 学生先读 [作业说明](docs/assignment_student.md)，教师读 [教师指南](docs/instructor_guide.md)。[实测验收](docs/validation.md) 区分运行通过、成功率和仍未验证的限制；[常见问题](docs/troubleshooting.md) 包含本机 EGL 修复。
@@ -28,17 +28,26 @@ CUDA_VISIBLE_DEVICES=0 scripts/lab_python.sh scripts/start_lab.py --group group_
 
 在自己电脑建立 SSH 隧道，然后用启动日志中的 token 登录 `http://127.0.0.1:8892/lab`，依次打开 notebooks/01–04。token 是 Jupyter 自动生成的登录凭据，不提交到 Git。实验启动器默认只监听服务器本机。
 
-服务器上的独立工作目录为 `/home/jingchen/projects/manipulation_lab`。已有运行的保留方式与迁移验证范围见 [迁移说明](docs/migration.md)。`docs/validation.md` 与 `docs/validation_metrics.json` 保留迁移前的历史实测记录。
+已有运行的保留方式与迁移验证范围见 [迁移说明](docs/migration.md)。`docs/validation.md` 与 `docs/validation_metrics.json` 保留迁移前的历史实测记录；后者中的文件路径已转为源实验目录的相对路径。
 
 ```bash
-ssh -N -L 8892:127.0.0.1:8892 jingchen@<服务器地址>
+ssh -N -L 8892:127.0.0.1:8892 <用户名>@<服务器地址>
 ```
 
 本机若已启动，可在服务器运行 `scripts/lab_python.sh -m jupyter server list` 获取自己的登录 URL。课堂多人使用已有 JupyterHub 的独立系统用户；本仓库没有自行实现账号系统。单用户演示服务的组名隔离防止误覆盖，不是安全权限隔离。
 
 ## 独立脚本复现
 
-以下目录必须不存在；重跑换新的版本目录，已有失败保留。
+必做实验固定种子17、50轮、256×3网络和数据划分，只比较两个预先给定的学习率。两份模型各执行相同的标准5次及偏移5次。代码核对初始化参数、数据划分、模型哈希和评测清单，结果不一致时拒绝把实验标为有效。
+
+```bash
+CUDA_VISIBLE_DEVICES=0 scripts/lab_python.sh scripts/controlled_experiment.py \
+  --output outputs/my_comparison_v1
+```
+
+Notebook 02 执行上述真实链路；Notebook 03 读取同一次结果作位置与案例对照；Notebook 04 按控制步选帧、标记人工观察到的错误，并把两学习率结果纳入报告。教师汇总和部署命令见 [教师指南](docs/instructor_guide.md) 与 [部署验收](docs/deployment_acceptance.md)。
+
+原有单模型入口继续保留，便于定位问题。以下目录必须不存在；重跑换新的版本目录，已有失败保留。
 
 ```bash
 scripts/lab_python.sh scripts/inspect_dataset.py --output outputs/my_run_v1/inspection

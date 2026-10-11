@@ -1,6 +1,6 @@
 # 独立仓库迁移说明
 
-教学实验已从 ICLR 主仓库的 `pipelines/manipulation_learning_lab` 提取到 `/home/jingchen/projects/manipulation_lab`，远程为 `https://github.com/tsingqingyun/manipulation_lab`。来源提交为 `dcb8e4afb4a6cb686d6e2dc143b1a28c3c724ad9`；保留目标仓库原有 LICENSE 与 main 历史。
+教学实验已从 ICLR 主仓库的 `pipelines/manipulation_learning_lab` 提取到 `manipulation_lab`，远程为 `https://github.com/tsingqingyun/manipulation_lab`。来源提交为 `dcb8e4afb4a6cb686d6e2dc143b1a28c3c724ad9`；保留目标仓库原有 LICENSE 与 main 历史。
 
 迁移代码提交 `68226388a04e17186282e2399bafc9610c50a5c0` 已推送到 `origin/main`，并通过 `git ls-remote` 核对远端提交一致。目标保持原有公开可见性。原仓库 HEAD、工作区状态和暂存差异均与迁移前一致。
 
@@ -12,10 +12,10 @@
 
 原目录仍有正在使用的 Jupyter 会话，因此本次保留原目录和服务。旧会话继续访问原目录；后续开发和新会话使用新目录。原有 8892 端口被占用时，可启动新实例：
 
-    cd /home/jingchen/projects/manipulation_lab
+    cd manipulation_lab
     CUDA_VISIBLE_DEVICES=0 scripts/lab_python.sh scripts/start_lab.py --group group_01 --port 8893
 
-配套 SSH 隧道使用 `ssh -N -L 8893:127.0.0.1:8893 jingchen@<服务器地址>`。按顺序从 Notebook 01 开始，创建新的会话。历史输出中的绝对路径是原始来源记录，不改写为新实验结果，也不直接作为新目录的活动会话指针。
+配套 SSH 隧道使用 `ssh -N -L 8893:127.0.0.1:8893 <用户名>@<服务器地址>`。按顺序从 Notebook 01 开始，创建新的会话。本地历史输出保留原始路径；公开 validation_metrics.json 的路径已改为源实验目录的相对路径，数值未变。历史记录不作为新目录的活动会话指针。
 
 ## 验证范围
 
