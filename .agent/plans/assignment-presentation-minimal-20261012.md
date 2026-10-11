@@ -11,7 +11,7 @@ Deliver a new independent nine-slide English deck with Chinese notes totaling te
 - [x] 2026-10-12: inspected existing slide sources and current student configuration. Confirmed robomimic BC uses nn.MSELoss with only the L2 loss enabled, and Adam, rather than plain gradient descent.
 - [x] 2026-10-12: built version 2 in presentations/assignment_intro_20261012_v2. All backgrounds are white; decoration and inherited line shadows removed; original videos and numeric evidence preserved.
 - [x] 2026-10-12: inspected all nine rendered pages and the formula pages at full size. Acceptance passed: 600 seconds, English visible text, Chinese notes, bounds, PDF text, editable equations, actual MSE/Adam source and identical embedded MP4 bytes. Browser playback evidence is carried forward after media hash equality; no redundant simulation or browser run.
-- [ ] Publish only the version 2 package and this plan; verify the remote commit.
+- [x] 2026-10-12: published only the version 2 package and this plan as commit 83183b0; origin/main advanced from dc90623 to 83183b0. The other session's deployment changes remain uncommitted by this task.
 
 ## Discoveries
 
@@ -23,7 +23,7 @@ Use editable PowerPoint text and mathematical symbols for the equations, with pr
 
 ## Current outcome
 
-The minimalist v2 deck, static PDF, separate Chinese narration, preview images and source are complete and verified. The three formulas are editable and have symbol definitions plus a numerical example. Version 1 and the other session's working-tree changes remain intact. Only the narrowly scoped publication step remains.
+The minimalist v2 deck, static PDF, separate Chinese narration, preview images and source are complete, verified and published in 83183b0. The three formulas are editable and have symbol definitions plus a numerical example. Version 1 and the other session's working-tree changes remain intact. Native PowerPoint playback on the instructor computer remains the stated platform limitation.
 
 ## Implementation and execution
 
