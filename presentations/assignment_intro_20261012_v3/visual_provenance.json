@@ -1,0 +1,133 @@
+{
+  "kind": "presentation-only evidence recovery",
+  "new_policy_rollouts": 0,
+  "new_training_runs": 0,
+  "failure_replay": {
+    "case": "standard_00",
+    "steps": 81,
+    "max_absolute_state_errors": {
+      "object_position": 0.0,
+      "eef_position": 0.0,
+      "gripper_width": 0.0
+    },
+    "frame_steps": [
+      1,
+      41,
+      81
+    ]
+  },
+  "paired_starts": [
+    {
+      "case": "standard_01",
+      "source_episode": "demo_185",
+      "seed": 102,
+      "object_position": [
+        0.0497475815176579,
+        -0.3064156404379914,
+        0.8600000000000001
+      ],
+      "max_state_error": 0.0
+    },
+    {
+      "case": "shifted_01",
+      "source_episode": "demo_185",
+      "seed": 102,
+      "object_position": [
+        0.08974758151765791,
+        -0.3064156404379914,
+        0.8600000000000001
+      ],
+      "max_state_error": 0.0
+    }
+  ],
+  "human_demonstration": {
+    "source": {
+      "kind": "human_demonstration_state_playback",
+      "episode": "demo_0",
+      "dataset_sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+      "elapsed_seconds": 6.037870733067393,
+      "time_domain": "20Hz control-step index, video subsampled to 10fps; no acquisition timestamps"
+    },
+    "duration_seconds": 5.9,
+    "copied_bytes": true
+  },
+  "action_comparison": {
+    "episode": "demo_0",
+    "recorded_step": 40,
+    "policy_role": "student",
+    "variant": "lr_a",
+    "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+    "expert_action": [
+      0.097,
+      -0.091,
+      -0.042,
+      0.026313170790672302,
+      -0.013873031362891197,
+      0.016830183565616608,
+      -1.0
+    ],
+    "predicted_action": [
+      0.021216196939349174,
+      -0.012603706680238247,
+      -0.16230615973472595,
+      0.016463160514831543,
+      -0.032066505402326584,
+      0.00596070010215044,
+      -0.9280083179473877
+    ],
+    "squared_error_per_component": [
+      0.00574318480633551,
+      0.0061459788062781205,
+      0.014473572070117393,
+      9.702270243416855e-05,
+      0.00033100249762360937,
+      0.00011814567076256447,
+      0.005182802284764421
+    ],
+    "mean_squared_error": 0.004584529834045113,
+    "same_observation_render_error": 2.220446049250313e-16,
+    "interpretation": "Single fixed example on a recorded demonstration state; not held-out policy success or causal explanation.",
+    "normalization": "RolloutPolicy applies the checkpoint training-only statistics to the raw observation."
+  },
+  "sources": [
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/summary.json",
+      "sha256": "d08c5e67e6659a01ff0ba721c6df50f5cfa386aa58ae91bb9eb7d01e75805d50"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/standard_00.npz",
+      "sha256": "e140dc4685dbcfa1eacb149f1fb95fd0eb26703a4a620047307080df8f160e01"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/standard_01.npz",
+      "sha256": "546d18989264cd74bfef8387dd22f0301bf917a32d68b9bfa0c441a3ad530d90"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/shifted_01.npz",
+      "sha256": "bfe2167ec2579d0f2e08627d72c4f3bd65472ab31f31d88354ee80a24198824b"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/training/student_policy.pth",
+      "sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/demonstration_163326_30827c/demonstration.mp4",
+      "sha256": "659b269276dc75977faddee8826bb1003f7b98520608ca3169e9fde84a1f19f5"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/demonstration_163326_30827c/provenance.json",
+      "sha256": "9fbcde767e38ac72b9f632929ad75cebc9509c9005ea0a9b1d0869ece83aa63e"
+    }
+  ],
+  "new_asset_sha256": {
+    "action_comparison.json": "9907c39d80900427ef7eadcbe1865086f609fcdd3ca2acc16cd3693a3e920e47",
+    "shifted_start.png": "370e20375314ac62bfdc20913f5777a92026f8024c9ec8ab8e644e9b1a0824f4",
+    "failure_hd_081.png": "dbb8917fb2ff41a34447a3877a80e1a7b9df271bcca58c1b0e2224a6e7c046db",
+    "human_poster.png": "080e0d543e074b005b6b6d2fdaa9405abb1976e36b1b56c7b282b5c856bae6e6",
+    "standard_start.png": "075a427dc2a7db21923f2b4e449632c36d99f60e262fe5f3e1170edf61ed9811",
+    "demonstration_state.png": "edc24c291b69476e0416dbc6822233a3489fa7646a88134169eaf0c9a373a9e9",
+    "human_demonstration.mp4": "659b269276dc75977faddee8826bb1003f7b98520608ca3169e9fde84a1f19f5",
+    "failure_hd_041.png": "b8ff12a91284775f928296d333533d0cf143e796c0e7734d1d85c360854e6c4d",
+    "failure_hd_001.png": "f63b3018b64be06864919547dedbcf3a1c59efa271afd3347bda40dfaf893658"
+  }
+}

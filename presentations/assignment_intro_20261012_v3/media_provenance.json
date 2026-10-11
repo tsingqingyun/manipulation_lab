@@ -1,0 +1,241 @@
+{
+  "source_run": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3",
+  "source_experiment": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae",
+  "policy_role": "student",
+  "variant": "lr_a",
+  "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+  "success_case": {
+    "episode_id": "standard_01",
+    "condition": "standard",
+    "source_episode": "demo_185",
+    "seed": 102,
+    "policy_name": "student_deterministic_mlp",
+    "policy_role": "student",
+    "checkpoint": "../training/student_policy.pth",
+    "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+    "initial_object_position": "[0.0497475815176579, -0.3064156404379914, 0.8600000000000001]",
+    "final_object_position": "[0.21636476852149958, 0.3616557207312553, 0.8438415686866355]",
+    "steps": 149,
+    "environment_success": true,
+    "stable_success": true,
+    "failure_stage": "none",
+    "error": "",
+    "elapsed_seconds": 1.8020340078510344,
+    "video": "standard_01.mp4"
+  },
+  "failure_case": {
+    "episode_id": "standard_00",
+    "condition": "standard",
+    "source_episode": "demo_39",
+    "seed": 101,
+    "policy_name": "student_deterministic_mlp",
+    "policy_role": "student",
+    "checkpoint": "../training/student_policy.pth",
+    "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+    "initial_object_position": "[0.05460564679300406, -0.35422492636704417, 0.8600000000000001]",
+    "final_object_position": "[0.090226704678261, -0.27642378021778596, 0.8437958446298311]",
+    "steps": 500,
+    "environment_success": false,
+    "stable_success": false,
+    "failure_stage": "manual_review_required",
+    "error": "",
+    "elapsed_seconds": 4.2231310228817165,
+    "video": "standard_00.mp4"
+  },
+  "render_kind": "Replay the saved successful action sequence from the identical initial state; no policy/training/evaluation rerun",
+  "render_backend": "OSMesa",
+  "max_abs_state_replay_errors": {
+    "object_position": 0.0,
+    "eef_position": 0.0,
+    "gripper_width": 0.0
+  },
+  "state_comparison": "All 149 post-action states, object xyz, end-effector xyz and gripper width, tolerance 1e-6 m",
+  "video": {
+    "file": "success_half_speed.mp4",
+    "resolution": [
+      768,
+      768
+    ],
+    "fps": 5,
+    "playback_speed": 0.5,
+    "source_control_hz": 20,
+    "recorded_control_steps": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61,
+      63,
+      65,
+      67,
+      69,
+      71,
+      73,
+      75,
+      77,
+      79,
+      81,
+      83,
+      85,
+      87,
+      89,
+      91,
+      93,
+      95,
+      97,
+      99,
+      101,
+      103,
+      105,
+      107,
+      109,
+      111,
+      113,
+      115,
+      117,
+      119,
+      121,
+      123,
+      125,
+      127,
+      129,
+      131,
+      133,
+      135,
+      137,
+      139,
+      141,
+      143,
+      145,
+      147,
+      149
+    ],
+    "duration_seconds": 15.0
+  },
+  "success_keyframes": [
+    {
+      "control_step": 1,
+      "simulation_time_seconds": 0.05,
+      "file": "success_step_001.png"
+    },
+    {
+      "control_step": 41,
+      "simulation_time_seconds": 2.05,
+      "file": "success_step_041.png"
+    },
+    {
+      "control_step": 89,
+      "simulation_time_seconds": 4.45,
+      "file": "success_step_089.png"
+    },
+    {
+      "control_step": 145,
+      "simulation_time_seconds": 7.25,
+      "file": "success_step_145.png"
+    }
+  ],
+  "failure_keyframes": [
+    {
+      "control_step": 1,
+      "simulation_time_seconds": 0.05,
+      "file": "failure_step_001.png"
+    },
+    {
+      "control_step": 41,
+      "simulation_time_seconds": 2.05,
+      "file": "failure_step_041.png"
+    },
+    {
+      "control_step": 81,
+      "simulation_time_seconds": 4.05,
+      "file": "failure_step_081.png"
+    }
+  ],
+  "sources": [
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/standard_01.mp4",
+      "sha256": "fb7cc807b7c1b2bd1b3d44eccc093d929592c155740f3f0675121b58d54741f6"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/standard_01.npz",
+      "sha256": "546d18989264cd74bfef8387dd22f0301bf917a32d68b9bfa0c441a3ad530d90"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/standard_00.mp4",
+      "sha256": "45d4211001017182cb30c7017c1c28c0ddb30c1c54edc2e4f4ed22eddff40932"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/standard_00.npz",
+      "sha256": "e140dc4685dbcfa1eacb149f1fb95fd0eb26703a4a620047307080df8f160e01"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/evaluation/summary.json",
+      "sha256": "d08c5e67e6659a01ff0ba721c6df50f5cfa386aa58ae91bb9eb7d01e75805d50"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/training/training_log.csv",
+      "sha256": "5865314c47daa0f1bbc563c97838ebc2487c9fbef0de2eed49c1bd9b2a6df2f5"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_b/training/training_log.csv",
+      "sha256": "1efce9d28e1621aa75cd6e3e8c33cc0cb9aa0cb1e044bcfcc50e36139892b270"
+    },
+    {
+      "path": "outputs/teaching_acceptance_20261012_v1/groups/group_01/20261011T163325Z_131cb6f3/experiment_163342_eb82ae/lr_a/training/dataset_inspection.json",
+      "sha256": "713f0e470ce3ac4ee5b713993f55047f9a818108dce5a285f29315db850f3f97"
+    }
+  ],
+  "assets": {
+    "failure_original.mp4": "45d4211001017182cb30c7017c1c28c0ddb30c1c54edc2e4f4ed22eddff40932",
+    "failure_step_001.png": "9dbfb044c03d9cc3bac88590c62f5e04f8f79dc18e2dceab381f6b146e83b3d7",
+    "failure_step_041.png": "83418efa4ff3d8f7cb6be8425e1fd633e129d7e8d44920106272be4ba6832d37",
+    "failure_step_081.png": "21f1f3823e777ea64340bd0b91ce8e11be651a5b114183bb17a85fc8b044ce63",
+    "failure_trace.npz": "e140dc4685dbcfa1eacb149f1fb95fd0eb26703a4a620047307080df8f160e01",
+    "lr_a_evaluation_summary.json": "d08c5e67e6659a01ff0ba721c6df50f5cfa386aa58ae91bb9eb7d01e75805d50",
+    "lr_a_training_log.csv": "eb2dda6d9b1614e9fa96fde59d2a462687c5bad61e4fefe404d213cf483a00cf",
+    "lr_a_training_summary.json": "ea23cb16f77e0801a9fe6eafbada5b85c760560a810f051fb36fa93433ed1744",
+    "lr_b_evaluation_summary.json": "bf7e3824b2cea176bbef130502c53054420877b2174891df64876db41f2de3e8",
+    "lr_b_training_log.csv": "fa1e1a6b9a6cc753bb935cb4ef8bded5f508f54cf845c37b4dad48f6f0410525",
+    "lr_b_training_summary.json": "2bb2158dfc96e0be729da1126d8ab5c214e818e596d74615b9d23d30af1951ae",
+    "success_half_speed.mp4": "15bad2f84ea870a281b047604a12e7676115fc70a2a8268605a8baf9fa34b306",
+    "success_poster.png": "d34fbd87808b7979e359709cf05535e61b4c06ad255ec3009773a73662fb2a95",
+    "success_step_001.png": "d34fbd87808b7979e359709cf05535e61b4c06ad255ec3009773a73662fb2a95",
+    "success_step_041.png": "9631702a647125d40068d2f869df43a5618f2065958df5708e1fe4410fad29d7",
+    "success_step_089.png": "dd2a0715ffe8da9edfbaafbb3d3ab6bb70e0df5aef1cddc544a13c3e0bf659ac",
+    "success_step_145.png": "9f35af8c1ac242ccd2b82a35b46a15a8c6efc0cdb943ee5b8c364b5c4372db7a",
+    "success_trace.npz": "546d18989264cd74bfef8387dd22f0301bf917a32d68b9bfa0c441a3ad530d90",
+    "training_initial_positions.csv": "9d4fceb72d54a4c33952eb19f686b6d9bb2a758df50d8a40b8aed3b8a1874630"
+  },
+  "limitations": [
+    "Re-rendering preserves logged physics states; it is not an independent policy evaluation.",
+    "The selected successful example is not a success-rate estimate.",
+    "Stage labels are visual teaching annotations, not automatically inferred contact labels."
+  ],
+  "text_normalization": "CSV copies use LF line endings; all original numeric strings are preserved. Original run files remain untouched."
+}

@@ -1,0 +1,135 @@
+{
+  "title": "Manipulation Learning Lab",
+  "subtitle": "From Demonstrations to Robot Policies",
+  "course": "Introduction to Robotics",
+  "project_subtitle": "Learning Robot Manipulation from Demonstrations",
+  "total_seconds": 600,
+  "slides": [
+    {
+      "number": 1,
+      "title": "Manipulation Learning Lab",
+      "seconds": 30,
+      "sources": [
+        "README.md: Overview and Task Description",
+        "media_provenance.json"
+      ],
+      "notes_zh": "【0:00–0:30】这次实验，我们让机械臂学会把罐子放进指定格子。先不用记算法名字，先看它到底要完成什么动作。你会看人的示范，训练一个模型，再让机器人自己试。最后，我们一起解释它成功或者失败的原因。"
+    },
+    {
+      "number": 2,
+      "title": "Can it put the can away?",
+      "seconds": 60,
+      "sources": [
+        "configs/environment.yaml",
+        "configs/evaluation.yaml",
+        "src/manipulation_lab/evaluation.py: stable_placement",
+        "media_provenance.json"
+      ],
+      "notes_zh": "【0:30–1:30】点击左边的视频，先完整看一次，播放为半速，共 15 秒。右边是同一次真实学生策略执行的四个时刻：接近、抓住、搬过去、松手。请大家指出哪个格子是目标，想一想最终这样算不算放好了。罐子最后横躺，这在当前任务里可以算成功，不要求它直立。我们分别记录仿真环境的成功标志和更严格的稳定放置：罐子在目标区且有半径余量、夹爪张开不再接触，策略继续运行一秒，物体位移不超过一厘米、速度不超过每秒五厘米。这不是证明任意姿态下整个物体网格完全在格内。"
+    },
+    {
+      "number": 3,
+      "title": "How does it learn?",
+      "seconds": 70,
+      "sources": [
+        "README.md: Task Description",
+        "src/manipulation_lab/training.py",
+        "src/manipulation_lab/evaluation.py",
+        "visual_provenance.json: human demonstration"
+      ],
+      "notes_zh": "【1:30–2:40】左边可以点击播放人的示范。这是记录的仿真状态回放，不是学生策略。每一个时刻都同时记下当时的观测和人的下一步动作。中间训练模型，让它在同样观测下预测相近的动作；这条曲线来自已有的真实训练。右边才是让训练好的模型自己运行。执行的时候不是播放预先写好的轨迹，而是观察、行动、再观察，每秒做 20 次。数据共有 200 条完整示范，160 条用来训练、20 条验证并选择保存的模型、20 条保留给测试。不要把同一条轨迹拆进不同集合，也不要按测试成绩反过来挑模型。"
+    },
+    {
+      "number": 4,
+      "title": "What can the policy see?",
+      "seconds": 70,
+      "sources": [
+        "README.md: Task Description",
+        "configs/environment.yaml",
+        "src/manipulation_lab/common.py: policy_observation",
+        "src/manipulation_lab/training.py: training-only normalization",
+        "configs/bc_student.json"
+      ],
+      "notes_zh": "【2:40–3:50】看左边的标注：机器人需要知道夹爪在哪里、朝哪个方向，两根手指分别张到哪里，以及罐子在哪里、朝哪个方向。夹爪的位置与姿态 7 个数，两个手指关节位置 2 个数，罐子的位置与姿态 7 个数，共 16 个观测值。右边的输出可以理解成三个问题：往哪移动，怎么转动，夹爪开还是合。一共是三维平移、三维旋转和一个开合命令，共 7 个数。输入是状态值，不是这里展示的视频像素。位置用世界坐标、单位为米，Z 向上；姿态用 xyzw 四元数。输出归一化到负一至一，平移每轴最多五厘米、旋转轴角分量最多半弧度，夹爪正数闭合、负数张开。观测使用训练集统计做归一化，推断时网络权重和统计都固定。"
+    },
+    {
+      "number": 5,
+      "title": "Learn to match the next move",
+      "seconds": 80,
+      "sources": [
+        "configs/bc_student.json",
+        "src/manipulation_lab/policy.py",
+        "src/manipulation_lab/training.py",
+        "assets/lr_a_training_log.csv",
+        "assets/lr_b_training_log.csv",
+        "third_party/robomimic/robomimic/algo/bc.py: nn.MSELoss",
+        "third_party/robomimic/robomimic/config/bc_config.py: optimizer_type and loss weights",
+        "third_party/robomimic/robomimic/utils/torch_utils.py: Adam optimizer",
+        "assets/action_comparison.json",
+        "visual_provenance.json"
+      ],
+      "notes_zh": "【3:50–5:10】现在把同一个状态交给人和模型，比较它们下一步会怎么动。左图对应 demo_0 的第 40 个记录步，右侧三对横线就是这一观测下人的平移命令与已有学生模型的预测；其他四个分量也在保存的数据里。它们接近但不完全一样，训练就是不断减少这种差距。下面只记住一个式子：把机器人的预测减去人的示范，每个分量平方，再取平均。这就是行为克隆的均方误差。图只展示三个平移分量，真实损失对每批样本的全部七个动作分量取平均，即总平方误差除以 7B。模型是普通前馈网络，三层隐藏层，每层 256 个单元。代码用 Adam 根据误差的梯度更新权重；学习率决定更新步子的大小，Adam 还会根据历史梯度调节方向。这里不推导梯度公式。训练 50 轮，按验证误差最低点保存模型；在这一状态上的动作误差，不等于整个任务的成功率。这个示范状态例子也不是独立的泛化评测。"
+    },
+    {
+      "number": 6,
+      "title": "Four things to try",
+      "seconds": 70,
+      "sources": [
+        "README.md: Getting Started and Experiments",
+        "docs/assignment_student.md",
+        "notebooks/01_demonstrations.ipynb",
+        "notebooks/02_train_policy.ipynb",
+        "notebooks/03_policy_evaluation.ipynb",
+        "notebooks/04_failure_analysis.ipynb"
+      ],
+      "notes_zh": "【5:10–6:20】大家要做四件事，按四个 notebook 的顺序。第一，看一段人的示范、检查观测与动作，回答 Q1。第二，比较两个学习率 0.001 和 0.0003，回答 Q2、Q3。这一步会训练两次并自动做完评测。数据、模型、初始权重、种子 17、50 轮、批量大小 256 和设备都要保持一致。第三，打开保存的视频与位置图，比较同一批评测案例，回答 Q4，不再重新执行评测。第四，找一次真实失败，至少检查三个控制步，标出最早能被证据支持的错误，回答 Q5 并导出结果。实验和讨论预计 130 到 160 分钟：四部分约 20、50 到 60、40 到 50、20 到 30 分钟，另外留报告整理时间。只改答案时重跑答案和导出单元即可，不要从第一本重新开始。"
+    },
+    {
+      "number": 7,
+      "title": "Move the can. What changes?",
+      "seconds": 80,
+      "sources": [
+        "configs/controlled_experiment.json",
+        "configs/evaluation.yaml",
+        "docs/assignment_student.md: Part 3",
+        "assets/lr_a_evaluation_summary.json",
+        "assets/lr_b_evaluation_summary.json",
+        "visual_provenance.json: matched initial-state snapshots"
+      ],
+      "notes_zh": "【6:20–7:40】左边这一对图起点来自同一条示范，种子也一样，只把罐子沿世界 X 轴移动四厘米。请先猜一猜，模型还能完成任务吗？实验为每个模型准备五对这样的起点，共十次执行，两个模型一共二十次。右边的每个点对应一次稳定放置的结果，实心是成功，空心是失败。已有这一组真实实验中，学习率 0.001 分别成功 2/5 和 3/5，0.0003 分别是 5/5 和 5/5。不要把它当作目标成绩，也不能只凭五例断言哪种学习率普遍更好。四厘米的变化可能仍在训练数据覆盖范围内，所以这不是严格认证的分布外评测。主模型 lr_a 在测试前已经固定，不能看完分数再重新选。"
+    },
+    {
+      "number": 8,
+      "title": "Where does it go wrong?",
+      "seconds": 80,
+      "sources": [
+        "notebooks/04_failure_analysis.ipynb",
+        "src/manipulation_lab/reporting.py",
+        "assets/failure_trace.npz",
+        "media_provenance.json",
+        "visual_provenance.json: same-action failure re-render through step 81"
+      ],
+      "notes_zh": "【7:40–9:00】这三张图片是同一次真实失败的第 1、41、81 步。先只描述看见了什么：最后夹爪离开了，罐子还留在源箱里。接下来回看中间过程，究竟从哪一步开始可以确定出现了错误？不要把最后一帧当作最早错误，更不要立即把猜测当成原因。用 notebook 的视频、物体和夹爪轨迹、开口宽度与动作命令一起判断，至少检查三个控制步并保存自己的错误标记，再提出一个原因假设和能区分不同解释的实验。视频每四步才保存一帧，请说明请求的状态步和最近视频帧之间的偏差，状态零没有对应帧。原始失败视频保留在课件包里。如果自己的主模型没有失败，可以明确引用老师的参考失败，不能改称自己的模型结果。"
+    },
+    {
+      "number": 9,
+      "title": "What to hand in",
+      "seconds": 60,
+      "sources": [
+        "README.md: Submission Requirements and Grading Rubric",
+        "docs/assignment_student.md: Submission and Detailed Grading",
+        "notebooks/04_failure_analysis.ipynb"
+      ],
+      "notes_zh": "【9:00–10:00】最后交两样：一到两页 PDF，用自己的话回答 Q1 到 Q5；以及第四本 notebook 导出的证据 ZIP，里面保留两种模型、配置、日志、视频和失败证据。自动生成的报告只是证据附录，不能替代自己的解释。空答案或者没标错误会保持草稿状态。评分是示范理解 20 分、训练 25 分、评测 30 分、失败分析 25 分。成功率高本身不加分；一次失败，只要实验完整、证据清楚、解释合理，也可以得满分。原始结果请保留到评分结束，不要通过换种子、重复试验挑最好的一次。"
+    }
+  ],
+  "revision": "v3 — visual explanation with concise supporting text and a natural teaching voice",
+  "equations": [
+    {
+      "slide": 5,
+      "latex": "\\mathcal{L}=\\mathrm{mean}\\!\\left[(a_{\\mathrm{robot}}-a_{\\mathrm{human}})^2\\right]",
+      "meaning": "Elementwise squared error averaged over every sample and all seven normalized action components; equivalent to sum/(7B).",
+      "rendering": "STIX mathematical typesetting at high resolution; LaTeX source preserved."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+Slide 1
+1 Introduction to Robotics Manipulation
+Learning Lab From Demonstrations
+to Robot Policies Learning Robot Manipulation from Demonstrations
+
+Slide 2
+Can it put the can away? 2 Panda arm: pick up the can and release it in the marked bin. Click to play · 15 s · half speed Reach Grasp Transport Place In the target. Released. Stable for 1 second. Open gripper · no contact · displacement ≤1 cm
+
+Slide 3
+How does it learn? 3 A demonstration pairs the current observation with a human’s next action. Watch a person Fit a policy Let the robot try Demonstration · Click to play Training Inference · 20 actions / second 160 train  /  20 validation  /  20 test demonstrations
+
+Slide 4
+What can the policy see? 4  Gripper pose
++ finger positions  Can pose 16 state values Gripper pose (7) + finger joints (2)
++ can pose (7) 7 commands 3 translation + 3 rotation + 1 gripper
+Normalized commands in [−1, 1] A fresh observation, 20 times per second.
+
+Slide 5
+Learn to match the next move 5 Behavior cloning trains a neural network to predict the human’s next action. The same observation Three hidden layers × 256 units Adam updates weights; validation selects the model. Average squared error across samples
+and all 7 action values.
+
+Slide 6
+Four things to try 6 01 Watch Inspect observations and actions. Q1 02 Train twice Save both models and curves. Q2–Q3 03 Compare Use the same test cases. Q4 04 Explain Inspect at least 3 steps. Q5 Change only the learning rate: 0.001 or 0.0003. Fixed data, model, initialization, seed 17, 50 epochs, batch size 256 and device.
+
+Slide 7
+Move the can. What changes? 7 Shift only the can; pair the source episode and random seed.  Standard  +4 cm in world X Five matched starts per model Not a certified out-of-distribution test. Stable placements Standard Shifted Learning rate 0.001      2/5      3/5 Learning rate 0.0003      5/5      5/5 One completed example; five cases are a coarse estimate.
+
+Slide 8
+Where does it go wrong? 8 Use frames and state logs to separate the observed error from a possible cause. Step 1 Step 41 Step 81  Still here. Inspect ≥3 steps, mark the first observable error, then propose a test.
+
+Slide 9
+What to hand in 9  PDF 1–2 pages · Q1–Q5  ZIP Both models · videos · logs Export the ZIP from Notebook 04. The generated report is an evidence appendix. Assessment 20 Demonstrations 25 Training 30 Evaluation 25 Failure analysis A well-explained failure can earn full credit.

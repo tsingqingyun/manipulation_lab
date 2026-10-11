@@ -1,0 +1,38 @@
+{
+  "episode": "demo_0",
+  "recorded_step": 40,
+  "policy_role": "student",
+  "variant": "lr_a",
+  "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+  "expert_action": [
+    0.097,
+    -0.091,
+    -0.042,
+    0.026313170790672302,
+    -0.013873031362891197,
+    0.016830183565616608,
+    -1.0
+  ],
+  "predicted_action": [
+    0.021216196939349174,
+    -0.012603706680238247,
+    -0.16230615973472595,
+    0.016463160514831543,
+    -0.032066505402326584,
+    0.00596070010215044,
+    -0.9280083179473877
+  ],
+  "squared_error_per_component": [
+    0.00574318480633551,
+    0.0061459788062781205,
+    0.014473572070117393,
+    9.702270243416855e-05,
+    0.00033100249762360937,
+    0.00011814567076256447,
+    0.005182802284764421
+  ],
+  "mean_squared_error": 0.004584529834045113,
+  "same_observation_render_error": 2.220446049250313e-16,
+  "interpretation": "Single fixed example on a recorded demonstration state; not held-out policy success or causal explanation.",
+  "normalization": "RolloutPolicy applies the checkpoint training-only statistics to the raw observation."
+}

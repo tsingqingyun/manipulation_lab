@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-12",
+  "base_commit": "b0784091ba3f8949747d153a3b1c49ce34169b1e",
+  "scope": "Current implemented working tree; ongoing course-packaging changes are owned by a separate user session.",
+  "files": {
+    "README.md": "dd1316658ce542e8d9dfd3fa39b3c03831d5dd02b7d0c0833d46545b54cd0a1a",
+    "docs/assignment_student.md": "200e7b1cf8a3381522c2361e80386c9b5f1710b59a44f383076074c03e99d742",
+    "docs/instructor_guide.md": "9553686f456bd53ee23891f7f8c8be9fa62c974a99da99e4b514b886c89684eb",
+    "configs/environment.yaml": "c45428eacd5e9a14162b19b97942b541bde8ff7fea55c74605b7fa62c63e617a",
+    "configs/bc_student.json": "f2307c3baae312a4af674ca70ce7414abebb48c538a42f8fe3f2eab5cd9b9717",
+    "configs/controlled_experiment.json": "ed3d64d95fdb8bf641d848ce7a0d95c410cf20daa20bcd9261f7a35469c161cb",
+    "configs/evaluation.yaml": "05bba8c3ae9973e2cc7b3edb1fbf87aa5ed7a66e74c2e6faa0622f5b992f432a",
+    "src/manipulation_lab/policy.py": "1d3601d66e445e82fc4df769890530d6e7b188e7ce2bfb76dad6fe39939e254f",
+    "src/manipulation_lab/common.py": "070045613cef54ab1a38578682208b15715811631773f3ae6b7e3d2f086a0028",
+    "src/manipulation_lab/evaluation.py": "6492b9b691fcaa3ad6594830dc078462b695a6d8e4a981ab4179ec7cc800f8ab",
+    "src/manipulation_lab/training.py": "5787b3bab9d89bde18d9113e2dcb54176311d0715998d13bc1da083bfddc546a",
+    "third_party/robomimic/robomimic/algo/bc.py": "dfe8054e956192182a167b8f4b6e0aead792f609fd0a70ff19cdca9d4bade374",
+    "third_party/robomimic/robomimic/config/bc_config.py": "daff093a4f0eb63d01a29ce176bd881674b2ebd49bf7081b6ffd77eaae9a28f5",
+    "third_party/robomimic/robomimic/utils/torch_utils.py": "a536c2c8525cbf32bb52c40dba55e0e912c1abbac75331465ccd411c0de23d67",
+    "notebooks/01_demonstrations.ipynb": "4bad389d4d91fee3f6bc3200a2509a64149b9fe205baf590fa75ebf563b2a6c9",
+    "notebooks/02_train_policy.ipynb": "15d26ce5cc126fed798ace4d4b4d8e110d5b8bf1c4377d24b89482bf7513689c",
+    "notebooks/03_policy_evaluation.ipynb": "04fd11c5964bccebe0c3525211e3d7fa707fd4593ba6309c1c8a02840ab517fb",
+    "notebooks/04_failure_analysis.ipynb": "c3c069e8c8345059ae722de4e5ba3aa72506cc28eaa53aa884366d7bfc139020"
+  },
+  "rubric": [
+    20,
+    25,
+    30,
+    25
+  ],
+  "submission": "1\u20132 page PDF and Notebook 04 evidence ZIP",
+  "control_hz": 20,
+  "observation_dimensions": 16,
+  "action_dimensions": 7,
+  "policy": "deterministic MLP 256/256/256",
+  "source_result_role": "One existing completed student example, not a target score or new benchmark.",
+  "revision": "Visual v3; supplementary same-observation example, not a new policy benchmark"
+}

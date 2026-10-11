@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "slides": 9,
+  "notes_seconds": 600,
+  "visible_language": "English",
+  "notes_language": "Chinese",
+  "native_text_word_counts": [
+    17,
+    46,
+    42,
+    44,
+    44,
+    61,
+    62,
+    40,
+    46
+  ],
+  "v2_native_text_word_counts": [
+    20,
+    59,
+    62,
+    79,
+    80,
+    96,
+    67,
+    61,
+    74
+  ],
+  "native_text_reduction_fraction": 0.3277591973244147,
+  "count_scope": "Editable slide text; mathematical graphic and chart-internal labels are excluded from both counts.",
+  "pdf_text_coverage": true,
+  "fonts": [
+    "SourceSans3-It",
+    "SourceSans3-Regular",
+    "SourceSerif4-Regular"
+  ],
+  "media": [
+    {
+      "file": "success_half_speed.mp4",
+      "seconds": 15.0,
+      "size": [
+        768,
+        768
+      ],
+      "decoded_frames": 75
+    },
+    {
+      "file": "human_demonstration.mp4",
+      "seconds": 5.9,
+      "size": [
+        384,
+        384
+      ],
+      "decoded_frames": 59
+    },
+    {
+      "file": "failure_original.mp4",
+      "seconds": 25.0,
+      "size": [
+        256,
+        256
+      ],
+      "decoded_frames": 125
+    }
+  ],
+  "embedded_media_matches": true,
+  "playback": {
+    "success_half_speed.mp4": {
+      "duration": 15,
+      "ended": true,
+      "error": null
+    },
+    "human_demonstration.mp4": {
+      "duration": 5.9,
+      "ended": true,
+      "error": null
+    },
+    "browser_version": "153.0.8010.12"
+  },
+  "failure_replay_errors": {
+    "object_position": 0.0,
+    "eef_position": 0.0,
+    "gripper_width": 0.0
+  },
+  "single_state_action_mse": 0.004584529834045113,
+  "formula": "Mean of componentwise squared differences across all seven components and batch samples.",
+  "formula_rendering": "STIX high-resolution image with LaTeX source; not individual manually placed glyphs.",
+  "limitations": [
+    "Native PowerPoint playback on the instructor computer remains untested.",
+    "Same-state illustration is not a new held-out rollout or policy performance estimate.",
+    "PDF is static. Equation is a typeset image; LaTeX source is supplied."
+  ],
+  "deliverable_sha256": {
+    "Manipulation_Learning_Lab.pptx": "fb17bed6fe236e134b352324598dd4e10f75823e4bbf298543618d48bf755bb1",
+    "Manipulation_Learning_Lab.pdf": "a4927349e9a828f0b3b26bd5e92f70fcefb0c95581f547cfb335d49097dbed5a",
+    "speaker_notes_zh.txt": "233c932cfb549736044bc8c262530f50aa6e14c2d8a1ad3468a100bcf4476de5"
+  }
+}
