@@ -12,7 +12,7 @@ Create a separate v3 package with nine English slides, ten minutes of Chinese no
 - [x] Prepare traceable visual assets, open-license fonts and an actual single-state action comparison without training or selecting new rollouts.
 - [x] Build the visual deck, concise slide text and updated Chinese narration; restore supporting explanation following the user's live feedback.
 - [x] Inspect every rendered page; verify media, formula, word reduction and source contracts.
-- [ ] Commit and push only the v3 package and this plan; record delivery.
+- [x] Commit and push only the v3 package and this plan; package commit `f681679` was pushed to `origin/main`.
 
 ## Findings and decisions
 
@@ -23,6 +23,8 @@ Use the same successful and failed student episodes as v1/v2. Re-render only sav
 ## Current result
 
 The balanced v3 deck, static PDF, nine page previews and Chinese narration are complete. Final editable text is 402 words versus 598 in v2; the earlier 237-word draft was too terse. Counts exclude equation/chart-internal labels. Nine slides, 600 seconds of notes, English text, shape bounds, PDF text coverage, intended fonts, video byte identity, decoding and browser playback/seeking passed. The existing failure replay matched all 81 recovered states exactly for the checked quantities; the seven-component same-observation action MSE is 0.004584529834045113. No new training or policy-evaluation runs were performed. Native PowerPoint on the instructor's machine remains untested. No grading, notebook, training, environment, top-level README or older-deck changes were made.
+
+Delivery: `presentations/assignment_intro_20261012_v3/Manipulation_Learning_Lab.pptx`, the matching PDF, `preview/contact_sheet.png` and `speaker_notes_zh.txt`. The package README explains the bundled fonts, editable content and verification limits.
 
 ## Implementation
 
