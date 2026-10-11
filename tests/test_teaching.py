@@ -119,3 +119,27 @@ def test_notebook_report_figures_use_report_directory_not_notebook_cwd(tmp_path,
     (assets / "curve.png").unlink()
     with pytest.raises(FileNotFoundError):
         notebook_report_markdown(path)
+
+
+def test_requested_state_is_not_shifted_to_the_nearest_video_frame(tmp_path, monkeypatch):
+    """Synthetic unit fixture only: preserve the action-before-state indexing contract."""
+    from manipulation_lab import reporting
+    evaluation, output = tmp_path / "evaluation", tmp_path / "analysis"
+    evaluation.mkdir(); output.mkdir()
+    write_json(evaluation / "summary.json", {"episodes": [{"episode_id": "case", "stable_success": False,
+        "environment_success": False, "error": "", "video": "fixture.mp4", "policy_role": "student",
+        "checkpoint_sha256": "unit-fixture"}]})
+    np.savez(evaluation / "case.npz", actions=np.ones((2, 7)), eef_position=np.arange(9).reshape(3, 3),
+             object_position=np.arange(9).reshape(3, 3), gripper_width=[.08, .04, .02], video_control_steps=[1])
+    class Reader:
+        def count_frames(self): return 1
+        def get_data(self, index): return np.zeros((16, 16, 3), dtype=np.uint8)
+        def close(self): pass
+    monkeypatch.setattr(reporting.imageio, "get_reader", lambda _: Reader())
+    facts = reporting.failure_evidence(evaluation, "case", output, [0, 2], first_error_step=2)
+    first, last = facts["keyframes"]
+    assert first["recorded_control_step"] == 1 and first["requested_state"]["control_step"] == 0
+    assert first["requested_state"]["preceding_normalized_action"] is None
+    assert last["requested_state"]["eef_world_position_m"] == [6, 7, 8]
+    assert last["requested_state"]["gripper_opening_m"] == .02
+    assert last["requested_state"]["preceding_normalized_action"] == [1.] * 7

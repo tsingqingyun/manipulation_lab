@@ -1,0 +1,1041 @@
+{
+  "date": "2026-10-12",
+  "base_commit": "a2c58a7c606794233cdc1f24523ae11f29197788",
+  "artifact_root": "outputs/course_acceptance_20261012_v1",
+  "fresh_public_clone": true,
+  "fresh_python_environment": true,
+  "declared_packages_compatible": 163,
+  "public_package_cache_allowed": true,
+  "fresh_operating_system_install_verified": false,
+  "environment_isolation": {
+    "imports_inside_fresh_checkout": true,
+    "no_system_site_packages": true,
+    "kernel_matches_environment": true,
+    "module_paths": {
+      "manipulation_lab": "src/manipulation_lab/__init__.py",
+      "robomimic": "third_party/robomimic/robomimic/__init__.py",
+      "robosuite": "third_party/robosuite/robosuite/__init__.py",
+      "torch": "outputs/course_venv/lib/python3.12/site-packages/torch/__init__.py",
+      "mujoco": "outputs/course_venv/lib/python3.12/site-packages/mujoco/__init__.py",
+      "nbclient": "outputs/course_venv/lib/python3.12/site-packages/nbclient/__init__.py"
+    },
+    "submodules": "7c66e7a41b5d9dcc905b1a68346bfee1b49b79c9 third_party/robomimic (v0.4.0)\n 51cc01785bab80ffeed20da15e67d7dd4140e76a third_party/robosuite (v1.5.1)"
+  },
+  "dataset": {
+    "source": "https://huggingface.co/datasets/amandlek/robomimic/resolve/main/v1.5/can/ph/low_dim_v15.hdf5?download=true",
+    "sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+    "episodes": 200,
+    "control_steps": 23207,
+    "downloaded_anew": true
+  },
+  "cpu_smoke": {
+    "passed": true,
+    "device": "cpu",
+    "render_backend": "osmesa",
+    "elapsed_seconds": 57.420527826063335,
+    "versions": {
+      "python": "3.12.13",
+      "robomimic": "0.4.0",
+      "robosuite": "1.5.1",
+      "mujoco": "3.2.7",
+      "torch": "2.8.0",
+      "torchvision": "0.23.0",
+      "numpy": "1.26.4",
+      "h5py": "3.14.0",
+      "jupyterlab": "4.4.9"
+    },
+    "conditions": {
+      "standard": {
+        "episodes": 1,
+        "environment_success_rate": 0.0,
+        "stable_success_rate": 0.0
+      },
+      "shifted": {
+        "episodes": 1,
+        "environment_success_rate": 0.0,
+        "stable_success_rate": 0.0
+      }
+    },
+    "scope": "2 training epochs; real checkpoint loading and 2 closed-loop rollouts; not assignment completion"
+  },
+  "device_override_smoke": {
+    "passed": true,
+    "device": "cpu",
+    "render_backend": "osmesa",
+    "elapsed_seconds": 50.84668243303895,
+    "versions": {
+      "python": "3.12.13",
+      "robomimic": "0.4.0",
+      "robosuite": "1.5.1",
+      "mujoco": "3.2.7",
+      "torch": "2.8.0",
+      "torchvision": "0.23.0",
+      "numpy": "1.26.4",
+      "h5py": "3.14.0",
+      "jupyterlab": "4.4.9"
+    },
+    "conditions": {
+      "standard": {
+        "episodes": 1,
+        "environment_success_rate": 0.0,
+        "stable_success_rate": 0.0
+      },
+      "shifted": {
+        "episodes": 1,
+        "environment_success_rate": 0.0,
+        "stable_success_rate": 0.0
+      }
+    },
+    "scope": "2 training epochs; real checkpoint loading and 2 closed-loop rollouts; not assignment completion"
+  },
+  "reference": {
+    "ready": true,
+    "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+    "role": "instructor_reference",
+    "conditions": {
+      "standard": {
+        "episodes": 5,
+        "environment_success_rate": 0.8,
+        "stable_success_rate": 0.8
+      },
+      "shifted": {
+        "episodes": 5,
+        "environment_success_rate": 0.6,
+        "stable_success_rate": 0.4
+      }
+    },
+    "errors": 0,
+    "failure_episode": "standard_03",
+    "failure_video": "reference_evaluation/standard_03.mp4",
+    "source": "fixed reference trained from public data"
+  },
+  "reference_training": {
+    "epochs": 400,
+    "best_epoch": 15,
+    "best_validation_mse": 0.034575670678417776,
+    "elapsed_seconds": 50.41035832790658,
+    "device": "cuda"
+  },
+  "unit_tests": {
+    "passed": 13,
+    "failed": 0
+  },
+  "jupyter": {
+    "loopback_only": true,
+    "random_token_present": true,
+    "unauthenticated_api_status": 403,
+    "authenticated_api_status": 200,
+    "four_notebooks_listed": true,
+    "shutdown_status": 200,
+    "scope": "one local authenticated Jupyter server, not SSH/JupyterHub or separate users"
+  },
+  "negative_checks": {
+    "checks": [
+      {
+        "case": "missing_reference",
+        "nonzero_exit": true,
+        "message_found": "Reference missing. Use --train"
+      },
+      {
+        "case": "cuda_unavailable",
+        "nonzero_exit": true,
+        "message_found": "CUDA unavailable. Select device='cpu' explicitly"
+      },
+      {
+        "case": "preserve_output",
+        "nonzero_exit": true,
+        "message_found": "FileExistsError"
+      },
+      {
+        "case": "missing_environment",
+        "nonzero_exit": true,
+        "message_found": "Environment missing."
+      }
+    ],
+    "existing_checkpoint_preserved": true
+  },
+  "documentation": {
+    "student_docs_english": true,
+    "four_notebooks_have_required_sections": true,
+    "notebook_code_parses": true,
+    "source_notebooks_clean": true,
+    "bash_blocks_syntax_checked": 15,
+    "local_links_checked": true,
+    "administrative_commands_executed": false,
+    "administrative_note": "sudo packages, real user/group setup and SSH/JupyterHub require site administrator; syntax and documented prerequisites checked only"
+  },
+  "classroom": {
+    "notebook_and_queue_acceptance_passed": true,
+    "formal_multiuser_deployment_passed": false,
+    "account_isolation_verified": false,
+    "limitation": "Same system UID; separate account permissions and JupyterHub authentication not verified",
+    "elapsed_seconds": 1024.8060512491502,
+    "groups": [
+      {
+        "group": "group_01",
+        "exit_code": 0,
+        "execution": {
+          "group": "group_01",
+          "notebooks": [
+            {
+              "notebook": "01_demonstrations.ipynb",
+              "elapsed_seconds": 22.86837279004976,
+              "passed": true
+            },
+            {
+              "notebook": "02_train_policy.ipynb",
+              "elapsed_seconds": 490.9378829509951,
+              "passed": true
+            },
+            {
+              "notebook": "03_policy_evaluation.ipynb",
+              "elapsed_seconds": 0.9024859587661922,
+              "passed": true
+            },
+            {
+              "notebook": "04_failure_analysis.ipynb",
+              "elapsed_seconds": 2.036095257848501,
+              "passed": true
+            }
+          ],
+          "completed": true
+        }
+      },
+      {
+        "group": "group_02",
+        "exit_code": 0,
+        "execution": {
+          "group": "group_02",
+          "notebooks": [
+            {
+              "notebook": "01_demonstrations.ipynb",
+              "elapsed_seconds": 12.600528852082789,
+              "passed": true
+            },
+            {
+              "notebook": "02_train_policy.ipynb",
+              "elapsed_seconds": 863.0299109183252,
+              "passed": true
+            },
+            {
+              "notebook": "03_policy_evaluation.ipynb",
+              "elapsed_seconds": 0.8954931469634175,
+              "passed": true
+            },
+            {
+              "notebook": "04_failure_analysis.ipynb",
+              "elapsed_seconds": 1.9696337911300361,
+              "passed": true
+            }
+          ],
+          "completed": true
+        }
+      },
+      {
+        "group": "group_03",
+        "exit_code": 0,
+        "execution": {
+          "group": "group_03",
+          "notebooks": [
+            {
+              "notebook": "01_demonstrations.ipynb",
+              "elapsed_seconds": 7.426418689079583,
+              "passed": true
+            },
+            {
+              "notebook": "02_train_policy.ipynb",
+              "elapsed_seconds": 256.48803385719657,
+              "passed": true
+            },
+            {
+              "notebook": "03_policy_evaluation.ipynb",
+              "elapsed_seconds": 0.8766528251580894,
+              "passed": true
+            },
+            {
+              "notebook": "04_failure_analysis.ipynb",
+              "elapsed_seconds": 2.049050881061703,
+              "passed": true
+            }
+          ],
+          "completed": true
+        }
+      },
+      {
+        "group": "group_04",
+        "exit_code": 0,
+        "execution": {
+          "group": "group_04",
+          "notebooks": [
+            {
+              "notebook": "01_demonstrations.ipynb",
+              "elapsed_seconds": 268.604870764073,
+              "passed": true
+            },
+            {
+              "notebook": "02_train_policy.ipynb",
+              "elapsed_seconds": 303.4088335381821,
+              "passed": true
+            },
+            {
+              "notebook": "03_policy_evaluation.ipynb",
+              "elapsed_seconds": 0.8345090900547802,
+              "passed": true
+            },
+            {
+              "notebook": "04_failure_analysis.ipynb",
+              "elapsed_seconds": 2.0560612035915256,
+              "passed": true
+            }
+          ],
+          "completed": true
+        }
+      },
+      {
+        "group": "group_05",
+        "exit_code": 0,
+        "execution": {
+          "group": "group_05",
+          "notebooks": [
+            {
+              "notebook": "01_demonstrations.ipynb",
+              "elapsed_seconds": 273.4516631620936,
+              "passed": true
+            },
+            {
+              "notebook": "02_train_policy.ipynb",
+              "elapsed_seconds": 660.7089238339104,
+              "passed": true
+            },
+            {
+              "notebook": "03_policy_evaluation.ipynb",
+              "elapsed_seconds": 0.8761289268732071,
+              "passed": true
+            },
+            {
+              "notebook": "04_failure_analysis.ipynb",
+              "elapsed_seconds": 2.0186429019086063,
+              "passed": true
+            }
+          ],
+          "completed": true
+        }
+      },
+      {
+        "group": "group_06",
+        "exit_code": 0,
+        "execution": {
+          "group": "group_06",
+          "notebooks": [
+            {
+              "notebook": "01_demonstrations.ipynb",
+              "elapsed_seconds": 17.668781397864223,
+              "passed": true
+            },
+            {
+              "notebook": "02_train_policy.ipynb",
+              "elapsed_seconds": 799.4094373281114,
+              "passed": true
+            },
+            {
+              "notebook": "03_policy_evaluation.ipynb",
+              "elapsed_seconds": 0.8818914997391403,
+              "passed": true
+            },
+            {
+              "notebook": "04_failure_analysis.ipynb",
+              "elapsed_seconds": 1.9837917750701308,
+              "passed": true
+            }
+          ],
+          "completed": true
+        }
+      }
+    ],
+    "peak_live_groups": 6,
+    "max_active_resource_slots": {
+      "evaluation": 1,
+      "training": 1
+    },
+    "max_queue_wait_seconds": 543.0650128270499,
+    "peak_process_tree_rss_sum_gib": 9.684303283691406,
+    "rss_note": "Sum includes shared pages; not unique physical memory",
+    "teacher_reference": {
+      "ready": true,
+      "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+      "role": "instructor_reference",
+      "conditions": {
+        "standard": {
+          "episodes": 5,
+          "environment_success_rate": 0.8,
+          "stable_success_rate": 0.8
+        },
+        "shifted": {
+          "episodes": 5,
+          "environment_success_rate": 0.6,
+          "stable_success_rate": 0.4
+        }
+      },
+      "errors": 0,
+      "failure_episode": "standard_03",
+      "failure_video": "reference_evaluation/standard_03.mp4",
+      "source": "existing trusted instructor model; fresh fixed evaluation"
+    }
+  },
+  "artifact_checks": {
+    "passed": true,
+    "executed_notebooks": 24,
+    "inline_png_outputs": 72,
+    "real_student_evaluations_checked": 120,
+    "archives_verified": 6,
+    "aggregate_rows": 12,
+    "exact_state_and_nearest_video_mapping_checked": true,
+    "all_video_first_last_frames_decoded": true,
+    "archive_sha256_and_relative_csv_paths_checked": true,
+    "all_automated_reports_correctly_marked_draft": true,
+    "records": [
+      {
+        "group": "group_01",
+        "variant": "lr_a",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 0.4,
+            "stable_success_rate": 0.4
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 0.6,
+            "stable_success_rate": 0.6
+          }
+        }
+      },
+      {
+        "group": "group_01",
+        "variant": "lr_b",
+        "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          }
+        }
+      },
+      {
+        "group": "group_02",
+        "variant": "lr_a",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 0.4,
+            "stable_success_rate": 0.4
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 0.6,
+            "stable_success_rate": 0.6
+          }
+        }
+      },
+      {
+        "group": "group_02",
+        "variant": "lr_b",
+        "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          }
+        }
+      },
+      {
+        "group": "group_03",
+        "variant": "lr_a",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 0.4,
+            "stable_success_rate": 0.4
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 0.6,
+            "stable_success_rate": 0.6
+          }
+        }
+      },
+      {
+        "group": "group_03",
+        "variant": "lr_b",
+        "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          }
+        }
+      },
+      {
+        "group": "group_04",
+        "variant": "lr_a",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 0.4,
+            "stable_success_rate": 0.4
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 0.6,
+            "stable_success_rate": 0.6
+          }
+        }
+      },
+      {
+        "group": "group_04",
+        "variant": "lr_b",
+        "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          }
+        }
+      },
+      {
+        "group": "group_05",
+        "variant": "lr_a",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 0.4,
+            "stable_success_rate": 0.4
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 0.6,
+            "stable_success_rate": 0.6
+          }
+        }
+      },
+      {
+        "group": "group_05",
+        "variant": "lr_b",
+        "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          }
+        }
+      },
+      {
+        "group": "group_06",
+        "variant": "lr_a",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 0.4,
+            "stable_success_rate": 0.4
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 0.6,
+            "stable_success_rate": 0.6
+          }
+        }
+      },
+      {
+        "group": "group_06",
+        "variant": "lr_b",
+        "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+        "conditions": {
+          "standard": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          },
+          "shifted": {
+            "episodes": 5,
+            "environment_success_rate": 1.0,
+            "stable_success_rate": 1.0
+          }
+        }
+      }
+    ]
+  },
+  "training": [
+    {
+      "group": "group_01",
+      "variant": "lr_a",
+      "epochs": 50,
+      "best_epoch": 7,
+      "best_validation_mse": 0.03473110596361063,
+      "elapsed_seconds": 6.2696264130063355,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_01",
+      "variant": "lr_b",
+      "epochs": 50,
+      "best_epoch": 11,
+      "best_validation_mse": 0.03469040771542544,
+      "elapsed_seconds": 7.524354604072869,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_02",
+      "variant": "lr_a",
+      "epochs": 50,
+      "best_epoch": 7,
+      "best_validation_mse": 0.03473110596361063,
+      "elapsed_seconds": 7.366389203350991,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_02",
+      "variant": "lr_b",
+      "epochs": 50,
+      "best_epoch": 11,
+      "best_validation_mse": 0.03469040771542544,
+      "elapsed_seconds": 7.429724518675357,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_03",
+      "variant": "lr_a",
+      "epochs": 50,
+      "best_epoch": 7,
+      "best_validation_mse": 0.03473110596361063,
+      "elapsed_seconds": 6.28915608394891,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_03",
+      "variant": "lr_b",
+      "epochs": 50,
+      "best_epoch": 11,
+      "best_validation_mse": 0.03469040771542544,
+      "elapsed_seconds": 7.591852526180446,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_04",
+      "variant": "lr_a",
+      "epochs": 50,
+      "best_epoch": 7,
+      "best_validation_mse": 0.03473110596361063,
+      "elapsed_seconds": 6.47141746012494,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_04",
+      "variant": "lr_b",
+      "epochs": 50,
+      "best_epoch": 11,
+      "best_validation_mse": 0.03469040771542544,
+      "elapsed_seconds": 7.541941535659134,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_05",
+      "variant": "lr_a",
+      "epochs": 50,
+      "best_epoch": 7,
+      "best_validation_mse": 0.03473110596361063,
+      "elapsed_seconds": 7.481112643145025,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_05",
+      "variant": "lr_b",
+      "epochs": 50,
+      "best_epoch": 11,
+      "best_validation_mse": 0.03469040771542544,
+      "elapsed_seconds": 7.070419554132968,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_06",
+      "variant": "lr_a",
+      "epochs": 50,
+      "best_epoch": 7,
+      "best_validation_mse": 0.03473110596361063,
+      "elapsed_seconds": 7.32206670101732,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    },
+    {
+      "group": "group_06",
+      "variant": "lr_b",
+      "epochs": 50,
+      "best_epoch": 11,
+      "best_validation_mse": 0.03469040771542544,
+      "elapsed_seconds": 8.09236419107765,
+      "initial_weights_sha256": "a60a94c42f095b6df28783e23a0bd0ebebb7aafbb3512a863a42c0f69a57dbcc"
+    }
+  ],
+  "paired_student_results": [
+    {
+      "group": "group_01",
+      "variant": "lr_a",
+      "learning_rate": "0.001",
+      "selected_epoch": "7",
+      "validation_mse": "0.03473110596361063",
+      "standard_stable_success_rate": "0.4",
+      "shifted_stable_success_rate": "0.6",
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+      "status": "complete"
+    },
+    {
+      "group": "group_01",
+      "variant": "lr_b",
+      "learning_rate": "0.0003",
+      "selected_epoch": "11",
+      "validation_mse": "0.03469040771542544",
+      "standard_stable_success_rate": "1.0",
+      "shifted_stable_success_rate": "1.0",
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+      "status": "complete"
+    },
+    {
+      "group": "group_02",
+      "variant": "lr_a",
+      "learning_rate": "0.001",
+      "selected_epoch": "7",
+      "validation_mse": "0.03473110596361063",
+      "standard_stable_success_rate": "0.4",
+      "shifted_stable_success_rate": "0.6",
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+      "status": "complete"
+    },
+    {
+      "group": "group_02",
+      "variant": "lr_b",
+      "learning_rate": "0.0003",
+      "selected_epoch": "11",
+      "validation_mse": "0.03469040771542544",
+      "standard_stable_success_rate": "1.0",
+      "shifted_stable_success_rate": "1.0",
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+      "status": "complete"
+    },
+    {
+      "group": "group_03",
+      "variant": "lr_a",
+      "learning_rate": "0.001",
+      "selected_epoch": "7",
+      "validation_mse": "0.03473110596361063",
+      "standard_stable_success_rate": "0.4",
+      "shifted_stable_success_rate": "0.6",
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+      "status": "complete"
+    },
+    {
+      "group": "group_03",
+      "variant": "lr_b",
+      "learning_rate": "0.0003",
+      "selected_epoch": "11",
+      "validation_mse": "0.03469040771542544",
+      "standard_stable_success_rate": "1.0",
+      "shifted_stable_success_rate": "1.0",
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+      "status": "complete"
+    },
+    {
+      "group": "group_04",
+      "variant": "lr_a",
+      "learning_rate": "0.001",
+      "selected_epoch": "7",
+      "validation_mse": "0.03473110596361063",
+      "standard_stable_success_rate": "0.4",
+      "shifted_stable_success_rate": "0.6",
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+      "status": "complete"
+    },
+    {
+      "group": "group_04",
+      "variant": "lr_b",
+      "learning_rate": "0.0003",
+      "selected_epoch": "11",
+      "validation_mse": "0.03469040771542544",
+      "standard_stable_success_rate": "1.0",
+      "shifted_stable_success_rate": "1.0",
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+      "status": "complete"
+    },
+    {
+      "group": "group_05",
+      "variant": "lr_a",
+      "learning_rate": "0.001",
+      "selected_epoch": "7",
+      "validation_mse": "0.03473110596361063",
+      "standard_stable_success_rate": "0.4",
+      "shifted_stable_success_rate": "0.6",
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+      "status": "complete"
+    },
+    {
+      "group": "group_05",
+      "variant": "lr_b",
+      "learning_rate": "0.0003",
+      "selected_epoch": "11",
+      "validation_mse": "0.03469040771542544",
+      "standard_stable_success_rate": "1.0",
+      "shifted_stable_success_rate": "1.0",
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+      "status": "complete"
+    },
+    {
+      "group": "group_06",
+      "variant": "lr_a",
+      "learning_rate": "0.001",
+      "selected_epoch": "7",
+      "validation_mse": "0.03473110596361063",
+      "standard_stable_success_rate": "0.4",
+      "shifted_stable_success_rate": "0.6",
+      "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+      "status": "complete"
+    },
+    {
+      "group": "group_06",
+      "variant": "lr_b",
+      "learning_rate": "0.0003",
+      "selected_epoch": "11",
+      "validation_mse": "0.03469040771542544",
+      "standard_stable_success_rate": "1.0",
+      "shifted_stable_success_rate": "1.0",
+      "checkpoint_sha256": "8bcb6ce7145de39df71422e8ca5eeba9fff8de4f34ed77fa3019c1e3b1b912f9",
+      "status": "complete"
+    }
+  ],
+  "metadata_correction": {
+    "affected": [
+      "fresh_checkout/outputs/fresh_cpu_smoke_v1/evaluation/summary.json",
+      "fresh_checkout/checkpoints/reference_v1/reference_evaluation/summary.json"
+    ],
+    "actual_render_backend": "osmesa",
+    "actual_rollout_compute": "CPU inference and physics",
+    "reason": "An existing hardcoded rollout_device label claimed EGL rendering. The launched environment and smoke.json record OSMesa. The source label was corrected before classroom student evaluation.",
+    "raw_metrics_modified": false,
+    "experiments_repeated_for_this_fix": false
+  },
+  "runtime_source_manifest": [
+    {
+      "file": "src/manipulation_lab/__init__.py",
+      "sha256": "78bce12102ca201611e52281d90c403b75de5a466efa39289615f11a91f1df88"
+    },
+    {
+      "file": "src/manipulation_lab/classroom.py",
+      "sha256": "7200f792bdac5f32bddc6f0a17e3e3cc85a5169a8e05b4b67dfa34b9297f12c1"
+    },
+    {
+      "file": "src/manipulation_lab/common.py",
+      "sha256": "070045613cef54ab1a38578682208b15715811631773f3ae6b7e3d2f086a0028"
+    },
+    {
+      "file": "src/manipulation_lab/dataset.py",
+      "sha256": "5987d462552608f539eab411144fbb0f0c4c5bfc25eaf8d8435140895accf876"
+    },
+    {
+      "file": "src/manipulation_lab/evaluation.py",
+      "sha256": "6492b9b691fcaa3ad6594830dc078462b695a6d8e4a981ab4179ec7cc800f8ab"
+    },
+    {
+      "file": "src/manipulation_lab/notebook.py",
+      "sha256": "3c426cd36491dae9bc79094c33039faf1ec7d83351afee140fd571d44a421954"
+    },
+    {
+      "file": "src/manipulation_lab/policy.py",
+      "sha256": "1d3601d66e445e82fc4df769890530d6e7b188e7ce2bfb76dad6fe39939e254f"
+    },
+    {
+      "file": "src/manipulation_lab/reporting.py",
+      "sha256": "e68a3c4d27da379884978df8b3b7354778d4e14e6073918ea853250f929cd5e0"
+    },
+    {
+      "file": "src/manipulation_lab/simulator.py",
+      "sha256": "4e1da18b86798b03c6ba094dc4d8d945e8a3328dd21f8afd7257dedabcc6ba0b"
+    },
+    {
+      "file": "src/manipulation_lab/teaching.py",
+      "sha256": "5cadab14d08eb19252bea34d9faa6ee047ede635d1b90057e93533bd052d5717"
+    },
+    {
+      "file": "src/manipulation_lab/training.py",
+      "sha256": "5787b3bab9d89bde18d9113e2dcb54176311d0715998d13bc1da083bfddc546a"
+    },
+    {
+      "file": "src/manipulation_lab/visualization.py",
+      "sha256": "64909680919defbe84166ca553413cba804ae3e825469e1fb1cc8c7105d525f7"
+    },
+    {
+      "file": "scripts/_bootstrap.py",
+      "sha256": "04a6b012cafe0a75666c8e492de96662cb1c3db29353afc797bfb92d577431e4"
+    },
+    {
+      "file": "scripts/aggregate_results.py",
+      "sha256": "e672d63a0f44fc46267acc1d2ba83a8ca9c0c6a629b13a696b3257617bc1d514"
+    },
+    {
+      "file": "scripts/controlled_experiment.py",
+      "sha256": "1834365b308b56cecd0b635e5e018faa223fff80f84fd615eac1c77dfa15be03"
+    },
+    {
+      "file": "scripts/download_dataset.py",
+      "sha256": "cef44b55cfbb16c3051896c384eb81aaf9a5f89d74f473a0b9e7e5575d0d2483"
+    },
+    {
+      "file": "scripts/evaluate.py",
+      "sha256": "618cd972c6584867b4616d6d6a8e2e19be686325cbdca96df331566258d07c29"
+    },
+    {
+      "file": "scripts/execute_notebooks.py",
+      "sha256": "0f8f3947972d5b4312fb719f1f1008a2251859b7cbe414888923e9c706d1aa64"
+    },
+    {
+      "file": "scripts/export_submission.py",
+      "sha256": "a1b6f175d0e4c8520b794521d452c12330445f358dc8e224d2394d716ba78166"
+    },
+    {
+      "file": "scripts/generate_report.py",
+      "sha256": "53703fe4aef5ed1b15c3758f6be2764764a40ef0cd4711e360ff2458a761213c"
+    },
+    {
+      "file": "scripts/inspect_dataset.py",
+      "sha256": "02dd9d71d7b4df279bcfe0bd99a74590c324cd764afe08c76cf8584658de6713"
+    },
+    {
+      "file": "scripts/preflight.py",
+      "sha256": "faa0ebfc8ee777e3defdeb83a329751cc1efbf58eee2503c440e29ddbb2c91a2"
+    },
+    {
+      "file": "scripts/prepare_reference.py",
+      "sha256": "3f6c6ae02b55711578fbbd1df7339a694201208bf895ed667e6d611872aa8a53"
+    },
+    {
+      "file": "scripts/replay_demo.py",
+      "sha256": "a78c1fe42d8540bd8353264a7328e669f1605cc945686a58fb9541b7cc3abf0d"
+    },
+    {
+      "file": "scripts/smoke_test.py",
+      "sha256": "f199d01f6a445b96a09b7348e95e7c70ac572d4ee1020963d93e858bdecafd7f"
+    },
+    {
+      "file": "scripts/start_lab.py",
+      "sha256": "be8e1b0f57c495ec5c620ccda949b028ec40b16f8c4ff391a5fe690eabb83aa6"
+    },
+    {
+      "file": "scripts/train.py",
+      "sha256": "9a634a0606456a74080707b845c695abe3eab43b5bc32923eaf71d70697133cf"
+    },
+    {
+      "file": "scripts/validate_classroom.py",
+      "sha256": "620abe44c5bb6b922646fd671baba361d67c17c0826ea5b8063f2b04cb6c99f0"
+    },
+    {
+      "file": "scripts/lab_python.sh",
+      "sha256": "f9066893d9347f34f8e8e506691f0e58954e6afb3ea0b4690556181650c3f6a0"
+    },
+    {
+      "file": "scripts/setup_environment.sh",
+      "sha256": "7b0723c9973dcb1de0cff7ce6c63e6da33dca34be51bac5ed5ce5267c4db129d"
+    },
+    {
+      "file": "notebooks/01_demonstrations.ipynb",
+      "sha256": "4bad389d4d91fee3f6bc3200a2509a64149b9fe205baf590fa75ebf563b2a6c9"
+    },
+    {
+      "file": "notebooks/02_train_policy.ipynb",
+      "sha256": "15d26ce5cc126fed798ace4d4b4d8e110d5b8bf1c4377d24b89482bf7513689c"
+    },
+    {
+      "file": "notebooks/03_policy_evaluation.ipynb",
+      "sha256": "04fd11c5964bccebe0c3525211e3d7fa707fd4593ba6309c1c8a02840ab517fb"
+    },
+    {
+      "file": "notebooks/04_failure_analysis.ipynb",
+      "sha256": "c3c069e8c8345059ae722de4e5ba3aa72506cc28eaa53aa884366d7bfc139020"
+    },
+    {
+      "file": "tests/test_dataset.py",
+      "sha256": "dc8253d7bf1f63c6049983b45d799de44e0ceceb00306dec01af68f99f8ec9f7"
+    },
+    {
+      "file": "tests/test_evaluation.py",
+      "sha256": "17e5a2fc1174766b32e0deec9cc3bdddeee07429fd01d8630a7ecb0c916132b3"
+    },
+    {
+      "file": "tests/test_policy.py",
+      "sha256": "81033b363a7d0f9744c40c8136036abac296ec162a94af2ac660a79117aa94be"
+    },
+    {
+      "file": "tests/test_teaching.py",
+      "sha256": "0b7e3768ef11698e4dc6e1abcecf112b7d83111f57069135b03b4ad0a057057a"
+    },
+    {
+      "file": "configs/bc_reference.json",
+      "sha256": "11c4615cad8b1afa356956ecd8019b98f536e73308ab570c50e4e5c18004e861"
+    },
+    {
+      "file": "configs/bc_student.json",
+      "sha256": "f2307c3baae312a4af674ca70ce7414abebb48c538a42f8fe3f2eab5cd9b9717"
+    },
+    {
+      "file": "configs/controlled_experiment.json",
+      "sha256": "ed3d64d95fdb8bf641d848ce7a0d95c410cf20daa20bcd9261f7a35469c161cb"
+    },
+    {
+      "file": "configs/environment.yaml",
+      "sha256": "c45428eacd5e9a14162b19b97942b541bde8ff7fea55c74605b7fa62c63e617a"
+    },
+    {
+      "file": "configs/evaluation.yaml",
+      "sha256": "05bba8c3ae9973e2cc7b3edb1fbf87aa5ed7a66e74c2e6faa0622f5b992f432a"
+    }
+  ],
+  "limitations": [
+    "No clean-OS sudo installation test",
+    "Six processes share one Unix UID; separate accounts and permission isolation unverified",
+    "Institutional JupyterHub/SSH/TLS not verified",
+    "No interactive browser playback/seek test",
+    "Full CPU-only classroom timing on lower-resource hardware unverified",
+    "Student answers deliberately blank and automated reports DRAFT",
+    "Five paired cases per condition; six identical-seed groups are not independent statistical samples"
+  ]
+}

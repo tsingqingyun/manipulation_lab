@@ -10,7 +10,7 @@ import signal
 import time
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "data/low_dim_v15.hdf5"
+DATA = Path(os.environ.get("LAB_DATASET", ROOT / "data/low_dim_v15.hdf5")).expanduser().resolve()
 KEYS = ["robot0_eef_pos", "robot0_eef_quat", "robot0_gripper_qpos", "object"]
 
 

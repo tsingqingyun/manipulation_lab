@@ -131,7 +131,7 @@ def run_experiment(base, design, evaluation_config, output, dataset=DATA):
                 history = list(csv.DictReader(f))
             for ax, metric in zip(axes, ("training_loss", "validation_loss")):
                 ax.plot([int(r["epoch"]) for r in history], [float(r[metric]) for r in history], label=f"LR {settings['learning_rate']}")
-                ax.set(xlabel="Epoch", ylabel=metric, yscale="log"); ax.legend()
+                ax.set(xlabel="Epoch", ylabel=metric.replace("_", " ") + " (action MSE)", yscale="log"); ax.legend()
             write_csv(evaluation / "paired_results.csv", paired_cases(result))
             position_plot(read_json(training / "dataset_inspection.json"), result, evaluation / "initial_positions.png")
             row = {"variant": name, "learning_rate": settings["learning_rate"], "epochs": train["epochs"],

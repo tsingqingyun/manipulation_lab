@@ -16,7 +16,8 @@ controller: 'BASIC/right/OSC_POSE; delta in world frame; GRIP'
 control_hz: 20
 observation_adapter: 'world_pose_only_v1; eef xyz/xyzw, gripper qpos, object[7:14]; 16 dimensions'
 action: '7 dimensions; normalized [-1,1]; xyz scaled by 0.05 m, rotation axis-angle by 0.5 rad, gripper +close/-open'
-render_backend: EGL
+render_backend: EGL  # wrapper default; set MUJOCO_GL=osmesa for software rendering
+supported_render_backends: [egl, osmesa]
 max_concurrent_evaluations: 1
 max_concurrent_training_jobs: 1
 cpu_threads_per_job: 2

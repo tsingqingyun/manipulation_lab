@@ -13,6 +13,7 @@ from manipulation_lab.teaching import read_json
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--output", required=True)
+    p.add_argument("--checkpoint", default=str(ROOT / "checkpoints/instructor_reference.pth"))
     a = p.parse_args()
     output = new_output(a.output).resolve()
     start = time.monotonic()
@@ -27,7 +28,7 @@ if __name__ == "__main__":
         "uid": os.getuid(), "available_ram_gib_at_start": psutil.virtual_memory().available / 2**30,
         "account_isolation_verified": False, "concurrency_scope": "six independent Jupyter kernels under one OS user"})
     with open(output / "reference.log", "x") as log:
-        subprocess.run([python, str(ROOT / "scripts/prepare_reference.py"), "--output", str(output / "reference")],
+        subprocess.run([python, str(ROOT / "scripts/prepare_reference.py"), "--checkpoint", a.checkpoint, "--output", str(output / "reference")],
                        cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)
     processes = []
     for i in range(1, 7):

@@ -1,5 +1,6 @@
 import _bootstrap
 import argparse
+import os
 import json
 from pathlib import Path
 import yaml
@@ -13,7 +14,11 @@ if __name__ == "__main__":
     p.add_argument("--evaluation-config", default=str(ROOT / "configs/evaluation.yaml"))
     p.add_argument("--dataset", default=str(DATA))
     p.add_argument("--output", required=True)
+    p.add_argument("--device", choices=["cpu", "cuda"], default=os.environ.get("LAB_DEVICE"))
     a = p.parse_args()
-    result = run_experiment(read_json(a.config), read_json(a.design),
+    settings = read_json(a.config)
+    if a.device:
+        settings["device"] = a.device
+    result = run_experiment(settings, read_json(a.design),
                             yaml.safe_load(Path(a.evaluation_config).read_text()), a.output, a.dataset)
     print(json.dumps(result["comparison"], indent=2))

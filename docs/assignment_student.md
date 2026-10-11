@@ -1,60 +1,57 @@
-# Assignment 2 — Manipulation Learning Lab
+# Student Assignment
 
-目标：机器人通过人类示教学习抓取 Can，搬运到指定容器、释放并稳定放置。你将回答数据从哪来、怎样训练策略、怎样闭环控制、为什么仍会失败。每组提交一份报告，不需额外 PPT。
+Complete four notebooks in order in your assigned group. Plan 130–160 minutes for execution and discussion, plus time to polish your report. Installation is prepared before class. All student results must come from your own actual training and simulator rollouts.
 
-## 开始之前
+## Part 1 — Understanding Demonstrations (20 points)
 
-教师提供浏览器地址、账号和组号。打开 JupyterLab，选择 **Manipulation Lab (Python 3.12)** 内核。Shift+Enter 运行一个单元；左侧 `[*]` 表示还在执行。按 01→02→03→04 顺序，不跳过训练。重跑会创建新结果目录；01 第一格重新执行会开始全新实验。课堂时间主要用于理解、比较和分析，计算本身可以很快。
+Play one human demonstration. Identify the 16-value policy observation and 7-value normalized action, their coordinate frame and units. Inspect the 160/20/20 whole-episode split and the initial-position plot. Explain why a trajectory supplies information that a successful final image does not.
 
-| Task | What to do | 时间 | Deliverable |
-|---|---|---:|---|
-| Explore Demonstrations | 看一整条人类观测—动作轨迹 | 20 min | demonstration_analysis.json |
-| Train a Policy | 必做两学习率对照，两次真实训练与同条件评测 | 50–60 min | 两套曲线、配置、checkpoint、对照表 |
-| Evaluate the Policy | 位置覆盖与标准/位移逐案例配对 | 40–50 min | 位置图、配对CSV/JSON、真实视频 |
-| Analyze a Failure | 找到第一次可见错误，区分事实和原因假设 | 20–30 min | 1–2 页报告、关键帧 |
+Deliver: Q1, demonstration video/provenance, observation/action inspection and initial-position figure.
 
-其余时间用于熟悉 Notebook 和处理错误，总计约 2–3 小时。
+## Part 2 — Training a Behavior Cloning Policy (25 points)
 
-## 核心概念
+Complete the mandatory learning-rate comparison: 0.001 versus 0.0003. Keep the dataset, whole-episode split, three 256-unit hidden layers, seed 17, initialization, 50 epochs, batch size, normalization and device identical. The code verifies these controls. Each model is selected at its best validation epoch; the primary model remains `lr_a`, chosen before test results.
 
-Observation（观测）：机器人当前知道什么，例如末端和物体位置。Action（动作）：控制器这一步接收什么，例如向某方向移动、开合夹爪。Demonstration（示教）：专家连续完成任务留下的观测和动作序列。Policy（策略）：从观测计算动作的函数。Training（训练）：用专家动作作为标签来更新网络。Inference（推理）：网络参数不变，只计算动作。Rollout（闭环运行）：动作影响仿真，新观测再输入策略。Success Rate（成功率）：成功回合数除以测试回合数。
+Deliver: both configurations, checkpoints, raw training/validation loss CSVs, curves with selected epochs, comparison table and Q2–Q3. Explain how the two curves relate to actual manipulation outcomes. Do not change seeds, discard an unsuccessful variant or use the test set for model selection.
 
-## Task 1 — 01_demonstrations.ipynb
+## Part 3 — Policy Evaluation and Generalization (30 points)
 
-选择一条 demonstration，查看轨迹长度、关键步、末端位置、Can 高度与夹爪命令。观看视频时确认这是人类记录状态的回放。位置单位米，控制频率 20 Hz；每步 0.05 秒不是原始采集时间戳。
+Each checkpoint must execute the same 5 standard and 5 Position Shift cases. Compare each paired case using its source episode and seed. Inspect actual test initial states relative to training demonstration initial states. Watch representative videos. Distinguish environment success from stable released placement.
 
-输入是 16 个状态数值；输出是 7 个归一化动作数值。观测不包含相机图像。四元数是表示方向的四个数，暂时不需要自己实现其运算。
+Deliver: both `summary.json` and `results.csv` files, evaluation configurations, test manifests, paired CSVs, position/success plots, representative rollout and Q4. Discuss that five cases per condition provide a coarse estimate. A +0.04 m world-X shift is not a certified OOD benchmark, even when the 2D scatter points differ.
 
-填写 Q1：What are the observations and actions in this task? Q2：Why do we need trajectories instead of only successful final images?
+## Part 4 — Failure Analysis (25 points)
 
-## Task 2 — 02_train_policy.ipynb
+Choose a completed real failure from the primary student model. If it has no failure, use explicitly attributed instructor evidence. Do not report the instructor model's outcome as yours. Inspect at least three control steps, mark the first observable error, and inspect the requested-step state alongside the nearest actual video frame. Explain any frame offset.
 
-看网络结构和专家动作，执行必做 Controlled Experiment（只改变一个因素的对照实验）。学习率预先固定为 1e-3 和 3e-4；数据及划分、256×3网络、种子17、50轮、batch size与归一化全部相同。不要同时修改轮数或结构。确定性 BC 使用均方误差：网络动作与专家动作越接近，损失越低。训练集和验证集按整条轨迹分开。
+Deliver: failure video, signal plot, selected frames, `observed_facts.json`, your first-error annotation, failure stage, hypothesis and improvement proposal. The proposal should describe a future controlled test; you do not need to implement another algorithm. Use `unknown` for the failure stage if the evidence is inconclusive, and explain why.
 
-检查两组 Training Loss 和 Validation Loss，保存各自的 student_policy.pth、训练CSV和对照表。Notebook 02 会接着让两份模型各执行标准5次、位移5次，核验测试案例一致。两组都要提交，不能看测试结果后选更高分的一组。后续主模型预先固定为 lr_a。较低验证损失不保证较高闭环成功率。
+## Report (1–2 pages)
 
-## Task 3 — 03_policy_evaluation.ipynb
+Include your group, run identifier, dataset/checkpoint identifiers and the following answers:
 
-读取 Task 2 已完成的两模型评测。二维图比较160条训练示教第一步的物体位置与实际测试初始位置，不是整条轨迹覆盖图。标准与世界X位移4cm的测试用 source_episode 和 seed 配对，逐个比较环境成功、稳定放置、执行步数和异常。不要只挑成功视频。位移仍在源容器内，Position Shift 不等于严格 OOD；二维位置图也不能证明高维分布之外的泛化。
+- **Q1. What observations and actions are used in this task?** Include dimensions, units, frame and gripper sign.
+- **Q2. How does behavior cloning learn from demonstrations?** Identify input, expert target, loss, weight update and validation selection.
+- **Q3. Does a lower training loss always result in better manipulation performance?** Cite your two learning-rate curves and success counts; distinguish open-loop prediction error from closed-loop behavior.
+- **Q4. How does changing the initial object position affect the learned policy?** Cite a paired case and the coverage figure, including the generalization limitation.
+- **Q5. Identify one failure and propose a possible improvement.** Cite its control step/frame and state; separate the observed error from the hypothesized cause and proposed test.
 
-查看环境成功和更严格的稳定放置成功。抓住或举起都不是完整成功。我们的稳定检查还要求放在指定格、释放、无夹爪接触，并持续至少一秒。五次只是课堂粗估；一次失败不意味着算法完全无效，一次成功也不证明可靠。
+A compact comparison table and one annotated failure figure are sufficient in the report. Put full curves, videos and raw records in the evidence appendix. The generated `report.md` is an evidence appendix, not a replacement for your discussion. Fill notebook answer cells in your own words; regenerate the final report after edits. Empty answers or no error marker keep it marked DRAFT.
 
-若自己的策略很差，仍应保留并提交真实结果。可查看明确标注 Instructor Reference 的教师评测，不能替换学生结果。
+## Submission
 
-## Task 4 — 04_failure_analysis.ipynb
+Submit your PDF and the ZIP produced by Notebook 04. It includes both model variants, training configurations, curves/logs, evaluation configurations/manifests/results, videos, failure evidence and class-summary CSV rows. Keep the original output directory. Do not submit environment packages, the public dataset, Jupyter tokens or unrelated files. The archive's local session pointers document the original run; report figure links are relative and work after extraction.
 
-选择真实失败，观看完整视频、末端与物体轨迹、夹爪命令及关键帧。阶段可选接近、抓取、抬起、搬运、放置或无法判断。程序不会根据最终误差替你编造根因。
+If interrupted by an infrastructure failure, retain its logs and partial output, notify the instructor and record any authorized rerun in your report. Do not hide failed experiments. A low policy success rate alone is not a reason to rerun or lose points.
 
-在 KEYFRAME_STEPS 中填写要查看的控制步；在 FIRST_ERROR_STEP 中标记第一次可见错误（不确定就保持 None）。夹爪开口（米）和归一化动作（无量纲）分轴显示。视频每4步采样，界面会注明请求步与实际帧的控制步差值；控制步0没有原始视频帧，不能把最接近的第1步当成第0步。修改标记后重新生成分析与报告。
+## Detailed Grading
 
-填写：失败发生在哪个阶段？第一个可观察错误是什么、在哪一步？可能原因是什么？怎样改进以及怎样验证？例如“物体从未抬高”是事实，“训练数据覆盖不足”是待检验原因，不能混为一谈。
+| Area | Points | Allocation |
+|---|---:|---|
+| Demonstration Understanding | 20 | 10 observation/action interpretation; 5 playback evidence; 5 split/trajectory explanation |
+| Policy Training & Experiment | 25 | 10 both real runs/checkpoints; 8 valid controls/configuration; 7 curves and Q2–Q3 interpretation |
+| Policy Evaluation | 30 | 10 complete paired metrics/manifests; 8 videos and position plot; 7 success-criterion interpretation; 5 Q4 and limits |
+| Failure Analysis & Discussion | 25 | 8 real attributed case and steps; 7 earliest observable error supported by state/frames; 7 plausible hypothesis/test; 3 concise reproducible report |
+| **Total** | **100** | Evidence, reproducibility and analysis; no points awarded solely for a higher success rate |
 
-生成 report.md 后整理成 1–2 页。空答案会保留 DRAFT 标记；这是提醒，不是已经完成的分析。若学生全部回合成功，可使用教师提供的真实失败记录，报告里保留来源标签。
-
-## 提交与评分
-
-每组一份 1–2 页报告，附示教分析 JSON、两学习率曲线与checkpoint、评测/配对 CSV、位置图、运行配置和所选关键帧。数据与权重不需要复制进报告正文。
-
-评分：示教理解 20%，真实训练 25%，完整评测 30%，失败分析 25%。不以绝对成功率作为主要评分依据。必须保留失败结果，不能用预录视频或教师权重冒充本人实验。
-
-常见问题：找不到 kernel 请选择教师提供的内核；找不到数据请联系教师运行下载；目录已存在请新建运行版本；CUDA 不可用时明确将 device 改为 cpu；仿真排队时等待共享资源锁；无成功视频表示这次确实没有稳定成功。更多见 troubleshooting.md。
+Incomplete evidence can receive partial credit with an honest explanation. Runtime failures are distinct from valid unsuccessful rollouts. A documented failed manipulation can receive full marks when the experiment and analysis meet the requirements.

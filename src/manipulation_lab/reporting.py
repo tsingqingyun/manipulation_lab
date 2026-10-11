@@ -86,6 +86,13 @@ def failure_evidence(evaluation, episode, output, requested_steps=None, first_er
                 raise ValueError("Video frame count does not match control-step mapping")
             frames = frame_selection(requested_steps, recorded, total)
             for i, frame in enumerate(frames):
+                step = frame["requested_control_step"]
+                frame["requested_state"] = {
+                    "control_step": step, "control_elapsed_s": step / 20,
+                    "eef_world_position_m": data["eef_position"][step].tolist(),
+                    "object_world_position_m": data["object_position"][step].tolist(),
+                    "gripper_opening_m": float(data["gripper_width"][step]),
+                    "preceding_normalized_action": data["actions"][step - 1].tolist() if step else None}
                 frame.update({"file": f"keyframe_{i}.png", "mapping_source": mapping_source})
                 imageio.imwrite(output / frame["file"], reader.get_data(frame["video_frame_index"]))
         finally:
@@ -93,6 +100,8 @@ def failure_evidence(evaluation, episode, output, requested_steps=None, first_er
     else:
         raise ValueError("Selected failure has no recorded video")
     fig = failure_signal_figure(data, first_error_step)
+    fig.suptitle(f"{episode} · {row['policy_role']} · simulated world state / normalized command")
+    fig.tight_layout(rect=(0, 0, 1, .97))
     fig.savefig(output / "failure_signals.png", dpi=140); plt.close(fig)
     facts = {"episode": episode, "source": "learned_policy_rollout", "environment_success": row["environment_success"],
         "stable_success": row["stable_success"], "initial_object_position_m": data["object_position"][0].tolist(),
@@ -113,10 +122,12 @@ def generate_report(run, output, training, evaluation, analysis):
     train = json.loads((Path(training) / "training_summary.json").read_text())
     answers = json.loads((Path(analysis) / "failure_analysis.json").read_text())
     demonstration = json.loads((run / "demonstration_analysis.json").read_text())
-    complete = (all(str(answers.get(k, "")).strip() for k in ("stage", "first_observable_error", "hypothesized_cause", "improvement"))
+    discussion_path = run / "discussion_answers.json"
+    discussion = json.loads(discussion_path.read_text()) if discussion_path.exists() else {}
+    complete = (all(str(discussion.get(k, "")).strip() for k in ("q2", "q3", "q4")) and all(str(answers.get(k, "")).strip() for k in ("stage", "first_observable_error", "hypothesized_cause", "improvement"))
                 and answers.get("first_error_control_step") is not None and demonstration["answers_complete"])
     lines = ["# Manipulation Learning Lab — Group Report", "",
-        f"Status: {'student answers provided; instructor review required' if complete else 'DRAFT — fill in your failure-analysis answers before submission'}", "",
+        f"Status: {'student answers provided; instructor review required' if complete else 'DRAFT — complete Q1–Q5 and mark the first observable error before submission'}", "",
         f"Run: `{run.name}`. Policy: **{summary['policy_name']}** ({summary['policy_role']}).",
         f"Training: {train['epochs']} epochs, selected epoch {train['best_epoch']}, validation action MSE {train['best_validation_mse']:.5f}; {train['elapsed_seconds']:.1f}s.", "",
         "| Condition | Episodes | Environment success | Stable released placement |", "|---|---:|---:|---:|"]
@@ -124,7 +135,12 @@ def generate_report(run, output, training, evaluation, analysis):
         lines.append(f"| {name} | {c['episodes']} | {c['environment_success_rate']:.0%} | {c['stable_success_rate']:.0%} |")
     lines += ["", "Five episodes give a coarse classroom estimate. Position Shift Test is not a certified OOD benchmark.", "",
         "## Demonstration understanding", "", f"Q1: {demonstration.get('q1') or '[Complete this answer]'}", "",
-        f"Q2: {demonstration.get('q2') or '[Complete this answer]'}", "",
+        f"Demonstration reflection: {demonstration.get('q2') or '[Complete this answer]'}", "",
+        "## Training and evaluation discussion", "",
+        f"Q2 — How BC learns: {discussion.get('q2') or '[Complete this answer]'}", "",
+        f"Q3 — Loss versus performance: {discussion.get('q3') or '[Complete this answer]'}", "",
+        f"Q4 — Initial position: {discussion.get('q4') or '[Complete this answer]'}", "",
+        "Q5 is addressed by the failure analysis below.", "",
         "## Failure analysis", "", f"Episode: {answers.get('episode', '')}; evidence policy role: {answers.get('evidence_policy_role', 'unknown')}.", ""]
     for key, title in [("stage", "Failure stage"), ("first_observable_error", "First observable error — fact"),
                        ("hypothesized_cause", "Possible cause — hypothesis"), ("improvement", "Proposed improvement")]:

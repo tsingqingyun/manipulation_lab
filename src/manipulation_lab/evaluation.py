@@ -117,7 +117,7 @@ def evaluate(checkpoint, config, output, dataset=DATA):
             summary = {"policy_name": ckpt["lab_contract"]["policy_name"], "policy_role": ckpt["lab_contract"]["role"],
                 "checkpoint_sha256": checkpoint_hash, "conditions": {}, "elapsed_seconds": time.monotonic() - start,
                 "peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
-                "rollout_device": "CPU; EGL GPU for rendering", "position_test_name": "Position Shift Test (not certified OOD)",
+                "rollout_device": "CPU inference and physics", "render_backend": os.environ.get("MUJOCO_GL", "egl"), "position_test_name": "Position Shift Test (not certified OOD)",
                 "success_definition": "environment ever-success; separately: continuing policy for >=1s with target-margin containment, open gripper, no gripper contact, displacement<=1cm, speed<=5cm/s",
                 "errors": sum(bool(r["error"]) for r in rows), "episodes": rows}
             for condition in config["conditions"]:
