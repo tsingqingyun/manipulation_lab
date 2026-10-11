@@ -1,0 +1,54 @@
+{
+  "title": "Manipulation Learning Lab",
+  "subtitle": "From Demonstrations to Robot Policies",
+  "course": "Introduction to Robotics",
+  "project_subtitle": "Learning Robot Manipulation from Demonstrations",
+  "total_seconds": 600,
+  "slides": [
+    {
+      "number": 1, "title": "Manipulation Learning Lab", "seconds": 30,
+      "sources": ["README.md: Overview and Task Description", "media_provenance.json"],
+      "notes_zh": "【0:00–0:30】今天介绍的是 Manipulation Learning Lab，也就是从示范中学习机器人操作。画面来自本仓库的真实仿真环境：Panda 机械臂要把红色易拉罐放进目标格。大家不需要先掌握机器人学或深度学习理论。这次实验的主线只有三步：观察人的示范、训练一个策略、再让机器人自己执行。策略可以先理解成一个根据当前状态决定下一步动作的函数。"
+    },
+    {
+      "number": 2, "title": "What Will the Robot Do?", "seconds": 60,
+      "sources": ["configs/environment.yaml", "configs/evaluation.yaml", "src/manipulation_lab/evaluation.py: stable_placement", "media_provenance.json"],
+      "notes_zh": "【0:30–1:30】先看任务：机器人能不能学会抓起并放置物体？左边是真实学生模型的一次成功轨迹，请点击画面播放。这里用半速播放，15 秒对应约 7.5 秒的仿真动作，并非运行时间变长。指一下 Panda 机械臂、红色罐子和右下方带罐形标记的目标格。右边四幅画面按时间排列：接近、抓取、搬运、放下。成功并不要求罐子直立；这个案例最终横躺，但满足本实验的稳定放置标准。我们会分别记录环境自带的成功标志，以及更严格的稳定释放放置：目标区内保留半径余量、夹爪张开且不再接触，策略继续运行至少一秒，位移不超过一厘米、速度不超过每秒五厘米。位置条件不是任意姿态完整网格都在格内的证明。"
+    },
+    {
+      "number": 3, "title": "Demonstration → Training → Inference", "seconds": 70,
+      "sources": ["README.md: Task Description", "src/manipulation_lab/training.py", "src/manipulation_lab/evaluation.py"],
+      "notes_zh": "【1:30–2:40】示范、训练和推断是三种不同的过程。首先，人演示如何操作；我们拿到的不是一张成功照片，而是连续的状态和动作记录。每个样本告诉我们：在这样的状态下，人下一步做了什么。数据共有 200 条完整示范，分成 160 条训练、20 条验证、20 条测试，不能把同一条轨迹拆到不同集合。训练时用训练示范更新模型，用验证集选择保存的模型权重，这就是 checkpoint。最后才让机器人在仿真中自己执行，测试结果不能反过来挑模型。推断不是一次性播放整条动作序列，而是不断重复：观察当前状态、计算动作、执行、再次观察。每秒重复 20 次。图中的视频是给我们看任务的；学生策略实际吃的是状态数值，不是相机图像。"
+    },
+    {
+      "number": 4, "title": "What Does the Policy See and Do?", "seconds": 70,
+      "sources": ["README.md: Task Description", "configs/environment.yaml", "src/manipulation_lab/common.py: policy_observation"],
+      "notes_zh": "【2:40–3:50】把策略想象成一个输入输出盒子。输入的 observation，也就是当前观测，共 16 个数：夹爪末端位置 3 个数、姿态 4 个数、两根手指的关节位置 2 个数，再加罐子的位置和姿态 7 个数。姿态这里用四元数的 xyzw 顺序表示，课堂不需要展开推导。注意两根手指的关节位置不等于一个开口宽度；可视化会另外计算宽度。输出 action，也就是下一步命令，共 7 个数：三维平移、三维旋转和一个开合命令。位置以米为单位，世界坐标的 Z 轴向上。动作先归一化到负一到一，再由控制器转换：平移每个轴最多五厘米，旋转轴角各分量最多半弧度；正的夹爪命令是闭合，负的是张开。这里不输入目标图片、语言，也不把视频像素输入学生模型。"
+    },
+    {
+      "number": 5, "title": "Behavior Cloning: Learn the Next Action", "seconds": 80,
+      "sources": ["configs/bc_student.json", "src/manipulation_lab/policy.py", "src/manipulation_lab/training.py", "assets/lr_a_training_log.csv", "assets/lr_b_training_log.csv"],
+      "notes_zh": "【3:50–5:10】Behavior Cloning，行为克隆，就是让模型模仿示范者下一步的动作。把同一个观测输入模型，得到预测动作，与人记录的动作比较。这里的误差叫均方误差，也就是把每个动作分量的差平方后取平均。优化器根据误差调整网络内部的权重，然后继续看下一批样本。我们用的是已有的普通前馈神经网络，简称 MLP，三层隐藏层，每层 256 个单元；不需要大家设计复杂网络。观测归一化只使用训练集统计。一次 epoch 是完整看过训练样本一遍；每种设置都训练 50 遍。右图来自真实已完成实验，虚线标出各自验证误差最低的轮次。学习率是每次更新权重的步子大小。我们会比较两种步长，但请注意：在示范状态上预测准确，不保证自己执行时能成功，动作的小误差会改变后面的状态。"
+    },
+    {
+      "number": 6, "title": "Your Assignment: Four Notebooks", "seconds": 70,
+      "sources": ["README.md: Getting Started and Experiments", "docs/assignment_student.md", "notebooks/01_demonstrations.ipynb", "notebooks/02_train_policy.ipynb", "notebooks/03_policy_evaluation.ipynb", "notebooks/04_failure_analysis.ipynb"],
+      "notes_zh": "【5:10–6:20】下面看大家具体要做什么。老师会提前准备环境、数据和账号，课堂按顺序打开四个 notebook，也就是可以一边运行 Python 一边看结果的交互式实验文档。第一本看人类示范、数据字段和初始位置，回答 Q1。第二本训练两种学习率，0.001 和 0.0003，并自动执行后面的评测，回答 Q2、Q3。只改变学习率，其余数据、网络、初始权重、随机种子 17、50 轮预算、批量大小 256 和设备都固定。第三本读取第二本保存的同一批结果，比较初始位置变化，回答 Q4，不再重新评测。第四本分析一次真实失败，回答 Q5，并导出证据包。预计实验与讨论 130 到 160 分钟，另留报告整理时间。修改文字答案时只重跑答案和报告单元，别重新启动第一本创建新会话。"
+    },
+    {
+      "number": 7, "title": "Evaluate Behavior, Not Just Loss", "seconds": 80,
+      "sources": ["configs/controlled_experiment.json", "configs/evaluation.yaml", "docs/assignment_student.md: Part 3", "assets/lr_a_evaluation_summary.json", "assets/lr_b_evaluation_summary.json"],
+      "notes_zh": "【6:20–7:40】每个模型都做五个标准起点和五个位移起点，一共两个模型、20 次仿真。位移测试沿世界 X 轴把罐子移动四厘米；同一对案例的来源示范和随机种子一致。左图可以把它看成桌面的俯视图，每条线连接同一案例的两个初始位置。右边是真实已完成的一个示例：学习率 0.001 在标准和位移条件下分别稳定成功 2/5、3/5，0.0003 是 5/5、5/5。这不是大家必须复现的目标分数，也不能据此断言第二种学习率普遍更优。每组只有五例，重复同一随机种子的六个小组也不是六组独立统计证据。位移条件甚至可能表现更好，所以不要预设变化一定造成失败。四厘米的变化可能仍落在训练数据覆盖区域，二维图也不能证明整个输入分布发生了严格的分布外变化。主模型 lr_a 在测试前就已固定；比较两者，但不要按测试分数重新选主模型。"
+    },
+    {
+      "number": 8, "title": "Make a Failure Explainable", "seconds": 80,
+      "sources": ["notebooks/04_failure_analysis.ipynb", "src/manipulation_lab/reporting.py", "assets/failure_trace.npz", "media_provenance.json"],
+      "notes_zh": "【7:40–9:00】失败分析是实验很重要的一部分。这三张画面来自同一个真实失败案例，步数是 1、41、81；到第三张时，罐子还在源箱。它没有稳定放进目标格，这是观察事实。至于为什么失败，不能仅凭这一帧就说模型没学会抓取或接触参数错误。右图显示完整轨迹中的罐子高度和夹爪宽度，帮助大家定位应该回看哪个时刻。请至少选三个控制步，并标出你能用证据支持的最早可见错误，再提出原因假设和一个能检验假设的对照实验。Notebook 04 允许修改关键步和错误标记，生成所选帧、状态表和曲线。视频每四步采一帧，请区分你请求的精确状态步和最近视频帧，说明偏差；第零步并没有对应视频帧。夹爪命令是无单位数，开口宽度才是米。如果主学生模型没有失败，可以用明确标注的老师参考案例，不能冒充自己的模型结果。"
+    },
+    {
+      "number": 9, "title": "What to Submit—and What Earns Credit", "seconds": 60,
+      "sources": ["README.md: Submission Requirements and Grading Rubric", "docs/assignment_student.md: Submission and Detailed Grading", "notebooks/04_failure_analysis.ipynb"],
+      "notes_zh": "【9:00–10:00】最后，每组交两样东西：一到两页 PDF 报告，以及第四本 notebook 生成的证据 ZIP。报告用自己的话回答五个问题：用了什么输入输出、行为克隆怎么学习、低误差是否等于高成功率、改变初始位置有什么影响、失败发生在哪以及怎么检验改进。ZIP 保留两种模型、配置、曲线、评测记录、视频和失败证据，在 Jupyter 文件浏览器下载。自动生成的 Markdown 是证据附录，不替代大家自己的讨论；答案空着或没标错误，仍会标记为草稿。评分总共 100 分：示范理解 20，训练实验 25，评测 30，失败分析与讨论 25。成功率高本身不加分，有完整证据和合理分析的失败也能拿满分。保留原始输出，不要通过反复换种子去挑最好的一次。现在从 Notebook 01 开始。"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "passed": true,
+  "slides": [
+    {
+      "slide": 1,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 2,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 3,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 4,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 5,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 6,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 7,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 8,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    },
+    {
+      "slide": 9,
+      "visible_language": "English",
+      "Chinese_speaker_notes": true,
+      "bounds_passed": true
+    }
+  ],
+  "timing_seconds": 600,
+  "embedded_video": "ppt/media/media1.mp4",
+  "embedded_video_matches_source_bytes": true,
+  "media": [
+    {
+      "file": "success_half_speed.mp4",
+      "duration_seconds": 15.0,
+      "fps": 5.0,
+      "resolution": [
+        768,
+        768
+      ],
+      "decoded_frames": 75
+    },
+    {
+      "file": "failure_original.mp4",
+      "duration_seconds": 25.0,
+      "fps": 5.0,
+      "resolution": [
+        256,
+        256
+      ],
+      "decoded_frames": 125
+    }
+  ],
+  "replay_state_max_errors": {
+    "object_position": 0.0,
+    "eef_position": 0.0,
+    "gripper_width": 0.0
+  },
+  "pdf": [
+    {
+      "page": 1,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 2,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 3,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 4,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 5,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 6,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 7,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 8,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    },
+    {
+      "page": 9,
+      "all_visible_text_words_present": true,
+      "static_preview": true
+    }
+  ],
+  "browser": {
+    "success_half_speed.mp4": {
+      "duration": 15,
+      "width": 768,
+      "height": 768,
+      "currentTime": 15,
+      "ended": true,
+      "error": null
+    },
+    "failure_original.mp4": {
+      "duration": 25,
+      "width": 256,
+      "height": 256,
+      "currentTime": 25,
+      "ended": true,
+      "error": null
+    },
+    "version": "153.0.8010.12"
+  },
+  "content_contract_passed": true,
+  "limitations": [
+    "Native Microsoft PowerPoint playback has not been tested on the instructor laptop.",
+    "PDF is a static preview; play the embedded PPTX media or the separate MP4.",
+    "This presentation does not certify completion of the separate environment-deployment session."
+  ],
+  "deliverable_sha256": {
+    "Manipulation_Learning_Lab.pptx": "2fcdd8b47806e4452fc057e6f836fd809ab414b4756aaeb86764cf0e33727d68",
+    "Manipulation_Learning_Lab.pdf": "2f3fec7561e2a062212764eefb21d862d2b83ad2e8358ed5bfb4303a83b33fd5",
+    "speaker_notes_zh.txt": "8d643af7e9a919026419415992c1be5e4bc46f90a013080abef6137f09e4c457"
+  }
+}
