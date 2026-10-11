@@ -12,7 +12,7 @@ Deliver a separate, editable nine-slide English PowerPoint with Chinese speaker 
 - [x] 2026-10-12: inspected the completed group 01 two-rate run; recorded the consulted working-tree files and hashes in source_contract.json.
 - [x] 2026-10-12: delivered nine editable English slides, 600 seconds of Chinese speaker notes, original failure media, 15-second half-speed success media and real plots. The 768-pixel success rendering exactly matches all 149 original logged object/eef/width states.
 - [x] 2026-10-12: inspected the rendered nine-page PDF, checked English text and Chinese notes, bounds and PDF text coverage, matching embedded video bytes, full MP4 decoding and Chromium playback/seeking. Native PowerPoint on the instructor laptop remains untested.
-- [ ] Commit and push only the presentation files and this plan; verify the remote revision.
+- [x] 2026-10-12: published the presentation and this plan in commit 7f9df61 to origin/main; push advanced the remote from a2c58a7. The remaining working-tree deployment/course changes belong to the other session and were not committed by this task.
 
 ## Discoveries
 
@@ -26,7 +26,7 @@ The working tree contains ongoing course-packaging changes, including English te
 
 ## Current outcome
 
-The independent teaching package is complete and acceptance passed. It includes PowerPoint, static PDF, Chinese narration, separate media, full preview, fonts, reproducible scripts and provenance. Original source/experiment outputs are preserved. No training or policy evaluation was rerun. Publishing the narrowly scoped presentation commit remains.
+The independent teaching package is complete, acceptance passed, and delivery commit 7f9df61 is published. It includes PowerPoint, static PDF, Chinese narration, separate media, full preview, fonts, reproducible scripts and provenance. Original source/experiment outputs are preserved. No training or policy evaluation was rerun. The only product-platform limitation is untested native PowerPoint playback on the instructor's computer; the browser-tested MP4 and static PDF are included.
 
 ## Project context
 
