@@ -1,0 +1,13 @@
+episodes_per_condition: 5
+seeds: [101, 102, 103, 104, 105]
+conditions: [standard, shifted]
+horizon: 500
+shift_xy_m: [0.04, 0.0]
+video_stride: 4
+video_size: 256
+stability_window_steps: 20
+stability_max_displacement_m: 0.01
+stability_max_speed_m_s: 0.05
+release_min_gripper_width_m: 0.055
+episode_timeout_seconds: 180
+timeout_seconds: 2400

@@ -1,0 +1,7 @@
+group,run_id,architecture,epochs,learning_rate,validation_mse,standard_episodes,standard_env_success,standard_stable_success,shifted_episodes,shifted_env_success,shifted_stable_success,failure_stage,first_observed_error,hypothesized_cause,improvement,instructor_notes
+group_01,,,,,,,,,,,,,,,,
+group_02,,,,,,,,,,,,,,,,
+group_03,,,,,,,,,,,,,,,,
+group_04,,,,,,,,,,,,,,,,
+group_05,,,,,,,,,,,,,,,,
+group_06,,,,,,,,,,,,,,,,

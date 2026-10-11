@@ -1,0 +1,15 @@
+.venv/
+data/*
+!data/README.md
+checkpoints/*
+!checkpoints/README.md
+outputs/*
+!outputs/.gitkeep
+.ipynb_checkpoints/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+.cc-connect/

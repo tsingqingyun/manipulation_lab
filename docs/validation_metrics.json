@@ -1,0 +1,724 @@
+{
+  "measured_on": "2026-10-11",
+  "student_run": "outputs/group_06/20261011T153726Z_a6beed5e",
+  "versions": {
+    "python": "3.12.13",
+    "robomimic": "0.4.0",
+    "robosuite": "1.5.1",
+    "mujoco": "3.2.7",
+    "torch": "2.8.0",
+    "torchvision": "0.23.0",
+    "numpy": "1.26.4",
+    "h5py": "3.14.0",
+    "jupyterlab": "4.4.9"
+  },
+  "dataset_sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+  "student_training": {
+    "elapsed_seconds": 8.037554570939392,
+    "epochs": 50,
+    "best_epoch": 7,
+    "best_validation_mse": 0.03473110596361063,
+    "last_training_mse": 0.017740093225308385,
+    "checkpoint_reload_passed": true,
+    "peak_rss_mib": 1608.0,
+    "peak_cuda_allocated_mib": 22.3056640625,
+    "device": "cuda",
+    "gpu_name": "NVIDIA RTX PRO 5000 Blackwell",
+    "cpu_threads": 2,
+    "versions": {
+      "python": "3.12.13",
+      "robomimic": "0.4.0",
+      "robosuite": "1.5.1",
+      "mujoco": "3.2.7",
+      "torch": "2.8.0",
+      "torchvision": "0.23.0",
+      "numpy": "1.26.4",
+      "h5py": "3.14.0",
+      "jupyterlab": "4.4.9"
+    }
+  },
+  "reference_training": {
+    "elapsed_seconds": 52.07692191982642,
+    "epochs": 400,
+    "best_epoch": 15,
+    "best_validation_mse": 0.034575670678417776,
+    "last_training_mse": 0.00796678469923556,
+    "checkpoint_reload_passed": true,
+    "peak_rss_mib": 1580.0,
+    "peak_cuda_allocated_mib": 29.1572265625,
+    "device": "cuda",
+    "gpu_name": "NVIDIA RTX PRO 5000 Blackwell",
+    "cpu_threads": 2,
+    "versions": {
+      "python": "3.12.13",
+      "robomimic": "0.4.0",
+      "robosuite": "1.5.1",
+      "mujoco": "3.2.7",
+      "torch": "2.8.0",
+      "torchvision": "0.23.0",
+      "numpy": "1.26.4",
+      "h5py": "3.14.0",
+      "jupyterlab": "4.4.9"
+    }
+  },
+  "student_evaluation": {
+    "policy_name": "student_deterministic_mlp",
+    "policy_role": "student",
+    "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+    "conditions": {
+      "standard": {
+        "episodes": 5,
+        "environment_success_rate": 0.4,
+        "stable_success_rate": 0.4
+      },
+      "shifted": {
+        "episodes": 5,
+        "environment_success_rate": 0.6,
+        "stable_success_rate": 0.6
+      }
+    },
+    "elapsed_seconds": 49.05247956607491,
+    "peak_rss_mib": 1608.53125,
+    "rollout_device": "CPU; EGL GPU for rendering",
+    "position_test_name": "Position Shift Test (not certified OOD)",
+    "success_definition": "environment ever-success; separately: continuing policy for >=1s with target-margin containment, open gripper, no gripper contact, displacement<=1cm, speed<=5cm/s",
+    "errors": 0,
+    "episodes": [
+      {
+        "episode_id": "standard_00",
+        "condition": "standard",
+        "source_episode": "demo_39",
+        "seed": 101,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.05460564679300406, -0.35422492636704417, 0.8600000000000001]",
+        "final_object_position": "[0.090226704678261, -0.27642378021778596, 0.8437958446298311]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.272526043001562,
+        "video": "standard_00.mp4"
+      },
+      {
+        "episode_id": "standard_01",
+        "condition": "standard",
+        "source_episode": "demo_185",
+        "seed": 102,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.0497475815176579, -0.3064156404379914, 0.8600000000000001]",
+        "final_object_position": "[0.21636476852149958, 0.3616557207312553, 0.8438415686866355]",
+        "steps": 149,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.8500959421508014,
+        "video": "standard_01.mp4"
+      },
+      {
+        "episode_id": "standard_02",
+        "condition": "standard",
+        "source_episode": "demo_29",
+        "seed": 103,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.17970988599589247, -0.26251761469338536, 0.8600000000000001]",
+        "final_object_position": "[0.18799314180122156, -0.2460108796876459, 0.8594988792351266]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.306925963144749,
+        "video": "standard_02.mp4"
+      },
+      {
+        "episode_id": "standard_03",
+        "condition": "standard",
+        "source_episode": "demo_48",
+        "seed": 104,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.0206228776466654, -0.34267440702012086, 0.8600000000000001]",
+        "final_object_position": "[0.01709052985101167, -0.3354674539808711, 0.8600620083632893]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.353114811703563,
+        "video": "standard_03.mp4"
+      },
+      {
+        "episode_id": "standard_04",
+        "condition": "standard",
+        "source_episode": "demo_157",
+        "seed": 105,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.1379149348562607, -0.3342708677725563, 0.8600000000000001]",
+        "final_object_position": "[0.22812394362065994, 0.3509504936780513, 0.8600563671709041]",
+        "steps": 150,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.8354284791275859,
+        "video": "standard_04.mp4"
+      },
+      {
+        "episode_id": "shifted_00",
+        "condition": "shifted",
+        "source_episode": "demo_39",
+        "seed": 101,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.09460564679300407, -0.35422492636704417, 0.8600000000000001]",
+        "final_object_position": "[0.15791436008481458, 0.08791921096619498, 0.8437722912237395]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.428219235967845,
+        "video": "shifted_00.mp4"
+      },
+      {
+        "episode_id": "shifted_01",
+        "condition": "shifted",
+        "source_episode": "demo_185",
+        "seed": 102,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.08974758151765791, -0.3064156404379914, 0.8600000000000001]",
+        "final_object_position": "[0.24331097476061087, 0.3502997930035074, 0.8600575513483446]",
+        "steps": 145,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.968375631608069,
+        "video": "shifted_01.mp4"
+      },
+      {
+        "episode_id": "shifted_02",
+        "condition": "shifted",
+        "source_episode": "demo_29",
+        "seed": 103,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.21970988599589247, -0.26251761469338536, 0.8600000000000001]",
+        "final_object_position": "[0.2224598539483075, -0.21701188275077604, 0.8644538963918178]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.183110530022532,
+        "video": "shifted_02.mp4"
+      },
+      {
+        "episode_id": "shifted_03",
+        "condition": "shifted",
+        "source_episode": "demo_48",
+        "seed": 104,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.0606228776466654, -0.34267440702012086, 0.8600000000000001]",
+        "final_object_position": "[0.16694610835663526, 0.35737985584446946, 0.843899063294601]",
+        "steps": 175,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 2.0236276872456074,
+        "video": "shifted_03.mp4"
+      },
+      {
+        "episode_id": "shifted_04",
+        "condition": "shifted",
+        "source_episode": "demo_157",
+        "seed": 105,
+        "policy_name": "student_deterministic_mlp",
+        "policy_role": "student",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth",
+        "checkpoint_sha256": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+        "initial_object_position": "[0.1779149348562607, -0.3342708677725563, 0.8600000000000001]",
+        "final_object_position": "[0.24001118271456942, 0.3454370900721188, 0.8600567318596241]",
+        "steps": 168,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.9194442802108824,
+        "video": "shifted_04.mp4"
+      }
+    ]
+  },
+  "reference_evaluation": {
+    "policy_name": "instructor_deterministic_mlp",
+    "policy_role": "instructor_reference",
+    "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+    "conditions": {
+      "standard": {
+        "episodes": 5,
+        "environment_success_rate": 0.8,
+        "stable_success_rate": 0.8
+      },
+      "shifted": {
+        "episodes": 5,
+        "environment_success_rate": 0.6,
+        "stable_success_rate": 0.4
+      }
+    },
+    "elapsed_seconds": 46.218223496340215,
+    "peak_rss_mib": 1630.84375,
+    "rollout_device": "CPU; EGL GPU for rendering",
+    "position_test_name": "Position Shift Test (not certified OOD)",
+    "success_definition": "environment ever-success; separately: continuing policy for >=1s with target-margin containment, open gripper, no gripper contact, displacement<=1cm, speed<=5cm/s",
+    "errors": 0,
+    "episodes": [
+      {
+        "episode_id": "standard_00",
+        "condition": "standard",
+        "source_episode": "demo_39",
+        "seed": 101,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.05460564679300406, -0.35422492636704417, 0.8600000000000001]",
+        "final_object_position": "[0.21442814075047276, 0.3957737793416417, 0.8600544796948207]",
+        "steps": 208,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 2.1535537210293114,
+        "video": "standard_00.mp4"
+      },
+      {
+        "episode_id": "standard_01",
+        "condition": "standard",
+        "source_episode": "demo_185",
+        "seed": 102,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.0497475815176579, -0.3064156404379914, 0.8600000000000001]",
+        "final_object_position": "[0.21948482498592362, 0.39469097801605024, 0.8600594256749162]",
+        "steps": 150,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.8005569479428232,
+        "video": "standard_01.mp4"
+      },
+      {
+        "episode_id": "standard_02",
+        "condition": "standard",
+        "source_episode": "demo_29",
+        "seed": 103,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.17970988599589247, -0.26251761469338536, 0.8600000000000001]",
+        "final_object_position": "[0.24871070522809957, 0.3736440346368545, 0.8600700154713651]",
+        "steps": 143,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.7685677469708025,
+        "video": "standard_02.mp4"
+      },
+      {
+        "episode_id": "standard_03",
+        "condition": "standard",
+        "source_episode": "demo_48",
+        "seed": 104,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.0206228776466654, -0.34267440702012086, 0.8600000000000001]",
+        "final_object_position": "[0.0293656201014893, -0.3405823818712444, 0.8600671018044937]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.202789123635739,
+        "video": "standard_03.mp4"
+      },
+      {
+        "episode_id": "standard_04",
+        "condition": "standard",
+        "source_episode": "demo_157",
+        "seed": 105,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.1379149348562607, -0.3342708677725563, 0.8600000000000001]",
+        "final_object_position": "[0.21022592502404297, 0.39427732868285714, 0.8600611551519984]",
+        "steps": 180,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.97656120499596,
+        "video": "standard_04.mp4"
+      },
+      {
+        "episode_id": "shifted_00",
+        "condition": "shifted",
+        "source_episode": "demo_39",
+        "seed": 101,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.09460564679300407, -0.35422492636704417, 0.8600000000000001]",
+        "final_object_position": "[0.08986380061291546, -0.3638740827876744, 0.8600606656619886]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.034405483864248,
+        "video": "shifted_00.mp4"
+      },
+      {
+        "episode_id": "shifted_01",
+        "condition": "shifted",
+        "source_episode": "demo_185",
+        "seed": 102,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.08974758151765791, -0.3064156404379914, 0.8600000000000001]",
+        "final_object_position": "[0.22079011279818042, 0.3903175671560315, 0.8600697246947673]",
+        "steps": 147,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.7731625349260867,
+        "video": "shifted_01.mp4"
+      },
+      {
+        "episode_id": "shifted_02",
+        "condition": "shifted",
+        "source_episode": "demo_29",
+        "seed": 103,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.21970988599589247, -0.26251761469338536, 0.8600000000000001]",
+        "final_object_position": "[0.2531309827024355, 0.3735762082430961, 0.8600602177468154]",
+        "steps": 143,
+        "environment_success": true,
+        "stable_success": true,
+        "failure_stage": "none",
+        "error": "",
+        "elapsed_seconds": 1.757579362951219,
+        "video": "shifted_02.mp4"
+      },
+      {
+        "episode_id": "shifted_03",
+        "condition": "shifted",
+        "source_episode": "demo_48",
+        "seed": 104,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.0606228776466654, -0.34267440702012086, 0.8600000000000001]",
+        "final_object_position": "[0.21041048771156592, 0.39409459230177135, 0.8438595475975269]",
+        "steps": 500,
+        "environment_success": true,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.2921211761422455,
+        "video": "shifted_03.mp4"
+      },
+      {
+        "episode_id": "shifted_04",
+        "condition": "shifted",
+        "source_episode": "demo_157",
+        "seed": 105,
+        "policy_name": "instructor_deterministic_mlp",
+        "policy_role": "instructor_reference",
+        "checkpoint": "/home/jingchen/projects/ICLR2027_DeformablePhysTwin_private/pipelines/manipulation_learning_lab/outputs/reference_v1/training/student_policy.pth",
+        "checkpoint_sha256": "dd66603600e5df85567aed6d92c83601c488e135b6dcbfad0840e929554958a7",
+        "initial_object_position": "[0.1779149348562607, -0.3342708677725563, 0.8600000000000001]",
+        "final_object_position": "[0.17939066922618122, -0.3360788034871764, 0.8600632972848524]",
+        "steps": 500,
+        "environment_success": false,
+        "stable_success": false,
+        "failure_stage": "manual_review_required",
+        "error": "",
+        "elapsed_seconds": 4.155830631963909,
+        "video": "shifted_04.mp4"
+      }
+    ]
+  },
+  "notebooks": [
+    {
+      "notebook": "01_demonstrations.ipynb",
+      "passed": true,
+      "elapsed_seconds": 9.17556674219668
+    },
+    {
+      "notebook": "02_train_policy.ipynb",
+      "passed": true,
+      "elapsed_seconds": 13.414298766758293
+    },
+    {
+      "notebook": "03_policy_evaluation.ipynb",
+      "passed": true,
+      "elapsed_seconds": 53.011410874314606
+    },
+    {
+      "notebook": "04_failure_analysis.ipynb",
+      "passed": true,
+      "elapsed_seconds": 1.6633322229608893
+    }
+  ],
+  "preflight": {
+    "versions": {
+      "python": "3.12.13",
+      "robomimic": "0.4.0",
+      "robosuite": "1.5.1",
+      "mujoco": "3.2.7",
+      "torch": "2.8.0",
+      "torchvision": "0.23.0",
+      "numpy": "1.26.4",
+      "h5py": "3.14.0",
+      "jupyterlab": "4.4.9"
+    },
+    "env_metadata": {
+      "env_name": "PickPlaceCan",
+      "env_version": "1.5.1",
+      "type": 1,
+      "env_kwargs": {
+        "has_renderer": false,
+        "has_offscreen_renderer": false,
+        "ignore_done": true,
+        "use_object_obs": true,
+        "use_camera_obs": false,
+        "control_freq": 20,
+        "controller_configs": {
+          "type": "BASIC",
+          "body_parts": {
+            "right": {
+              "type": "OSC_POSE",
+              "input_max": 1,
+              "input_min": -1,
+              "output_max": [
+                0.05,
+                0.05,
+                0.05,
+                0.5,
+                0.5,
+                0.5
+              ],
+              "output_min": [
+                -0.05,
+                -0.05,
+                -0.05,
+                -0.5,
+                -0.5,
+                -0.5
+              ],
+              "kp": 150,
+              "damping": 1,
+              "impedance_mode": "fixed",
+              "kp_limits": [
+                0,
+                300
+              ],
+              "damping_limits": [
+                0,
+                10
+              ],
+              "position_limits": null,
+              "orientation_limits": null,
+              "uncouple_pos_ori": true,
+              "control_delta": true,
+              "interpolation": null,
+              "ramp_ratio": 0.2,
+              "input_ref_frame": "world",
+              "gripper": {
+                "type": "GRIP"
+              }
+            }
+          }
+        },
+        "robots": [
+          "Panda"
+        ],
+        "camera_depths": false,
+        "camera_heights": 84,
+        "camera_widths": 84,
+        "lite_physics": false,
+        "reward_shaping": false
+      }
+    },
+    "state_comparisons": [
+      {
+        "episode": "demo_0",
+        "step": 0,
+        "observation_max_abs_error": {
+          "robot0_eef_pos": 2.7755575615628914e-17,
+          "robot0_eef_quat": 2.358139725155972e-17,
+          "robot0_gripper_qpos": 0.0,
+          "object": 0.0
+        },
+        "excluded_cached_relative_sensor_max_error": 1.9721664190292358,
+        "expert_one_step_max_abs_error": {
+          "robot0_eef_pos": 0.0006176864223769868,
+          "robot0_eef_quat": 0.0007889230547925147,
+          "robot0_gripper_qpos": 0.00042268438923400917,
+          "object": 0.0002560357981601368
+        }
+      },
+      {
+        "episode": "demo_0",
+        "step": 50,
+        "observation_max_abs_error": {
+          "robot0_eef_pos": 2.220446049250313e-16,
+          "robot0_eef_quat": 1.1102230246251565e-16,
+          "robot0_gripper_qpos": 0.0,
+          "object": 0.0
+        },
+        "excluded_cached_relative_sensor_max_error": 0.0002492731437087059,
+        "expert_one_step_max_abs_error": {
+          "robot0_eef_pos": 0.010004249567400147,
+          "robot0_eef_quat": 0.008726140196016193,
+          "robot0_gripper_qpos": 0.004994120151389961,
+          "object": 0.0004519990701049313
+        }
+      },
+      {
+        "episode": "demo_1",
+        "step": 100,
+        "observation_max_abs_error": {
+          "robot0_eef_pos": 2.220446049250313e-16,
+          "robot0_eef_quat": 1.6653345369377348e-16,
+          "robot0_gripper_qpos": 0.0,
+          "object": 0.0
+        },
+        "excluded_cached_relative_sensor_max_error": 0.4119550347657248,
+        "expert_one_step_max_abs_error": {
+          "robot0_eef_pos": 0.019669411193744907,
+          "robot0_eef_quat": 0.027316419662861358,
+          "robot0_gripper_qpos": 0.0012445855547446594,
+          "object": 0.024485893405741387
+        }
+      }
+    ],
+    "controller": {
+      "class": "OperationalSpaceController",
+      "input_type": "delta",
+      "input_ref_frame": "world",
+      "input_min": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "input_max": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "output_min": [
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "output_max": [
+        0.05,
+        0.05,
+        0.05,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "render_passed": true,
+    "reset_step_passed": true,
+    "elapsed_seconds": 10.374667161144316,
+    "available_ram_gib": 326.28759002685547,
+    "free_disk_gib": 147.38506698608398,
+    "cuda_available": true,
+    "gpu": "NVIDIA RTX PRO 5000 Blackwell"
+  },
+  "demonstration_playback": {
+    "kind": "human_demonstration_state_playback",
+    "episode": "demo_0",
+    "dataset_sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+    "elapsed_seconds": 6.133751157205552,
+    "time_domain": "20Hz control-step index, video subsampled to 10fps; no acquisition timestamps"
+  },
+  "artifacts": {
+    "outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/student_policy.pth": "59de6f66056b9de6d8288fe3ba77afd0e9ce1bea827378c1e4ae3ef7192dd72d",
+    "outputs/group_06/20261011T153726Z_a6beed5e/training_153736_14ca6f/training_log.csv": "68e0fe64b8cd3744a3cc741f00caee16621587411c3a07183afdea6d14f59b13",
+    "outputs/group_06/20261011T153726Z_a6beed5e/evaluation_153748_b94828/results.csv": "a2a252519eb72570993b199324110f5abb7d2cd89ab0e933f7db3a5d85742bc9",
+    "outputs/group_06/20261011T153726Z_a6beed5e/evaluation_153748_b94828/test_manifest.json": "add0104b353ba594c2f6a4e3b4138fe23eab148956754366a3a84ff18a96b237",
+    "outputs/group_06/20261011T153726Z_a6beed5e/evaluation_153748_b94828/successful_rollout.mp4": "2ba65bf29c0bed7903a80ad2e36afe2f4643bfbb8ef24aab79af93cb200d5c83",
+    "outputs/group_06/20261011T153726Z_a6beed5e/evaluation_153748_b94828/failed_rollout.mp4": "45d4211001017182cb30c7017c1c28c0ddb30c1c54edc2e4f4ed22eddff40932"
+  },
+  "browser": {
+    "lab_http_status": 200,
+    "notebook_opened": true,
+    "video": "outputs/group_06/20261011T153726Z_a6beed5e/evaluation_153748_b94828/successful_rollout.mp4",
+    "browser_playback": {
+      "duration": 7.6,
+      "currentTime": 0.800452,
+      "width": 256,
+      "height": 256,
+      "readyState": 4
+    },
+    "server": "127.0.0.1:8892",
+    "authentication": "Jupyter generated token; not stored in this report",
+    "browser_version": "Google Chrome 155.0.8059.39"
+  }
+}

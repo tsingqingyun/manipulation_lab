@@ -1,0 +1,7 @@
+{
+  "name": "instructor_deterministic_mlp", "architecture": "mlp",
+  "hidden_dims": [512, 512, 512], "learning_rate": 0.0003,
+  "epochs": 400, "batch_size": 256, "seed": 29, "device": "cuda",
+  "normalize_obs": true, "sequence_length": 1, "cpu_threads": 2,
+  "timeout_seconds": 7200
+}

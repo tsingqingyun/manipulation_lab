@@ -1,0 +1,3 @@
+`instructor_reference.pth` is trained locally from the validated v1.5 data; it is not an old model-zoo download. `reference_manifest.json` identifies its training run and hash. `reference_evaluation/` contains clearly labelled teacher results and a genuine failure for optional analysis. Shared files are read-only; real deployment uses administrator-owned storage.
+
+Rebuild using `configs/bc_reference.json`; select the minimum validation MSE checkpoint, evaluate on the same fixed cases, then copy it here without overwriting any existing reference. Never substitute this checkpoint for `student_policy.pth`. Large artifacts are not committed to Git.

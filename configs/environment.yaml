@@ -1,0 +1,22 @@
+python: 3.12.13
+robomimic:
+  version: 0.4.0
+  commit: 7c66e7a41b5d9dcc905b1a68346bfee1b49b79c9
+robosuite:
+  version: 1.5.1
+  commit: 51cc01785bab80ffeed20da15e67d7dd4140e76a
+mujoco: 3.2.7
+torch: 2.8.0
+torchvision: 0.23.0
+cuda_wheel: '12.8'
+dataset: 'amandlek/robomimic v1.5/can/ph/low_dim_v15.hdf5'
+task: PickPlaceCan
+robot: Panda
+controller: 'BASIC/right/OSC_POSE; delta in world frame; GRIP'
+control_hz: 20
+observation_adapter: 'world_pose_only_v1; eef xyz/xyzw, gripper qpos, object[7:14]; 16 dimensions'
+action: '7 dimensions; normalized [-1,1]; xyz scaled by 0.05 m, rotation axis-angle by 0.5 rad, gripper +close/-open'
+render_backend: EGL
+max_concurrent_evaluations: 1
+max_concurrent_training_jobs: 1
+cpu_threads_per_job: 2
