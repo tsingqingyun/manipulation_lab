@@ -199,5 +199,7 @@
     "all_12_checkpoint_hashes_unchanged": true,
     "source": "outputs/teaching_acceptance_20261012_v1/report_display_fix_v2/acceptance.json",
     "regression_test": "1 passed; initial 11 relevant tests already passed"
-  }
+  },
+  "implementation_commit": "e8d0ca927b888d12a967f26b261e32d4f05efdac",
+  "implementation_remote_verified": "origin/main"
 }
