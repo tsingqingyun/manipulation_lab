@@ -1,0 +1,26 @@
+{
+  "group": "group_01",
+  "notebooks": [
+    {
+      "notebook": "01_demonstrations.ipynb",
+      "elapsed_seconds": 10.069440884049982,
+      "passed": true
+    },
+    {
+      "notebook": "02_train_policy.ipynb",
+      "elapsed_seconds": 223.8478291244246,
+      "passed": true
+    },
+    {
+      "notebook": "03_policy_evaluation.ipynb",
+      "elapsed_seconds": 1.2167758690193295,
+      "passed": true
+    },
+    {
+      "notebook": "04_failure_analysis.ipynb",
+      "elapsed_seconds": 2.517804083880037,
+      "passed": true
+    }
+  ],
+  "completed": true
+}

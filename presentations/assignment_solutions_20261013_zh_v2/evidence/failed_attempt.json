@@ -1,0 +1,7 @@
+{
+  "attempt": "outputs/solutions_20261013_v1",
+  "stage": "Notebook 01 demonstration rendering",
+  "error": "ImportError: Cannot initialize a EGL device display",
+  "training_started": false,
+  "resolution": "Explicitly selected existing OSMesa software-rendering runtime; new independent output directory; no training/evaluation settings changed"
+}

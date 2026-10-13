@@ -1,0 +1,154 @@
+{
+  "episode": "standard_00",
+  "source": "learned_policy_rollout",
+  "environment_success": false,
+  "stable_success": false,
+  "initial_object_position_m": [
+    0.05460564679300406,
+    -0.35422492636704417,
+    0.8600000000000001
+  ],
+  "final_object_position_m": [
+    0.05529406583035102,
+    -0.352615113844663,
+    0.8600491399116988
+  ],
+  "max_object_lift_m": 0.005722129645927887,
+  "final_gripper_width_m": 0.07937303286542693,
+  "automatic_failure_stage": "unknown; manual review required",
+  "first_error_control_step": 57,
+  "first_error_source": "student_annotation",
+  "keyframes": [
+    {
+      "requested_control_step": 45,
+      "video_frame_index": 11,
+      "recorded_control_step": 45,
+      "offset_steps": 0,
+      "requested_state": {
+        "control_step": 45,
+        "control_elapsed_s": 2.25,
+        "eef_world_position_m": [
+          0.031062736112389706,
+          -0.37649858028974154,
+          0.8735973152319986
+        ],
+        "object_world_position_m": [
+          0.0545723184101044,
+          -0.3542418919882997,
+          0.8600593447836751
+        ],
+        "gripper_opening_m": 0.07948372276030652,
+        "preceding_normalized_action": [
+          0.013037006370723248,
+          -0.04854558780789375,
+          -0.11497293412685394,
+          0.01707308739423752,
+          -0.005030746106058359,
+          0.009607089683413506,
+          -0.5209231376647949
+        ]
+      },
+      "file": "keyframe_0.png",
+      "mapping_source": "recorded_in_rollout"
+    },
+    {
+      "requested_control_step": 53,
+      "video_frame_index": 13,
+      "recorded_control_step": 53,
+      "offset_steps": 0,
+      "requested_state": {
+        "control_step": 53,
+        "control_elapsed_s": 2.65,
+        "eef_world_position_m": [
+          0.03331231425667881,
+          -0.37946810802320546,
+          0.8673257331599752
+        ],
+        "object_world_position_m": [
+          0.0557954554580835,
+          -0.3546104706657447,
+          0.8599363489996569
+        ],
+        "gripper_opening_m": 0.053412513634457856,
+        "preceding_normalized_action": [
+          0.08206679672002792,
+          0.11618322134017944,
+          0.07487431913614273,
+          0.03177338466048241,
+          0.00790945254266262,
+          -0.006990558002144098,
+          0.9996772408485413
+        ]
+      },
+      "file": "keyframe_1.png",
+      "mapping_source": "recorded_in_rollout"
+    },
+    {
+      "requested_control_step": 57,
+      "video_frame_index": 14,
+      "recorded_control_step": 57,
+      "offset_steps": 0,
+      "requested_state": {
+        "control_step": 57,
+        "control_elapsed_s": 2.85,
+        "eef_world_position_m": [
+          0.03311728428801661,
+          -0.35641222474432505,
+          0.883758602529041
+        ],
+        "object_world_position_m": [
+          0.06005451982476621,
+          -0.34271925474054715,
+          0.8646673125759224
+        ],
+        "gripper_opening_m": 0.022397882728517934,
+        "preceding_normalized_action": [
+          -0.1582263857126236,
+          0.9963191747665405,
+          0.6318642497062683,
+          0.06401056051254272,
+          0.027188487350940704,
+          -0.19084890186786652,
+          1.0
+        ]
+      },
+      "file": "keyframe_2.png",
+      "mapping_source": "recorded_in_rollout"
+    },
+    {
+      "requested_control_step": 65,
+      "video_frame_index": 16,
+      "recorded_control_step": 65,
+      "offset_steps": 0,
+      "requested_state": {
+        "control_step": 65,
+        "control_elapsed_s": 3.25,
+        "eef_world_position_m": [
+          -0.013942392718176804,
+          -0.2575838990414022,
+          0.9627110031583774
+        ],
+        "object_world_position_m": [
+          0.055488224328102034,
+          -0.3521021868921496,
+          0.8602713911906941
+        ],
+        "gripper_opening_m": 0.0022418952319060554,
+        "preceding_normalized_action": [
+          0.004432213492691517,
+          0.9999960660934448,
+          0.6794843077659607,
+          0.12316856533288956,
+          0.08038754016160965,
+          -0.3765619099140167,
+          1.0
+        ]
+      },
+      "file": "keyframe_3.png",
+      "mapping_source": "recorded_in_rollout"
+    }
+  ],
+  "policy_role": "student",
+  "checkpoint_sha256": "e9771831a6563677cd6db4585b630b54c6f1e14668e4443e1a71e705290c7033",
+  "time_domain": "20Hz control indices, not acquisition timestamps; video frame indices differ"
+}

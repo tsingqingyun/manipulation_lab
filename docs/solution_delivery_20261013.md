@@ -85,3 +85,23 @@ cases per condition and simulation only. Saved notebook absolute paths refer to
 the original host; the evidence ZIP is the portable record. Earlier draft report
 versions remain as history, while the ZIP export manifest selects the completed
 report. Git publication is verified separately from artifact correctness.
+
+## 中文可视化修订版（同日）
+
+按最新要求，保留原浅色底、蓝灰与暖棕配色及衬线标题，正文、图表说明和讲稿
+改为中文，公式及变量保持英文记号。新增独立目录
+[`assignment_solutions_20261013_zh_v2`](../presentations/assignment_solutions_20261013_zh_v2/README.md)，
+保留原版材料；15 页讲稿共 880 秒。补充观察/动作图解、放大的实验曲线、逐案例
+配对图、抓取近景以及与数值对齐的失败关键帧。
+
+本次新增训练与策略评测均为 0。重放保存动作只改变相机：成功 141 步、失败前
+101 步；核对的物体/末端位置、夹爪关节与开口差均为 0，全部布尔记录一致。
+两段半速视频以 960×544 编码，近景静帧为 960×640。首次相机更新额外调用
+`sim.forward()` 导致约 0.075 mm 差异，失败尝试保留并排除；修正为只更新相机
+变换，没有放宽标准。具体来源、帧映射和失败记录见 `replay_provenance.json`。
+
+原结果和四份 Notebook 做哈希比对，内容未改。制稿验证覆盖 15 页、正文字符
+完整性、中文字体、英文公式、媒体解码及嵌入哈希，并检查逐页视觉排版。
+随包提供简体中文正文与标题字体，保留许可，核对改名前后全部字形及字符映射一致。
+模型、数据、训练/评测逻辑、学生模板均未改。仍未实测授课电脑上的原生
+PowerPoint 视频播放，也未执行失败原因干预实验。

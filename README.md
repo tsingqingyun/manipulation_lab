@@ -260,3 +260,5 @@ Notebook 01 会创建带时间戳的小组实验会话；Notebook 02–04 自动
 [教师指南](docs/instructor_guide.md) 说明如何汇总结果并组织次日讨论；[服务器部署说明](docs/server_setup.md) 涵盖环境部署、账号、并发资源控制和故障恢复。
 
 2026-10-13 教师题解：[15 页题解 PPT、PDF 与完整证据](presentations/assignment_solutions_20261013/README.md)、[4 份已执行并填写参考答案的 Notebook](notebooks/solutions_20261013/README.md)。这些材料解释一次固定实验的实际结果，原学生模板保持不变；[运行与交付记录](docs/solution_delivery_20261013.md) 列出指标和限制。
+
+中文可视化修订版：[PPT、PDF 与逐页讲稿](presentations/assignment_solutions_20261013_zh_v2/README.md)。沿用浅色、蓝灰与暖棕风格，正文中文、公式与变量英文，补充高清抓取近景和更清楚的图表；沿用同一次实验结果。

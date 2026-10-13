@@ -1,0 +1,29 @@
+[
+  {
+    "file": "LabClassroomSans-Regular.otf",
+    "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "selected_face": "Noto Sans CJK SC",
+    "source_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+    "sha256": "6d0c73226957722c997bcbe526261932ba9948382599561231351bcff88ea730",
+    "cmap_and_all_glyph_programs_unchanged": true,
+    "glyph_program_sha256": "d40d84cbe1bdd29988898774546703570cd2a1e76d1755738baeb7a0ba1839a8"
+  },
+  {
+    "file": "LabClassroomSans-Bold.otf",
+    "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+    "selected_face": "Noto Sans CJK SC",
+    "source_sha256": "faa5f3656a78b2e2d450d27fe8382c778bc2b6bb5ea29c986664a6a435056ceb",
+    "sha256": "7135081f8660f04f2c33e761037f113836dbd8c5b3d771ff52473e13ce15b3bc",
+    "cmap_and_all_glyph_programs_unchanged": true,
+    "glyph_program_sha256": "e90692b2f2b2f4f61e18f768968f5347d3c125a1df808842e0640ff7c23a2156"
+  },
+  {
+    "file": "LabClassroomSerif-Regular.otf",
+    "source": "/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc",
+    "selected_face": "Noto Serif CJK SC",
+    "source_sha256": "a04178ec485dffdff7cc0c0c20e1fce9202d7e2160d805e8e44a4c8841c58481",
+    "sha256": "38299a4aa474e650feff63e1018074caff23618e5ddc87072e0cc1679ed4663e",
+    "cmap_and_all_glyph_programs_unchanged": true,
+    "glyph_program_sha256": "188bd56b5e139e48dca9db756656ca609c764ede22fd5a8107490614c1c73870"
+  }
+]

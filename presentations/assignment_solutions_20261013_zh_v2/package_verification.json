@@ -1,0 +1,9 @@
+{
+  "file": "Chinese_Slides_Package.zip",
+  "members": 96,
+  "bytes": 78907976,
+  "sha256": "8b89f1b0367ed61d786ad5d7374d7cfee390ebe4b1db916717892aa0c7d378ec",
+  "crc_passed": true,
+  "all_member_hashes_match": true,
+  "notebooks_and_checkpoints_in_original_package": true
+}

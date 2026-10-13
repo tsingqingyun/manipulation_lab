@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    "standard",
+    "shifted"
+  ],
+  "episode_timeout_seconds": 180,
+  "episodes_per_condition": 5,
+  "horizon": 500,
+  "release_min_gripper_width_m": 0.055,
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "shift_xy_m": [
+    0.04,
+    0.0
+  ],
+  "stability_max_displacement_m": 0.01,
+  "stability_max_speed_m_s": 0.05,
+  "stability_window_steps": 20,
+  "timeout_seconds": 2400,
+  "video_size": 256,
+  "video_stride": 4
+}

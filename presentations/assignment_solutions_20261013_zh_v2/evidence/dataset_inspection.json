@@ -1,0 +1,2772 @@
+{
+  "source": "robomimic Can PH v1.5 human demonstrations",
+  "dataset_sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+  "episode_count": 200,
+  "total_steps": 23207,
+  "observation_shapes": {
+    "object": [
+      14
+    ],
+    "robot0_eef_pos": [
+      3
+    ],
+    "robot0_eef_quat": [
+      4
+    ],
+    "robot0_eef_quat_site": [
+      4
+    ],
+    "robot0_gripper_qpos": [
+      2
+    ],
+    "robot0_gripper_qvel": [
+      2
+    ],
+    "robot0_joint_pos": [
+      7
+    ],
+    "robot0_joint_pos_cos": [
+      7
+    ],
+    "robot0_joint_pos_sin": [
+      7
+    ],
+    "robot0_joint_vel": [
+      7
+    ]
+  },
+  "policy_observations": [
+    "robot0_eef_pos",
+    "robot0_eef_quat",
+    "robot0_gripper_qpos",
+    "object"
+  ],
+  "object_field_layout": "0:3 relative position in eef frame; 3:7 relative quaternion xyzw; 7:10 world position m; 10:14 world quaternion xyzw (robosuite 1.5.1)",
+  "policy_observation_shapes": {
+    "robot0_eef_pos": [
+      3
+    ],
+    "robot0_eef_quat": [
+      4
+    ],
+    "robot0_gripper_qpos": [
+      2
+    ],
+    "object": [
+      7
+    ]
+  },
+  "policy_observation_adapter": "world_pose_only_v1: object[7:14], others unchanged; excludes stale cached relative sensors",
+  "action_dim": 7,
+  "action_range": [
+    -1,
+    1
+  ],
+  "action_meaning": "OSC_POSE normalized delta xyz, delta rotation axis-angle, gripper (+close/-open); physical scaling in env metadata",
+  "coordinate_system": "robosuite world, z up; meters; observation quaternion xyzw; simulator free joint quaternion wxyz",
+  "time": {
+    "timestamps": "missing unless listed per episode",
+    "index": "control step",
+    "control_hz": 20
+  },
+  "success_labels": "rewards and dones are recorded labels, not independent stable placement proof",
+  "env_metadata": {
+    "env_name": "PickPlaceCan",
+    "env_version": "1.5.1",
+    "type": 1,
+    "env_kwargs": {
+      "has_renderer": false,
+      "has_offscreen_renderer": false,
+      "ignore_done": true,
+      "use_object_obs": true,
+      "use_camera_obs": false,
+      "control_freq": 20,
+      "controller_configs": {
+        "type": "BASIC",
+        "body_parts": {
+          "right": {
+            "type": "OSC_POSE",
+            "input_max": 1,
+            "input_min": -1,
+            "output_max": [
+              0.05,
+              0.05,
+              0.05,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "output_min": [
+              -0.05,
+              -0.05,
+              -0.05,
+              -0.5,
+              -0.5,
+              -0.5
+            ],
+            "kp": 150,
+            "damping": 1,
+            "impedance_mode": "fixed",
+            "kp_limits": [
+              0,
+              300
+            ],
+            "damping_limits": [
+              0,
+              10
+            ],
+            "position_limits": null,
+            "orientation_limits": null,
+            "uncouple_pos_ori": true,
+            "control_delta": true,
+            "interpolation": null,
+            "ramp_ratio": 0.2,
+            "input_ref_frame": "world",
+            "gripper": {
+              "type": "GRIP"
+            }
+          }
+        }
+      },
+      "robots": [
+        "Panda"
+      ],
+      "camera_depths": false,
+      "camera_heights": 84,
+      "camera_widths": 84,
+      "lite_physics": false,
+      "reward_shaping": false
+    }
+  },
+  "split_seed": 20261011,
+  "splits": {
+    "train": [
+      "demo_154",
+      "demo_85",
+      "demo_145",
+      "demo_108",
+      "demo_65",
+      "demo_71",
+      "demo_179",
+      "demo_53",
+      "demo_67",
+      "demo_62",
+      "demo_69",
+      "demo_198",
+      "demo_123",
+      "demo_86",
+      "demo_102",
+      "demo_187",
+      "demo_111",
+      "demo_112",
+      "demo_106",
+      "demo_172",
+      "demo_12",
+      "demo_104",
+      "demo_7",
+      "demo_156",
+      "demo_116",
+      "demo_125",
+      "demo_181",
+      "demo_43",
+      "demo_119",
+      "demo_73",
+      "demo_136",
+      "demo_146",
+      "demo_84",
+      "demo_42",
+      "demo_36",
+      "demo_61",
+      "demo_19",
+      "demo_4",
+      "demo_192",
+      "demo_161",
+      "demo_135",
+      "demo_90",
+      "demo_97",
+      "demo_66",
+      "demo_0",
+      "demo_96",
+      "demo_31",
+      "demo_131",
+      "demo_152",
+      "demo_11",
+      "demo_193",
+      "demo_8",
+      "demo_148",
+      "demo_16",
+      "demo_23",
+      "demo_5",
+      "demo_88",
+      "demo_103",
+      "demo_92",
+      "demo_95",
+      "demo_126",
+      "demo_41",
+      "demo_132",
+      "demo_89",
+      "demo_55",
+      "demo_20",
+      "demo_105",
+      "demo_158",
+      "demo_37",
+      "demo_33",
+      "demo_109",
+      "demo_60",
+      "demo_150",
+      "demo_196",
+      "demo_56",
+      "demo_15",
+      "demo_173",
+      "demo_160",
+      "demo_82",
+      "demo_58",
+      "demo_149",
+      "demo_133",
+      "demo_28",
+      "demo_47",
+      "demo_184",
+      "demo_195",
+      "demo_164",
+      "demo_122",
+      "demo_140",
+      "demo_26",
+      "demo_81",
+      "demo_197",
+      "demo_30",
+      "demo_141",
+      "demo_18",
+      "demo_72",
+      "demo_159",
+      "demo_170",
+      "demo_93",
+      "demo_68",
+      "demo_117",
+      "demo_177",
+      "demo_40",
+      "demo_49",
+      "demo_129",
+      "demo_99",
+      "demo_3",
+      "demo_153",
+      "demo_128",
+      "demo_162",
+      "demo_194",
+      "demo_191",
+      "demo_144",
+      "demo_50",
+      "demo_2",
+      "demo_10",
+      "demo_166",
+      "demo_176",
+      "demo_167",
+      "demo_199",
+      "demo_134",
+      "demo_155",
+      "demo_165",
+      "demo_182",
+      "demo_79",
+      "demo_24",
+      "demo_107",
+      "demo_83",
+      "demo_115",
+      "demo_77",
+      "demo_175",
+      "demo_25",
+      "demo_54",
+      "demo_118",
+      "demo_168",
+      "demo_6",
+      "demo_27",
+      "demo_101",
+      "demo_183",
+      "demo_127",
+      "demo_14",
+      "demo_57",
+      "demo_45",
+      "demo_110",
+      "demo_186",
+      "demo_130",
+      "demo_21",
+      "demo_143",
+      "demo_78",
+      "demo_174",
+      "demo_139",
+      "demo_147",
+      "demo_142",
+      "demo_120",
+      "demo_32",
+      "demo_35",
+      "demo_94",
+      "demo_137",
+      "demo_98",
+      "demo_80"
+    ],
+    "validation": [
+      "demo_113",
+      "demo_51",
+      "demo_190",
+      "demo_188",
+      "demo_13",
+      "demo_1",
+      "demo_76",
+      "demo_34",
+      "demo_9",
+      "demo_74",
+      "demo_64",
+      "demo_171",
+      "demo_121",
+      "demo_44",
+      "demo_38",
+      "demo_70",
+      "demo_180",
+      "demo_46",
+      "demo_87",
+      "demo_114"
+    ],
+    "test": [
+      "demo_39",
+      "demo_185",
+      "demo_29",
+      "demo_48",
+      "demo_157",
+      "demo_17",
+      "demo_100",
+      "demo_178",
+      "demo_22",
+      "demo_124",
+      "demo_189",
+      "demo_75",
+      "demo_52",
+      "demo_91",
+      "demo_59",
+      "demo_138",
+      "demo_163",
+      "demo_151",
+      "demo_63",
+      "demo_169"
+    ]
+  },
+  "train_initial_position_min_m": [
+    -0.01972169846452969,
+    -0.4185725202709859,
+    0.8600000000000001
+  ],
+  "train_initial_position_max_m": [
+    0.21883528876139563,
+    -0.08220044495792903,
+    0.8600000000000001
+  ],
+  "original_masks": {
+    "20_percent": 40,
+    "20_percent_train": 36,
+    "20_percent_valid": 4,
+    "50_percent": 100,
+    "50_percent_train": 90,
+    "50_percent_valid": 10,
+    "train": 180,
+    "valid": 20
+  },
+  "episodes": [
+    {
+      "episode": "demo_0",
+      "length": 118,
+      "initial_object_position_m": [
+        0.123724912698951,
+        -0.20150121318116285,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_1",
+      "length": 118,
+      "initial_object_position_m": [
+        0.10021437307742556,
+        -0.19377535951547273,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_2",
+      "length": 113,
+      "initial_object_position_m": [
+        0.12699248197822924,
+        -0.12516025316030224,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_3",
+      "length": 98,
+      "initial_object_position_m": [
+        -0.008357903389360863,
+        -0.08959212207885428,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_4",
+      "length": 102,
+      "initial_object_position_m": [
+        0.1363022197165093,
+        -0.08713098638947356,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_5",
+      "length": 134,
+      "initial_object_position_m": [
+        -0.01880106555906369,
+        -0.4007441592534851,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_6",
+      "length": 115,
+      "initial_object_position_m": [
+        -0.0014654603577080177,
+        -0.33268007596317134,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_7",
+      "length": 115,
+      "initial_object_position_m": [
+        0.19076680326103376,
+        -0.2707283378168317,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_8",
+      "length": 127,
+      "initial_object_position_m": [
+        0.042463649167003174,
+        -0.4079395631889121,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_9",
+      "length": 120,
+      "initial_object_position_m": [
+        0.10847818544435622,
+        -0.1866881438842816,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_10",
+      "length": 129,
+      "initial_object_position_m": [
+        0.09569653883325538,
+        -0.282536737133424,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_11",
+      "length": 94,
+      "initial_object_position_m": [
+        -0.01972169846452969,
+        -0.13338556543207394,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_12",
+      "length": 115,
+      "initial_object_position_m": [
+        0.2037243803990777,
+        -0.17716660959825978,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_13",
+      "length": 129,
+      "initial_object_position_m": [
+        0.09380601354398357,
+        -0.352592942587865,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_14",
+      "length": 113,
+      "initial_object_position_m": [
+        0.217549223002807,
+        -0.22533659096950054,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_15",
+      "length": 95,
+      "initial_object_position_m": [
+        0.09638725593073734,
+        -0.1866256477815782,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_16",
+      "length": 136,
+      "initial_object_position_m": [
+        0.11074643200150702,
+        -0.3605678893463188,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_17",
+      "length": 108,
+      "initial_object_position_m": [
+        0.13509299911794917,
+        -0.2574347396571094,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_18",
+      "length": 94,
+      "initial_object_position_m": [
+        0.0675962686720174,
+        -0.15530321744693956,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_19",
+      "length": 111,
+      "initial_object_position_m": [
+        0.1732158787968611,
+        -0.11137744333441765,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_20",
+      "length": 92,
+      "initial_object_position_m": [
+        0.1830150189246535,
+        -0.12619693033939314,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_21",
+      "length": 100,
+      "initial_object_position_m": [
+        0.11582213531404839,
+        -0.13714280773744777,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_22",
+      "length": 102,
+      "initial_object_position_m": [
+        0.026494231398960816,
+        -0.16065778526384009,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_23",
+      "length": 142,
+      "initial_object_position_m": [
+        0.04792870734354944,
+        -0.3419975649662198,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_24",
+      "length": 108,
+      "initial_object_position_m": [
+        0.10281491778833786,
+        -0.2306947945397626,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_25",
+      "length": 131,
+      "initial_object_position_m": [
+        0.163979144200043,
+        -0.4087909365100178,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_26",
+      "length": 112,
+      "initial_object_position_m": [
+        0.06662202372724227,
+        -0.29076686637201576,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_27",
+      "length": 124,
+      "initial_object_position_m": [
+        0.21240841755568415,
+        -0.29109723780591956,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_28",
+      "length": 141,
+      "initial_object_position_m": [
+        0.14653513560708376,
+        -0.3547141787084672,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_29",
+      "length": 107,
+      "initial_object_position_m": [
+        0.17970988599589247,
+        -0.26251761469338536,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_30",
+      "length": 127,
+      "initial_object_position_m": [
+        0.06179773997291017,
+        -0.4139545472427192,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_31",
+      "length": 96,
+      "initial_object_position_m": [
+        0.06519394295977997,
+        -0.24830594243038945,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_32",
+      "length": 110,
+      "initial_object_position_m": [
+        0.1090030771680483,
+        -0.28860173107481085,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_33",
+      "length": 115,
+      "initial_object_position_m": [
+        0.050760754761290036,
+        -0.17224941558998477,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_34",
+      "length": 106,
+      "initial_object_position_m": [
+        0.21315086597263036,
+        -0.2078004314997481,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_35",
+      "length": 111,
+      "initial_object_position_m": [
+        0.09442744702757445,
+        -0.2985310542895654,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_36",
+      "length": 103,
+      "initial_object_position_m": [
+        0.07150258152094655,
+        -0.12500783828688636,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_37",
+      "length": 116,
+      "initial_object_position_m": [
+        0.06025730299264877,
+        -0.32911393586900195,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_38",
+      "length": 107,
+      "initial_object_position_m": [
+        0.1101851169916521,
+        -0.3223056156732697,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_39",
+      "length": 113,
+      "initial_object_position_m": [
+        0.05460564679300406,
+        -0.35422492636704417,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_40",
+      "length": 117,
+      "initial_object_position_m": [
+        0.008349271603251662,
+        -0.33410499376407354,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_41",
+      "length": 136,
+      "initial_object_position_m": [
+        0.18307070999037212,
+        -0.4185725202709859,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_42",
+      "length": 117,
+      "initial_object_position_m": [
+        0.1806854245200925,
+        -0.20852231634011242,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_43",
+      "length": 106,
+      "initial_object_position_m": [
+        0.049565804268685884,
+        -0.1634920943132748,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_44",
+      "length": 121,
+      "initial_object_position_m": [
+        0.007895462737563474,
+        -0.2672677473319275,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_45",
+      "length": 127,
+      "initial_object_position_m": [
+        -0.00929546555973966,
+        -0.3003833188054761,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_46",
+      "length": 106,
+      "initial_object_position_m": [
+        0.16963468521006075,
+        -0.11374216582999061,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_47",
+      "length": 129,
+      "initial_object_position_m": [
+        0.20482247060017242,
+        -0.24273266977391422,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_48",
+      "length": 113,
+      "initial_object_position_m": [
+        0.0206228776466654,
+        -0.34267440702012086,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_49",
+      "length": 106,
+      "initial_object_position_m": [
+        0.016996692528580604,
+        -0.2472701551775597,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_50",
+      "length": 112,
+      "initial_object_position_m": [
+        0.007083426588273295,
+        -0.3410394356129745,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_51",
+      "length": 115,
+      "initial_object_position_m": [
+        0.08994418423308818,
+        -0.3513611976552329,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_52",
+      "length": 119,
+      "initial_object_position_m": [
+        0.06238576398562225,
+        -0.3568666477558806,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_53",
+      "length": 115,
+      "initial_object_position_m": [
+        0.13668727181626128,
+        -0.35848524267511733,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_54",
+      "length": 109,
+      "initial_object_position_m": [
+        0.06543618117833166,
+        -0.23683693608141815,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_55",
+      "length": 101,
+      "initial_object_position_m": [
+        0.1942628280531937,
+        -0.11170379416652435,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_56",
+      "length": 101,
+      "initial_object_position_m": [
+        0.13094380811120387,
+        -0.08512965548676119,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_57",
+      "length": 119,
+      "initial_object_position_m": [
+        0.1483577014557378,
+        -0.40193804669756217,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_58",
+      "length": 125,
+      "initial_object_position_m": [
+        0.2109029635087505,
+        -0.31547398124558695,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_59",
+      "length": 113,
+      "initial_object_position_m": [
+        0.16174447707902403,
+        -0.32228507352816316,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_60",
+      "length": 97,
+      "initial_object_position_m": [
+        0.1326185382588367,
+        -0.22735001154556528,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_61",
+      "length": 113,
+      "initial_object_position_m": [
+        0.10265587963480716,
+        -0.08528290527374646,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_62",
+      "length": 121,
+      "initial_object_position_m": [
+        0.12137058680432486,
+        -0.37294118637826856,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_63",
+      "length": 130,
+      "initial_object_position_m": [
+        0.14711570960253487,
+        -0.38760053249516707,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_64",
+      "length": 103,
+      "initial_object_position_m": [
+        0.050896790425494734,
+        -0.1414962114191262,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_65",
+      "length": 112,
+      "initial_object_position_m": [
+        0.15632186236135015,
+        -0.22726328125855721,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_66",
+      "length": 131,
+      "initial_object_position_m": [
+        0.10561249444150125,
+        -0.40685959457990417,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_67",
+      "length": 133,
+      "initial_object_position_m": [
+        0.19536573739013452,
+        -0.4065882647991441,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_68",
+      "length": 103,
+      "initial_object_position_m": [
+        0.17849293256862062,
+        -0.22895387174595194,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_69",
+      "length": 125,
+      "initial_object_position_m": [
+        0.1579731008568406,
+        -0.3278392903187687,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_70",
+      "length": 101,
+      "initial_object_position_m": [
+        0.16939915782716405,
+        -0.17029021898758712,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_71",
+      "length": 109,
+      "initial_object_position_m": [
+        0.18206135591159728,
+        -0.2714150194709607,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_72",
+      "length": 92,
+      "initial_object_position_m": [
+        0.08485314302668553,
+        -0.25244378371025655,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_73",
+      "length": 119,
+      "initial_object_position_m": [
+        0.21625858446305027,
+        -0.3755811720660502,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_74",
+      "length": 114,
+      "initial_object_position_m": [
+        0.14877125747905062,
+        -0.3496737033129048,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_75",
+      "length": 103,
+      "initial_object_position_m": [
+        0.11120064454301298,
+        -0.08999148808298321,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_76",
+      "length": 100,
+      "initial_object_position_m": [
+        0.09444683460719018,
+        -0.27402887921563124,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_77",
+      "length": 121,
+      "initial_object_position_m": [
+        0.1904305682960737,
+        -0.3762913148457599,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_78",
+      "length": 99,
+      "initial_object_position_m": [
+        0.04076633870911851,
+        -0.20148410044241813,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_79",
+      "length": 93,
+      "initial_object_position_m": [
+        0.07520936624686382,
+        -0.18408186450156677,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_80",
+      "length": 110,
+      "initial_object_position_m": [
+        0.15834746881742218,
+        -0.2013868808312502,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_81",
+      "length": 150,
+      "initial_object_position_m": [
+        0.04006022497739726,
+        -0.41404701014571244,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_82",
+      "length": 94,
+      "initial_object_position_m": [
+        0.09590823045882502,
+        -0.09384282757058929,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_83",
+      "length": 108,
+      "initial_object_position_m": [
+        0.03603758437748944,
+        -0.21477085561016407,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_84",
+      "length": 105,
+      "initial_object_position_m": [
+        -0.012642919425421867,
+        -0.2408210362924312,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_85",
+      "length": 115,
+      "initial_object_position_m": [
+        0.0918595537640497,
+        -0.3367259785388603,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_86",
+      "length": 126,
+      "initial_object_position_m": [
+        0.21883528876139563,
+        -0.306049828479282,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_87",
+      "length": 88,
+      "initial_object_position_m": [
+        0.08411843391333007,
+        -0.1315650089931056,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_88",
+      "length": 115,
+      "initial_object_position_m": [
+        0.07358588676389587,
+        -0.4024018512727622,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_89",
+      "length": 115,
+      "initial_object_position_m": [
+        0.12330826462745476,
+        -0.2558423173012768,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_90",
+      "length": 131,
+      "initial_object_position_m": [
+        0.16832968381977984,
+        -0.4102338351875604,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_91",
+      "length": 114,
+      "initial_object_position_m": [
+        0.19530384886647387,
+        -0.23604644471021993,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_92",
+      "length": 109,
+      "initial_object_position_m": [
+        0.06438426255976241,
+        -0.23045364935859144,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_93",
+      "length": 96,
+      "initial_object_position_m": [
+        0.017148959097674193,
+        -0.13814926545288728,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_94",
+      "length": 127,
+      "initial_object_position_m": [
+        0.19698307137330168,
+        -0.39263031161426787,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_95",
+      "length": 121,
+      "initial_object_position_m": [
+        0.12968480720411793,
+        -0.25457499307898773,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_96",
+      "length": 140,
+      "initial_object_position_m": [
+        0.13653627264199072,
+        -0.3334115141270898,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_97",
+      "length": 104,
+      "initial_object_position_m": [
+        0.012996680533949617,
+        -0.2321663508100779,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_98",
+      "length": 110,
+      "initial_object_position_m": [
+        0.1625424294407104,
+        -0.2525814798987236,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_99",
+      "length": 113,
+      "initial_object_position_m": [
+        0.1990297150263082,
+        -0.2542738492070131,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_100",
+      "length": 118,
+      "initial_object_position_m": [
+        0.13092740577348358,
+        -0.3719372782634074,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_101",
+      "length": 131,
+      "initial_object_position_m": [
+        -0.01854856323116434,
+        -0.4134636490211983,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_102",
+      "length": 105,
+      "initial_object_position_m": [
+        0.20762731476156934,
+        -0.09633254577120279,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_103",
+      "length": 96,
+      "initial_object_position_m": [
+        0.09130660662458173,
+        -0.22903117497790343,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_104",
+      "length": 120,
+      "initial_object_position_m": [
+        0.0009215836810728961,
+        -0.37372408704956994,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_105",
+      "length": 127,
+      "initial_object_position_m": [
+        0.20066330173980917,
+        -0.41849203128014323,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_106",
+      "length": 121,
+      "initial_object_position_m": [
+        0.20773999280158323,
+        -0.371280245566042,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_107",
+      "length": 113,
+      "initial_object_position_m": [
+        0.18022746651268787,
+        -0.2672920802197002,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_108",
+      "length": 94,
+      "initial_object_position_m": [
+        -0.010247990594814321,
+        -0.15840191034911424,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_109",
+      "length": 123,
+      "initial_object_position_m": [
+        0.003907016439694128,
+        -0.4047717927970468,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_110",
+      "length": 124,
+      "initial_object_position_m": [
+        0.20944970406064858,
+        -0.3189546554149135,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_111",
+      "length": 106,
+      "initial_object_position_m": [
+        0.16278263013008393,
+        -0.31308607635106545,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_112",
+      "length": 107,
+      "initial_object_position_m": [
+        0.017307654540539535,
+        -0.29173863264057165,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_113",
+      "length": 115,
+      "initial_object_position_m": [
+        0.12293085295055747,
+        -0.3820756180739199,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_114",
+      "length": 124,
+      "initial_object_position_m": [
+        0.09164595471755703,
+        -0.3972430160029682,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_115",
+      "length": 105,
+      "initial_object_position_m": [
+        0.03804105783720034,
+        -0.1934840161321367,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_116",
+      "length": 82,
+      "initial_object_position_m": [
+        0.05928694956473553,
+        -0.12839340778282096,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_117",
+      "length": 128,
+      "initial_object_position_m": [
+        0.16169349808265113,
+        -0.39159728208434913,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_118",
+      "length": 85,
+      "initial_object_position_m": [
+        0.009310382756996097,
+        -0.09644264849950404,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_119",
+      "length": 120,
+      "initial_object_position_m": [
+        0.20057813188486492,
+        -0.2982014144863882,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_120",
+      "length": 102,
+      "initial_object_position_m": [
+        0.035538368731545256,
+        -0.32247650013549256,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_121",
+      "length": 96,
+      "initial_object_position_m": [
+        0.20121354577915757,
+        -0.2232530669317917,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_122",
+      "length": 126,
+      "initial_object_position_m": [
+        0.018243465322947433,
+        -0.32524978476665745,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_123",
+      "length": 146,
+      "initial_object_position_m": [
+        0.13758959920981342,
+        -0.40213440211304075,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_124",
+      "length": 129,
+      "initial_object_position_m": [
+        0.008850420889628688,
+        -0.3579940470353483,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_125",
+      "length": 131,
+      "initial_object_position_m": [
+        0.10758587982595907,
+        -0.20549066966290108,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_126",
+      "length": 117,
+      "initial_object_position_m": [
+        0.2010339448635623,
+        -0.18023503141334538,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_127",
+      "length": 103,
+      "initial_object_position_m": [
+        0.1592475546933113,
+        -0.15773876952873248,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_128",
+      "length": 107,
+      "initial_object_position_m": [
+        0.14539355810904064,
+        -0.10592476634607415,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_129",
+      "length": 114,
+      "initial_object_position_m": [
+        0.19198378543385572,
+        -0.08220044495792903,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_130",
+      "length": 136,
+      "initial_object_position_m": [
+        0.007294462437898108,
+        -0.4163869667341819,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_131",
+      "length": 126,
+      "initial_object_position_m": [
+        -0.0065271557359635884,
+        -0.32293704421692926,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_132",
+      "length": 115,
+      "initial_object_position_m": [
+        0.0487453488406108,
+        -0.23588612047718177,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_133",
+      "length": 102,
+      "initial_object_position_m": [
+        0.09306050822390043,
+        -0.15683221283845897,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_134",
+      "length": 139,
+      "initial_object_position_m": [
+        0.13300335938038613,
+        -0.385811801680075,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_135",
+      "length": 126,
+      "initial_object_position_m": [
+        -0.003049659928388515,
+        -0.3082904899960803,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_136",
+      "length": 109,
+      "initial_object_position_m": [
+        0.07414723135044024,
+        -0.108282897036758,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_137",
+      "length": 128,
+      "initial_object_position_m": [
+        0.13290178150452012,
+        -0.3348431135136316,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_138",
+      "length": 101,
+      "initial_object_position_m": [
+        -1.4601191141550007e-05,
+        -0.19913125950631377,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_139",
+      "length": 123,
+      "initial_object_position_m": [
+        0.03558135937510598,
+        -0.21946803730328057,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_140",
+      "length": 98,
+      "initial_object_position_m": [
+        0.043664247505735304,
+        -0.1378653841620686,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_141",
+      "length": 132,
+      "initial_object_position_m": [
+        0.20313092251107714,
+        -0.27951622383007396,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_142",
+      "length": 139,
+      "initial_object_position_m": [
+        0.00807431318827491,
+        -0.3810355191379073,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_143",
+      "length": 136,
+      "initial_object_position_m": [
+        0.04082602024714148,
+        -0.38556240134510555,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_144",
+      "length": 109,
+      "initial_object_position_m": [
+        6.16525417219127e-05,
+        -0.2440361735700029,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_145",
+      "length": 143,
+      "initial_object_position_m": [
+        0.11676670530233871,
+        -0.3699491799276123,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_146",
+      "length": 136,
+      "initial_object_position_m": [
+        0.13663964744080834,
+        -0.31888043206376426,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_147",
+      "length": 120,
+      "initial_object_position_m": [
+        0.148355000026806,
+        -0.2516706176078352,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_148",
+      "length": 118,
+      "initial_object_position_m": [
+        0.11187740608904398,
+        -0.2978595814134831,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_149",
+      "length": 137,
+      "initial_object_position_m": [
+        -0.00821128416361376,
+        -0.4123681403279756,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_150",
+      "length": 126,
+      "initial_object_position_m": [
+        0.025277857672590887,
+        -0.37138859065230734,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_151",
+      "length": 132,
+      "initial_object_position_m": [
+        0.10216120933770692,
+        -0.3034812855955947,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_152",
+      "length": 119,
+      "initial_object_position_m": [
+        0.17052747908311688,
+        -0.13487684515416645,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_153",
+      "length": 107,
+      "initial_object_position_m": [
+        -0.006802673289981548,
+        -0.18272831955850222,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_154",
+      "length": 151,
+      "initial_object_position_m": [
+        0.052482851202816386,
+        -0.34217455754651405,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_155",
+      "length": 144,
+      "initial_object_position_m": [
+        0.013343921873168005,
+        -0.4101043724232627,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_156",
+      "length": 124,
+      "initial_object_position_m": [
+        0.06451507800068362,
+        -0.3152371491643824,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_157",
+      "length": 120,
+      "initial_object_position_m": [
+        0.1379149348562607,
+        -0.3342708677725563,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_158",
+      "length": 123,
+      "initial_object_position_m": [
+        0.036915263976066565,
+        -0.3230554635783273,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_159",
+      "length": 102,
+      "initial_object_position_m": [
+        2.2700245123991047e-05,
+        -0.085701999465736,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_160",
+      "length": 110,
+      "initial_object_position_m": [
+        0.21500355620870637,
+        -0.15817747623136028,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_161",
+      "length": 120,
+      "initial_object_position_m": [
+        0.19152430154849676,
+        -0.22925104853032385,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_162",
+      "length": 132,
+      "initial_object_position_m": [
+        0.17765737001219137,
+        -0.28711302055191984,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_163",
+      "length": 139,
+      "initial_object_position_m": [
+        0.12053917192276078,
+        -0.37546192988605137,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_164",
+      "length": 110,
+      "initial_object_position_m": [
+        0.03323976309128843,
+        -0.26321247234270484,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_165",
+      "length": 117,
+      "initial_object_position_m": [
+        0.13376639372647237,
+        -0.33478489840883463,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_166",
+      "length": 133,
+      "initial_object_position_m": [
+        0.18388435995256255,
+        -0.20922688314454926,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_167",
+      "length": 99,
+      "initial_object_position_m": [
+        0.164096135990574,
+        -0.14258901598592197,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_168",
+      "length": 103,
+      "initial_object_position_m": [
+        0.07712162884573073,
+        -0.14992659541684375,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_169",
+      "length": 102,
+      "initial_object_position_m": [
+        0.18432451078047185,
+        -0.18725160047120773,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_170",
+      "length": 103,
+      "initial_object_position_m": [
+        0.07295956651290754,
+        -0.0983519578177435,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_171",
+      "length": 111,
+      "initial_object_position_m": [
+        0.1881200173406485,
+        -0.10805508961496588,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_172",
+      "length": 125,
+      "initial_object_position_m": [
+        0.00983038369501836,
+        -0.38483171164970276,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_173",
+      "length": 109,
+      "initial_object_position_m": [
+        0.00374619251328584,
+        -0.29239095750082444,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_174",
+      "length": 120,
+      "initial_object_position_m": [
+        0.05525391556688036,
+        -0.3020662295505477,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_175",
+      "length": 114,
+      "initial_object_position_m": [
+        -0.006134310376066779,
+        -0.27362488941378454,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_176",
+      "length": 136,
+      "initial_object_position_m": [
+        0.19359126892901585,
+        -0.3678138437811712,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_177",
+      "length": 125,
+      "initial_object_position_m": [
+        -0.0047702447200169695,
+        -0.3993683141572936,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_178",
+      "length": 119,
+      "initial_object_position_m": [
+        -0.014088909153291904,
+        -0.11215109692662925,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_179",
+      "length": 103,
+      "initial_object_position_m": [
+        -0.0009124080338243634,
+        -0.12905068401788525,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_180",
+      "length": 140,
+      "initial_object_position_m": [
+        0.17795365343852354,
+        -0.16970953607136538,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_181",
+      "length": 122,
+      "initial_object_position_m": [
+        0.001812395849619522,
+        -0.31454734653189814,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_182",
+      "length": 126,
+      "initial_object_position_m": [
+        0.05677464416384022,
+        -0.20676520457443573,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_183",
+      "length": 122,
+      "initial_object_position_m": [
+        0.059760952999528105,
+        -0.23654612685702875,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_184",
+      "length": 130,
+      "initial_object_position_m": [
+        0.17142894877354414,
+        -0.20512210922766488,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_185",
+      "length": 130,
+      "initial_object_position_m": [
+        0.0497475815176579,
+        -0.3064156404379914,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_186",
+      "length": 106,
+      "initial_object_position_m": [
+        -0.003597966495510682,
+        -0.1733898429331399,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_187",
+      "length": 109,
+      "initial_object_position_m": [
+        -0.0169830339753598,
+        -0.10538464167666531,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_188",
+      "length": 118,
+      "initial_object_position_m": [
+        0.12610524197411072,
+        -0.08416661980555493,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_189",
+      "length": 148,
+      "initial_object_position_m": [
+        0.20972845474950746,
+        -0.27930378230110864,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_190",
+      "length": 110,
+      "initial_object_position_m": [
+        0.052652151077802925,
+        -0.19001345778431952,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_191",
+      "length": 95,
+      "initial_object_position_m": [
+        0.03121387239579934,
+        -0.13553962546205897,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_192",
+      "length": 115,
+      "initial_object_position_m": [
+        0.017291331807430393,
+        -0.10950149306109283,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_193",
+      "length": 138,
+      "initial_object_position_m": [
+        0.053355650573704894,
+        -0.40128382091506076,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_194",
+      "length": 108,
+      "initial_object_position_m": [
+        0.09707454728193834,
+        -0.20758645523813252,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_195",
+      "length": 110,
+      "initial_object_position_m": [
+        0.04713112617132334,
+        -0.2533902573588793,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_196",
+      "length": 114,
+      "initial_object_position_m": [
+        0.1823900432573906,
+        -0.13632381338033242,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_197",
+      "length": 114,
+      "initial_object_position_m": [
+        0.12587773734200755,
+        -0.08414299599852978,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_198",
+      "length": 126,
+      "initial_object_position_m": [
+        0.14431674184370022,
+        -0.33758488749873317,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    },
+    {
+      "episode": "demo_199",
+      "length": 96,
+      "initial_object_position_m": [
+        0.059051152328858325,
+        -0.11165034360740902,
+        0.8600000000000001
+      ],
+      "final_reward": 1.0,
+      "final_done": 1,
+      "timestamp_fields": []
+    }
+  ]
+}
