@@ -1,0 +1,137 @@
+{
+  "run": "outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c",
+  "files": [
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/training/training_log.csv",
+      "file": "evidence/lr_a_training_log.csv",
+      "sha256": "30409fba71bf4a16381221c9207e332ab56b86bfe26c233509da4f4562548832"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/training/training_summary.json",
+      "file": "evidence/lr_a_training_summary.json",
+      "sha256": "0ff56975706f94c9be3840b12cd0547875373ae4b9955b666dd97ebc8c56ea3a"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/training/training_config.json",
+      "file": "evidence/lr_a_training_config.json",
+      "sha256": "d1b50da3531d3b66a784f8fc21c87199d51e9eadec9f613109f4f477dfbae1dc"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/summary.json",
+      "file": "evidence/lr_a_evaluation_summary.json",
+      "sha256": "acd074eb5e5a8c1df57f664fb1e84a50aae81cff08adefa5b10270acdf98dcbb"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/paired_results.csv",
+      "file": "evidence/lr_a_paired_results.csv",
+      "sha256": "cbe20130d4b17c83b5e0a78c7d9f76c9f5990de6d5b7d6fddfcc76f0b49bcb17"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/test_manifest.json",
+      "file": "evidence/lr_a_test_manifest.json",
+      "sha256": "add0104b353ba594c2f6a4e3b4138fe23eab148956754366a3a84ff18a96b237"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_b/training/training_log.csv",
+      "file": "evidence/lr_b_training_log.csv",
+      "sha256": "79c06b34a7ff9457deaa84c4bd78fdc5d1adc7761401bc0510a7f219bd09367d"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_b/training/training_summary.json",
+      "file": "evidence/lr_b_training_summary.json",
+      "sha256": "0cb978714cdf78b29136b09c71545c25a7ae9adf6878c7dbdb67f5e9605e02bc"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_b/training/training_config.json",
+      "file": "evidence/lr_b_training_config.json",
+      "sha256": "a6e3d33ed7ead45bc209232a8c1864472c420c9293394ff8aeefbbb6c4d35e05"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_b/evaluation/summary.json",
+      "file": "evidence/lr_b_evaluation_summary.json",
+      "sha256": "601d700e819b3cf727c7dc7533d921fcea4c863e87057e3d5d1e716a35d637e1"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_b/evaluation/paired_results.csv",
+      "file": "evidence/lr_b_paired_results.csv",
+      "sha256": "90a11194d359fd87e96b2de74826cbe100003b47658e2798bf1729f083bfc19d"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_b/evaluation/test_manifest.json",
+      "file": "evidence/lr_b_test_manifest.json",
+      "sha256": "add0104b353ba594c2f6a4e3b4138fe23eab148956754366a3a84ff18a96b237"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/experiment.json",
+      "file": "evidence/experiment.json",
+      "sha256": "a1de05e93d852eaeb593c489c4d414ea2a1fbbb504ac8a8d642a824fa70bacf4"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/evaluation_config.json",
+      "file": "evidence/evaluation_config.json",
+      "sha256": "3aee90556520b6378f9f07f291b66fa60238ae6e19cd4ab069c8d9d390b02bb5"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/demonstration_051829_cc67c5/dataset_inspection.json",
+      "file": "evidence/dataset_inspection.json",
+      "sha256": "713f0e470ce3ac4ee5b713993f55047f9a818108dce5a285f29315db850f3f97"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/analysis_052630_4b175c/observed_facts.json",
+      "file": "evidence/observed_facts.json",
+      "sha256": "7404fd50702718162d0c60e51c9b25505e48ec3ba7808d798dbed834b8551fe1"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/analysis_052630_4b175c/failure_analysis.json",
+      "file": "evidence/failure_analysis.json",
+      "sha256": "3f08a04369852af7fb4bf354e6161243f8d54c01cce380f1ef9b08f46ea45dbf"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/standard_00.mp4",
+      "file": "assets/failure.mp4",
+      "sha256": "8ff497139768124ceceda4c7007d75a789b3432a705f7e5be8e9674d3c638bb3"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/standard_00.npz",
+      "file": "evidence/failure_trace.npz",
+      "sha256": "5913c6e766f53cd3ee4e8387f9f273b4dacccf569a667c1f9222ed93065d83ea"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/standard_01.mp4",
+      "file": "assets/success.mp4",
+      "sha256": "5c182c513010bd077b8f8ccb6926d7a59289c2998cb8adc33c83c66c359b8583"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/experiment_051841_40b7a2/lr_a/evaluation/standard_01.npz",
+      "file": "evidence/success_trace.npz",
+      "sha256": "51fe8ba7031eee75e534df4e7dabd2633cb665fe487e31d501fe9a1307a59395"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/demonstration_051829_cc67c5/demonstration.mp4",
+      "file": "assets/demonstration.mp4",
+      "sha256": "03770e59cd45a442d4e5a2eb9fdc879cef6dc70acae24897dd2a24ffc805dc41"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/analysis_052630_4b175c/keyframe_0.png",
+      "file": "assets/keyframe_0.png",
+      "sha256": "1afeffde4772379e67196479dfc346d31c494d69d3fa5f3ef65fd7db08f6b3b2"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/analysis_052630_4b175c/keyframe_1.png",
+      "file": "assets/keyframe_1.png",
+      "sha256": "ebd77d991dd85d146b0d1337cff77faaf11ea85af4386fb2a1d5f9834ed04ad8"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/analysis_052630_4b175c/keyframe_2.png",
+      "file": "assets/keyframe_2.png",
+      "sha256": "d118235212cc86f86d1faadd19f3243fcefdb285096b46d49adaa6872d8adb32"
+    },
+    {
+      "source": "/home/jingchen/projects/manipulation_lab/outputs/solutions_20261013_v2/runs/group_01/20261013T051828Z_5a8ae81c/analysis_052630_4b175c/keyframe_3.png",
+      "file": "assets/keyframe_3.png",
+      "sha256": "4ab2b7edac7e8fca23813560cce66240f8585bd2b78a7537dbd35ebf8cc09812"
+    }
+  ],
+  "derived_frames": "Unaltered decoded frames from the copied MP4s; no generated robot images.",
+  "claims": "This single fixed-seed run; no real-robot or independent multi-seed claim."
+}

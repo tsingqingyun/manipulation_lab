@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "notebooks": [
+    {
+      "file": "01_demonstrations.ipynb",
+      "code_cells_executed": 4,
+      "sha256": "40034c0b239016dfa2aae8d68e0679ee767ee098e0d2f39f90217609713d1975"
+    },
+    {
+      "file": "02_train_policy.ipynb",
+      "code_cells_executed": 5,
+      "sha256": "6a9afe522537ec003770cf03c13ef93ed6c26ea68c9dc9e24ad0dd79b6749a2f"
+    },
+    {
+      "file": "03_policy_evaluation.ipynb",
+      "code_cells_executed": 5,
+      "sha256": "e3530f5532dc4b1a1df478a4532b33f2ab6c0c8b33f7d1c94d2539ac0fa9b288"
+    },
+    {
+      "file": "04_failure_analysis.ipynb",
+      "code_cells_executed": 6,
+      "sha256": "06529221ad63ccaee8afbfbd5e2e64a8e7e98ac744ee5c387832a3de1771ab37"
+    }
+  ],
+  "original_execution_seconds": 237.65184996137396,
+  "training_runs": 2,
+  "epochs_per_run": 50,
+  "evaluation_episodes": 20,
+  "evaluation_errors": 0,
+  "controlled_checks": {
+    "only_learning_rate_changed": true,
+    "same_initial_weights": true,
+    "same_dataset_split_versions": true,
+    "same_evaluation_config_and_cases": true
+  },
+  "slides": 15,
+  "speaker_notes_seconds": 875,
+  "pdf_text_coverage": true,
+  "source_fonts_embedded": true,
+  "embedded_video_bytes_match": true,
+  "videos": [
+    {
+      "file": "success.mp4",
+      "frames": 36,
+      "duration_seconds": 7.2
+    },
+    {
+      "file": "failure.mp4",
+      "frames": 125,
+      "duration_seconds": 25.0
+    },
+    {
+      "file": "demonstration.mp4",
+      "frames": 59,
+      "duration_seconds": 5.9
+    }
+  ],
+  "report_pages": 2,
+  "answers_complete": true,
+  "failure_step": 57,
+  "exact_frame_offsets": true,
+  "evidence_zip_crc_and_hashes": true,
+  "limits": [
+    "Native PowerPoint rendering/playback on the teaching computer is untested.",
+    "Browser playback is not part of this acceptance; full MP4 decoding is checked.",
+    "One fixed training seed and five paired cases per condition; no strict OOD or real-robot claim.",
+    "EGL failed before training; its original attempt is preserved. The completed run uses OSMesa.",
+    "Failure cause remains a hypothesis; the proposed intervention has not been executed."
+  ],
+  "deliverable_sha256": {
+    "Manipulation_Lab_Worked_Solutions.pptx": "8b7bf9831db9dae443e2e96bbf890e5f8e8bd6325e708a9df0858ddb995c4841",
+    "Manipulation_Lab_Worked_Solutions.pdf": "a30b0fa139ce520f0a1cdf3089e6b3f647209f8c23e5fa8ea708813a4b1f3cb1",
+    "Instructor_Solution_Report.pdf": "1dd3bc54ee4917f750c5013d18cf4f1d46cefc9908252b99962659857fff3aaf",
+    "Experiment_Evidence.zip": "44462ca2d98d10272f8d99b0cb0f0286e3b89d959a073c596f53f757c82a7e2b"
+  },
+  "post_layout_correction": {
+    "slides_changed": [
+      4,
+      13
+    ],
+    "full_experiment_repeated": false,
+    "slide_bounds_and_pdf_text_passed": true,
+    "corrected_text_not_occluded_by_takeaway": true,
+    "embedded_videos_unchanged": true
+  },
+  "visual_review": {
+    "all_slides_contact_sheet_inspected": true,
+    "corrected_slides_4_and_13_inspected_at_full_size": true,
+    "both_report_pages_inspected": true
+  }
+}

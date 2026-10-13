@@ -1,0 +1,2 @@
+# Preserve byte-identical raw csv.writer logs, including their standard CRLF endings.
+evidence/*_training_log.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "primary_variant": "lr_a",
+  "selection_rule": "Primary variant fixed before evaluation; do not select using test success",
+  "variants": {
+    "lr_a": {
+      "learning_rate": 0.001,
+      "training": "lr_a/training",
+      "evaluation": "lr_a/evaluation",
+      "checkpoint_sha256": "e9771831a6563677cd6db4585b630b54c6f1e14668e4443e1a71e705290c7033"
+    },
+    "lr_b": {
+      "learning_rate": 0.0003,
+      "training": "lr_b/training",
+      "evaluation": "lr_b/evaluation",
+      "checkpoint_sha256": "a93ea8d540130c42f680eacaf7926eef463c0d1ed3f2fd4012ac4fd341cd0f98"
+    }
+  },
+  "checks": {
+    "only_learning_rate_changed": true,
+    "same_initial_weights": true,
+    "same_dataset_split_versions": true,
+    "same_evaluation_config_and_cases": true
+  },
+  "comparison": [
+    {
+      "variant": "lr_a",
+      "learning_rate": 0.001,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 12,
+      "validation_mse": 0.03537582876584447,
+      "standard_stable_success_rate": 0.6,
+      "shifted_stable_success_rate": 0.6
+    },
+    {
+      "variant": "lr_b",
+      "learning_rate": 0.0003,
+      "epochs": 50,
+      "seed": 17,
+      "selected_epoch": 12,
+      "validation_mse": 0.03412255911650028,
+      "standard_stable_success_rate": 1.0,
+      "shifted_stable_success_rate": 1.0
+    }
+  ]
+}

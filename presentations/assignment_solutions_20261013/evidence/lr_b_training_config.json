@@ -1,0 +1,18 @@
+{
+  "name": "student_deterministic_mlp",
+  "architecture": "mlp",
+  "hidden_dims": [
+    256,
+    256,
+    256
+  ],
+  "learning_rate": 0.0003,
+  "epochs": 50,
+  "batch_size": 256,
+  "seed": 17,
+  "device": "cpu",
+  "normalize_obs": true,
+  "sequence_length": 1,
+  "cpu_threads": 2,
+  "timeout_seconds": 3600
+}

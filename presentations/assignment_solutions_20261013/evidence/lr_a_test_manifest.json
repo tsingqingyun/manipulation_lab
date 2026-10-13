@@ -1,0 +1,105 @@
+{
+  "dataset_sha256": "3f2eb92e0a5025d0095e866ac16cc8092d6a762abe27dec90dbaff9027282962",
+  "episodes": [
+    {
+      "episode_id": "standard_00",
+      "condition": "standard",
+      "source_episode": "demo_39",
+      "seed": 101,
+      "shift_xy_m": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "standard_01",
+      "condition": "standard",
+      "source_episode": "demo_185",
+      "seed": 102,
+      "shift_xy_m": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "standard_02",
+      "condition": "standard",
+      "source_episode": "demo_29",
+      "seed": 103,
+      "shift_xy_m": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "standard_03",
+      "condition": "standard",
+      "source_episode": "demo_48",
+      "seed": 104,
+      "shift_xy_m": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "standard_04",
+      "condition": "standard",
+      "source_episode": "demo_157",
+      "seed": 105,
+      "shift_xy_m": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "shifted_00",
+      "condition": "shifted",
+      "source_episode": "demo_39",
+      "seed": 101,
+      "shift_xy_m": [
+        0.04,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "shifted_01",
+      "condition": "shifted",
+      "source_episode": "demo_185",
+      "seed": 102,
+      "shift_xy_m": [
+        0.04,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "shifted_02",
+      "condition": "shifted",
+      "source_episode": "demo_29",
+      "seed": 103,
+      "shift_xy_m": [
+        0.04,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "shifted_03",
+      "condition": "shifted",
+      "source_episode": "demo_48",
+      "seed": 104,
+      "shift_xy_m": [
+        0.04,
+        0.0
+      ]
+    },
+    {
+      "episode_id": "shifted_04",
+      "condition": "shifted",
+      "source_episode": "demo_157",
+      "seed": 105,
+      "shift_xy_m": [
+        0.04,
+        0.0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "slides": [
+    {
+      "slide": 1,
+      "title": "From demonstration to a defensible answer",
+      "seconds": 35,
+      "notes_zh": "这份题解沿着四份 Notebook 的数据流讲解五道问题。所有数字来自本次真实执行：先检查示教数据，再训练两种学习率，最后进行二十次闭环仿真。请强调这是一份有完整证据的参考解答，不是要求每位学生取得相同成功率。学生要学会解释输入输出、控制变量、结果与原因之间的界限。",
+      "sources": [
+        "evidence/experiment.json",
+        "results.json"
+      ]
+    },
+    {
+      "slide": 2,
+      "title": "What actually counts as task success?",
+      "seconds": 60,
+      "notes_zh": "先播放本次主要策略 lr_a 的真实成功视频。机器人需要抓取、搬运、松开并稳定放置，不能把抬起来等同于任务完成。环境成功是执行期间曾满足环境标志；稳定放置还要求目标区域、开口至少五点五厘米、无夹爪接触，继续执行策略一秒，位移不超过一厘米、速度不超过每秒五厘米。这里是持续运行同一个策略，不是人为把物体静止下来。",
+      "sources": [
+        "assets/success.mp4",
+        "evidence/evaluation_config.json",
+        "src/manipulation_lab/evaluation.py"
+      ]
+    },
+    {
+      "slide": 3,
+      "title": "Q1 · The policy observes 16 state values",
+      "seconds": 60,
+      "notes_zh": "观测是决策时已知的状态，动作是下一步给控制器的命令。逐项相加：末端位置三维、四元数四维、夹爪两个关节位置两维、罐子位置三维、四元数四维，共十六维。位置使用世界坐标系和米，Z 轴向上；四元数顺序是 xyzw。原始物体向量十四维不等于策略使用十四维；当前适配器仅取 object[7:14] 的世界位姿，训练和执行时一致。夹爪两个关节位置是两维观测，不意味着两个独立策略动作。",
+      "sources": [
+        "notebooks/01_demonstrations.ipynb",
+        "src/manipulation_lab/common.py",
+        "evidence/dataset_inspection.json"
+      ]
+    },
+    {
+      "slide": 4,
+      "title": "Q1 · Seven commands do not mean seven positions",
+      "seconds": 60,
+      "notes_zh": "动作七维分为三个平移增量、三个轴角旋转增量和一个夹爪命令。每维是归一化命令，不可直接把零点一解释成零点一米。平移缩放上限为五厘米，旋转为零点五弧度；例如平移命令零点二对应控制器请求的一厘米增量，实际末端运动仍受控制器和物理约束影响。夹爪命令正值闭合、负值张开；两个手指关节由同一个开合动作驱动。二十赫兹意味着每步五十毫秒，步号不是采集时间戳。",
+      "sources": [
+        "configs/environment.yaml",
+        "notebooks/01_demonstrations.ipynb",
+        "src/manipulation_lab/simulator.py"
+      ]
+    },
+    {
+      "slide": 5,
+      "title": "Q1 · A trajectory explains what the final image cannot",
+      "seconds": 45,
+      "notes_zh": "这里展示同一条真实人类示教 demo_0 的开始、中间和结束画面。最终照片只能说明某个时刻的状态，不能说明何时闭合、抬升之前是否抓稳、何时释放，或者动作和下一时刻状态的因果顺序。完整轨迹提供观测与专家动作的配对，BC 才能学习状态到动作的映射。示教回放恢复记录的模拟器状态，不是当前学习策略运行成功的证据。",
+      "sources": [
+        "assets/demonstration.mp4",
+        "notebooks/01_demonstrations.ipynb"
+      ]
+    },
+    {
+      "slide": 6,
+      "title": "Q2 · Behavior cloning learns the expert action",
+      "seconds": 60,
+      "notes_zh": "行为克隆就是监督学习：输入当前十六维状态，输出七维动作，以对应的专家动作为标签，最小化所有动作分量的均方误差。优化器根据梯度更新网络权重。每个 epoch 遍历完整训练样本。归一化均值和标准差只用训练集计算；验证集只用于比较每轮模型，选验证误差最小的检查点；测试集不训练也不选模型。整条轨迹属于同一个划分，避免相邻高度相关的状态跨集合泄漏。",
+      "sources": [
+        "src/manipulation_lab/training.py",
+        "src/manipulation_lab/policy.py",
+        "evidence/dataset_inspection.json"
+      ]
+    },
+    {
+      "slide": 7,
+      "title": "Q2 · Change one variable; keep the comparison fair",
+      "seconds": 60,
+      "notes_zh": "两次训练唯一计划改变的变量是学习率。数据、整轨迹划分、网络、初始化、随机种子十七、五十轮预算、批大小二百五十六和设备均保持一致。代码还比较初始权重哈希、数据与评测清单，所有检查必须通过。本次使用 CPU 训练、软件渲染；最初 EGL 失败发生在示教渲染阶段，未进入训练，日志保留。lr_a 在查看测试结果前就固定为主要分析模型，所以即使另一组分数更高，也不能事后换掉主要模型。",
+      "sources": [
+        "evidence/experiment.json",
+        "evidence/lr_a_training_config.json",
+        "evidence/lr_b_training_config.json"
+      ]
+    },
+    {
+      "slide": 8,
+      "title": "Q3 · Read training and validation curves together",
+      "seconds": 60,
+      "notes_zh": "先解释横轴是训练轮次，纵轴是对归一化动作计算的均方误差，使用对数刻度。蓝色训练、棕色验证，虚线标出最低验证误差的轮次。不要看到第五十轮训练误差最低就选择第五十轮：本作业按验证集选择权重。训练误差持续下降而验证误差没有同步下降，说明在训练示例上拟合更好，不等于新状态上的表现改善。两组使用相同纵轴，便于直接比较；所有数值保留在原始 CSV。",
+      "sources": [
+        "evidence/lr_a_training_log.csv",
+        "evidence/lr_b_training_log.csv"
+      ]
+    },
+    {
+      "slide": 9,
+      "title": "Q3 · Lower training error did not yield more successes",
+      "seconds": 60,
+      "notes_zh": "直接比较同一次运行的真实数字。lr_a 第五十轮训练误差更低，但用于评测的是各自验证集选择的检查点；其标准条件和偏移条件均只有三次成功，lr_b 均为五次。由此不能用训练误差代替闭环任务指标。注意这不是在同一权重上只改变误差的因果实验，也不是统计意义上证明低学习率普遍更优。每种条件只有五个案例，一个案例就是二十个百分点；只有一个训练种子，配对的标准和偏移也不是独立样本。",
+      "sources": [
+        "evidence/lr_a_training_log.csv",
+        "evidence/lr_b_training_log.csv",
+        "evidence/lr_a_evaluation_summary.json",
+        "evidence/lr_b_evaluation_summary.json"
+      ]
+    },
+    {
+      "slide": 10,
+      "title": "Q4 · Position Shift changes only the initial can position",
+      "seconds": 60,
+      "notes_zh": "散点图每一点是一条示教或一次测试的初始位置，不是运动轨迹；颜色也不表示成功失败。灰点为一百六十条训练轨迹的起点，蓝点是测试的标准起点，叉号是沿世界 X 正方向平移四厘米的起点，细线连接同一个配对案例。配对使用相同的源轨迹和随机种子，偏移后仍须在源箱内。这只是受控位置扰动，二维图无法证明完整十六维输入分布之外，因此不能称严格的分布外测试。",
+      "sources": [
+        "evidence/lr_a_test_manifest.json",
+        "evidence/dataset_inspection.json",
+        "src/manipulation_lab/teaching.py"
+      ]
+    },
+    {
+      "slide": 11,
+      "title": "Q4 · Same success labels, different completion times",
+      "seconds": 60,
+      "notes_zh": "本次所有配对案例的成功失败标签都没有因偏移而改变，但完成时间发生变化，不能把总成功率相同解释为行为完全不变。表内显示结果和执行步数。主要策略在 demo_185、种子一百零二上两种条件均成功，但标准需要一百四十一步，偏移后一百五十六步，增加十五步即零点七五秒。lr_b 在 demo_48 上反而从一百八十二步减少到一百四十一步。这些是观察事实；位置影响抓取几何或状态区域是可能机制，表格本身不能诊断原因。五百步表示未在时间预算内完成，而不是成功时间。",
+      "sources": [
+        "evidence/lr_a_paired_results.csv",
+        "evidence/lr_b_paired_results.csv"
+      ]
+    },
+    {
+      "slide": 12,
+      "title": "Q5 · The arm moves on without the can",
+      "seconds": 70,
+      "notes_zh": "播放主要策略第一条失败 standard_00。最明显的结果是机械臂继续搬运动作，但罐子留在源箱。不要把第五百步最终没放进去标为第一错误，那只是结果。我们沿状态和接触记录向前检查：四十九至五十六步有接触，五十七步首次失去接触，同时闭合命令接近正一；后续一直没有重新接触。把五十七步标为最早有明确数据支持的抓持丢失，不把它冒充最早的因果起点。更早的对齐偏差是否已经构成错误，还需要对照。",
+      "sources": [
+        "assets/failure.mp4",
+        "evidence/failure_trace.npz",
+        "evidence/observed_facts.json"
+      ]
+    },
+    {
+      "slide": 13,
+      "title": "Q5 · Pin the explanation to recorded steps",
+      "seconds": 60,
+      "notes_zh": "四张图分别是第四十五、五十三、五十七和六十五步。它们都恰好有实际视频帧，偏移为零，帧号分别十一、十三、十四和十六。请区分动作和状态：a[t-1] 导致 s[t]；视频每四步在执行动作之后记录，所以第一帧是状态一而不是状态零。第五十七步为二点八五秒控制经过时间，不是采集时间戳。普通情况下请求步号未必恰好有视频帧，必须报告偏移，不能把邻帧图像当成该时刻精确状态。",
+      "sources": [
+        "evidence/observed_facts.json",
+        "evidence/failure_trace.npz"
+      ]
+    },
+    {
+      "slide": 14,
+      "title": "Q5 · Separate measured facts from a causal story",
+      "seconds": 80,
+      "notes_zh": "左图放大前一百步，分别画世界高度、夹爪开口、归一化闭合命令和接触布尔值，避免混用单位。红线是人工标注，不是算法自动识别的根因。第五十七步开口约二点二四厘米，之后夹爪几乎完全闭合，末端明显升高，而罐子最高只比初始高约五点七毫米。事实支持没有形成可持续的抓持。可能是进入位置或姿态对齐不佳，也可能是闭合与抬升时序问题，但记录不足以证明某一个。若检验时序，应从相同的预闭合模拟状态、相同种子和同一策略检查点开始，仅改变规定长度的闭合等待，其余固定，比较接触持续和抬升；本次没有实施这个额外实验。",
+      "sources": [
+        "evidence/failure_trace.npz",
+        "evidence/failure_analysis.json"
+      ]
+    },
+    {
+      "slide": 15,
+      "title": "A complete solution is a chain of evidence",
+      "seconds": 45,
+      "notes_zh": "最后回到学生提交要求。四份完成版 Notebook 保留真实输出，并补齐参考答案。完整证据包包括两组配置、模型、曲线、配对结果、视频和标注；另有两页参考报告。原学生模板和旧输出保留，不要求学生复制相同文字。这个结果只描述本次固定种子的仿真；没有真实机器人验证、没有多个独立训练种子的统计结论，也没有实施新算法验证原因。PPT 有可编辑文字与中文讲解备注，PDF 用于快速预览；教学电脑上的原生 PowerPoint 媒体播放仍需打开确认。",
+      "sources": [
+        "solution_execution.json",
+        "media_provenance.json",
+        "verification.json"
+      ]
+    }
+  ],
+  "total_seconds": 875
+}
